@@ -24,7 +24,7 @@
         </swiper-item> 
         <block wx:for="{{banner}}" wx:key="this">
           <swiper-item>
-            <image src="{{'https://new-bigclient.oss-cn-qingdao.aliyuncs.com' + item}}" style='width:100%;height:100%;position: absolute;z-index:9999!important;' />
+            <image src="{{'https://new-bigclient.oss-cn-qingdao.aliyuncs.com' + item}}" style='width:100%;height:100%;position:absolute;z-index:9999!important;' />
           </swiper-item>
         </block>
     </swiper> 
@@ -67,7 +67,7 @@
   <view class='des_bottom' wx:if="{{goodItem.articles != ''}}" />
   <view class='shopRelaZhimaji' wx:if="{{goodItem.articles != ''}}">
     <view class='shopRelaZhimaji_left'>
-      <image src='{{goodItem.articles.headimgurl}}' style='width:80rpx;height:80rpx;border-radius:50%;'></image>
+      <image src='{{goodItem.articles.headimgurl}}' style='width:80rpx;height:80rpx;border-radius:50%;' mode='aspectFill' />
       <view class='shopRelaZhimaji_nick'>{{goodItem.articles.nickname}}</view>
     </view>
     <view class='shopRelaZhimaji_right'>{{goodItem.articles.num}}次点赞</view>
@@ -177,9 +177,9 @@
 
   <view class='cantbuyNow' wx:if="{{goodItem.button == '已抢完'}}">已抢完</view>
   <view class='buyNow' wx:else>
-    <button open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber" class='clearBtn' style='color:#fff;line-height:120rpx;' wx:if='{{bindMobileShow == 2}}' form-type="submit">立即抢购</button>
-    <button bindgetuserinfo="bindgetuserinfo" open-type="getUserInfo" lang="zh_CN" class='clearBtn' style='color:#fff;line-height:120rpx;' wx:if='{{bindMobileShow == 1}}' form-type="submit">立即抢购</button>
-    <button bindtap='buyNow' class='clearBtn' style='color:#fff;line-height:120rpx;' wx:if='{{bindMobileShow == 3}}' form-type="submit">立即抢购</button>
+    <button open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber" class='clearBtn' style='color:#fff;line-height:120rpx;' wx:if='{{bindMobileShow}}' form-type="submit">立即抢购</button>
+    <button bindgetuserinfo="bindgetuserinfo" open-type="getUserInfo" lang="zh_CN" class='clearBtn' style='color:#fff;line-height:120rpx;' wx:if='{{!bindMobileShow}}' form-type="submit">立即抢购</button>
+    <!-- <button bindtap='buyNow' class='clearBtn' style='color:#fff;line-height:120rpx;' wx:if='{{bindMobileShow == 3}}' form-type="submit">立即抢购</button> -->
   </view>
   <!-- 分享弹窗 -->
   <image class='share_popup animated veryFaster zoomIn' wx:if='{{shareShow}}' src='../../img/shareFriends.png'>

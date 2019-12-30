@@ -23,7 +23,7 @@ Page({
     goods_pic: '',
     canBuyNow: false,
     hasDanmu: false,
-    bindMobileShow: 3,
+    bindMobileShow: false,
     menuRectTop: '',
     recommad_list: [],
     clickId: '',
@@ -125,14 +125,6 @@ Page({
     })
     
     wx.getStorageSync('userLocation') != '' ? that.setData({ locationShow: true }) : that.setData({ locationShow: false })
-
-    // 判断新老用户(服务器端是否有数据)
-    if(wx.getStorageSync('qrop') != ''){
-      that.setData({ userLogin: false })
-      // Sesame.Sesame();
-    }else {
-      that.setData({ userLogin: true })
-    }
     that.ShopDetailLoadOringin(options)
   },
 
@@ -451,10 +443,10 @@ Page({
               open_id: wx.getStorageSync('session_key').openid,
               mobile: mobile
             },
-            success: function (res) {
+            success (res) {
               if (res.data.code == 0) {
                 that.setData({
-                  bindmobileShow: 3,
+                  bindMobileShow: false,
                 })
                 Sesame.Sesame();
                 setTimeout(function () {
@@ -496,8 +488,19 @@ Page({
     })
   },
 
-  onShow: function () {
+  onShow () {
     var that = this;
+    if (wx.getStorageSync('qrop') == '') {
+      that.setData({ bindMobileShow: false, userLogin: true })
+    } else {
+      that.setData({ userLogin: false })
+      if (wx.getStorageSync('qrop').mobile == '') {
+        that.setData({ bindMobileShow: true })
+      } else {
+        that.setData({ bindMobileShow: false })
+      }
+    }
+
     let videoContext = wx.createVideoContext('myVideo');
     // 监听网络情况变化
     wx.onNetworkStatusChange( function(res) {
@@ -520,15 +523,8 @@ Page({
         res.networkType == 'wifi' ? that.setData({ wifiAutoPlay: true }) : that.setData({ wifiAutoPlay: false })
       }
     })
-    if (wx.getStorageSync('qrop') == '') {
-      that.setData({ bindMobileShow: 1 })
-    }else {
-      if (wx.getStorageSync('qrop').mobile == '' || wx.getStorageSync('qrop').mobile == undefined) {
-        that.setData({ bindMobileShow: 2 })
-      } else {
-        that.setData({ bindMobileShow: 3 })
-      }
-    }
+    
+    console.log(this.data.bindMobileShow)
   },
 
   //授权
@@ -547,18 +543,29 @@ Page({
             inviter_id: wx.getStorageSync('inviterId')
           },
           success (res) {
-            wx.setStorageSync('qrop', res.data.data);
-            that.setData({ bindMobileShow: 2 })
-            if (res.data.data.get_sesame_status == 1) {
-              wx.showModal({
-                title: '',
-                content: '恭喜获得10元无门槛红包！',
-                cancelText: '确认',
-                confirmText: '查看',
-                success(res) {
-                  if (res.confirm) wx.navigateTo({ url: '../mission/mission', })
-                }
-              })
+            if(res.data.code == 0) {
+              if (wx.getStorageSync('qrop') != '') {
+                if (wx.getStorageSync('qrop').mobile != '') {
+                  wx.navigateTo({
+                    url: '../payment/payment?id=' + that.data.goods_id,
+                  })
+                } 
+                that.setData({ bindMobileShow: false })
+              } else {
+                that.setData({ bindMobileShow: true })
+              }
+              if (res.data.data.get_sesame_status == 1) {
+                wx.showModal({
+                  title: '',
+                  content: '恭喜获得10元无门槛红包！',
+                  cancelText: '确认',
+                  confirmText: '查看',
+                  success(res) {
+                    if (res.confirm) wx.navigateTo({ url: '../mission/mission', })
+                  }
+                })
+              }
+              wx.setStorageSync('qrop', res.data.data);
             }
           }
         })

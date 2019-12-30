@@ -19,7 +19,10 @@ Page({
     clickId: '',
     bargainPrice: '',
     goodsList: [],
-    canBuyNow: false
+    userDisconut: [],
+    useDiscountNow: false,
+    canBuyNow: false,
+    discount: ''
   },
 
   onLoad: function (options) {
@@ -29,7 +32,33 @@ Page({
     })
     wx.removeStorageSync('quitPay');
     if (wx.getStorageSync('qrop') != '') {
-      Sesame.Sesame()
+      wx.request({
+        url: 'https://kanjia.bigclient.cn/api/api/getUserInfo',
+        method: 'POST',
+        data: {
+          user_id: wx.getStorageSync('qrop').id
+        },
+        success (res) {
+          if (res.data.code == 0) {
+            wx.setStorageSync('qrop', res.data.data);
+            let discountList = res.data.data.discount;
+            let list = [{name: '不使用',pick: true}];
+            let obj = {};
+            discountList.map( e => {
+              obj.name = e * 10 + '折优惠券';
+              obj.discount = e;
+              obj.pick = false;
+              list.push(obj);
+            })
+            if(res.data.data.discount != '') {
+              that.setData({
+                userDisconut: list
+              })
+              console.log(that.data.userDisconut)
+            }
+          }
+        }
+      })
     }
     //获取版本信息
     wx.getSystemInfo({
@@ -114,7 +143,7 @@ Page({
     })
 
     this.setData({
-      goodsList: wx.getStorageSync('other_goods')
+      goodsList: wx.getStorageSync('other_goods'),
     })
   },
 
@@ -155,7 +184,7 @@ Page({
           that.Nofeedback_rsa();
         }
       })
-      that.Nofeedback_rsa();
+      // that.Nofeedback_rsa();
     }else {
       wx.pageScrollTo({
         scrollTop: 600,
@@ -174,13 +203,31 @@ Page({
   //是否使用芝麻粒
   deduction: function (e) {
     var that = this;
-    let true_false = e.detail.value;
-    if (true_false == true){
+    let true_false = !that.data.sesame_pay
+    this.setData({
+      sesame_pay: true_false
+    })
+    if (true_false) {
+      wx.showToast({
+        title: '折扣券与芝麻粒不能同时使用',
+        icon: 'none'
+      })
       that.setData({
         sesame_pay: true,
-        // fake_pay: (that.data.fake_pay - that.data.sesame / 100).toFixed(2),
         pay_amount: that.data.fake_pay
       })
+      if (that.data.userDisconut != '') {
+        that.data.userDisconut.map( e => {
+          if(e.name == '不使用') {
+            e.pick = true
+          }else {
+            e.pick = false
+          }
+        })
+        that.setData({
+          userDisconut: that.data.userDisconut
+        })
+      }
     }else {
       that.setData({
         sesame_pay: false,
@@ -318,10 +365,11 @@ Page({
     var that = this;
     let goos_id = this.data.goods_id;
     wx.setStorageSync('buyGoodsId', goos_id)
-    let sesame_use;
+    let sesame_use, discountUse;
     this.data.sesame_pay == true ? sesame_use = this.data.sesame : sesame_use =  0; 
     let no_pay_open_id = wx.getStorageSync('session_key').openid;
-    let newStr = { open_id: no_pay_open_id, sesame: sesame_use, goods_id: goos_id };
+    this.data.discount == '' ? discountUse = 1 : discountUse = this.data.discount
+    let newStr = { open_id: no_pay_open_id, sesame: sesame_use, goods_id: goos_id, discount: discountUse };
     // console.log(newStr);
     let newStr1 = JSON.stringify(newStr);
     let key = app.globalData.rsaKey;
@@ -336,7 +384,7 @@ Page({
       data: {
         encrypted_data: encStr
       },
-      success: function (res) {
+      success (res) {
         if(res.data.code == 0){
           wx.requestPayment({
             openId: wx.getStorageSync('session_key').openid,
@@ -380,4 +428,60 @@ Page({
       }
     })
   },
+
+  useDiscount () {
+    this.setData({ useDiscountNow: true })
+  },
+
+  maskCancel () {
+    var that= this;
+    this.setData({ useDiscountNow: false })
+    this.data.userDisconut.map (e => {
+      if(e.name != '不使用') {
+        if(e.pick == true) {
+          that.setData({
+            pay_amount: that.data.item.price * e.discount,
+            discount: e.discount
+          })
+        } 
+      } else {
+        if(e.pick == true) {
+          that.setData({
+            pay_amount: that.data.fake_pay,
+            discount: ''
+          })
+        }
+      }
+    })
+  },
+
+  cardUse (e) {
+    var that = this;
+    let nameHave = e.currentTarget.dataset.name;
+    this.data.userDisconut.map( e => {
+      if (e.name == nameHave) {
+        e.pick = true;
+      }
+      if (nameHave != '不使用') {
+        if( e.name == '不使用') e.pick = false;
+        that.setData({
+          sesame_pay: false,
+          pay_amount: that.data.real_pay
+        })
+      }else {
+        if (e.name == '不使用') {
+          e.pick = true;
+          that.setData({
+            sesame_pay: true,
+            pay_amount: that.data.fake_pay
+          })
+        }else {
+          e.pick = false
+        }
+      }
+    })
+    this.setData({
+      userDisconut: that.data.userDisconut
+    })
+  }
 })

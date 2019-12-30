@@ -2,12 +2,24 @@ const time = require('../../utils/util.js');
 Page({
   data: {
     zhima_detail: [],
-    page: 1
+    page: 1,
+    canReachBottom: true
   },
 
   onLoad: function (options) {
     var that = this;
-    this.Myzhima(); 
+    if(options.from == 'activity') {
+      let activityData = wx.getStorageSync('activityData').sesame_logs;
+      activityData.map( e => {
+        e.create_time = time.tsFormatTime(e.create_time * 1000, 'Y-M-D h:m:s');
+      })
+      that.setData({ 
+        zhima_detail: activityData,
+        canReachBottom: false
+      })
+    }else {
+      that.Myzhima(); 
+    }
   },
 
   Myzhima () {
@@ -37,9 +49,11 @@ Page({
 
   onReachBottom: function () {
     var that = this;
-    this.setData({
-      page: that.data.page + 1
-    })
-    this.Myzhima();
+    if(this.data.canReachBottom == true) {
+      that.setData({
+        page: that.data.page + 1
+      })
+      that.Myzhima();
+    }
   },
 })

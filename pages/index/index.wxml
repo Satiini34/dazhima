@@ -27,7 +27,7 @@
     </view>
     <!-- 添加小程序 -->
     <add-tips duration="1000" id='addTip' />
-    <location-tip />
+    <location-tip locationShow='{{locationTip}}' />
     <view wx:for="{{goodsList}}" class="shopBlock" wx:key='item' catchtap="goodItem" id="{{item.id}}">
       <view class='shopBlockL'>
         <image src="{{'http://new-bigclient.oss-cn-qingdao.aliyuncs.com' + item.goods_pic + '?x-oss-process=style/abc'}}" class='shopMainPic' binderror='imgLoadErr'>

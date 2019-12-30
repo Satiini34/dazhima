@@ -32,7 +32,8 @@ Page({
     allGoodDetail: '',
     releaseState: true,
     pop: '',
-    popShow: false
+    popShow: false,
+    locationTip: false
   },
 
   testBargin () {
@@ -179,9 +180,14 @@ Page({
         },250)
       },
       fail () {
+        if(wx.getStorageSync('locationTip') == ''){
+          that.setData({
+            locationTip: true
+          })
+        }
         that.setData({
           getUserLocation: 3,
-          locationShow: false
+          locationShow: false,
         })
         wx.setStorageSync('nowCity', 'refuse')
         that.Dailygoodlist();
@@ -257,36 +263,46 @@ Page({
 
   getLocation() {
     var that = this;
-    wx.openSetting({
-      success(res) {
-        if (res.authSetting['scope.userLocation'] == true) {
-          that.setData({
-            getUserLocation: 1,
-          })
-          wx.getLocation({
-            success: function (res) {
-              wx.setStorageSync('userLocation', res)
-              that.Dailygoodlist()
-              that.setData({
-                getUserLocation: 1,
-                locationShow: true
-              })
-              let tencentMapKey = 'JAXBZ-ZVACX-OGN46-7DUJS-7UO2J-QWBYE';
-              let latitude = res.latitude;
-              let longitude = res.longitude;
-              wx.request({
-                url: `https://apis.map.qq.com/ws/geocoder/v1/?location=${latitude},${longitude}&key=${tencentMapKey}`,
-                success(res) {
-                  if (res.data.status == 0) {
-                    wx.setStorageSync('nowCity', res.data.result.ad_info.city)
+    if(wx.getStorageSync('nowCity') == ''){
+      wx.getLocation({
+        type: 'gcj02',
+        success(res) {
+          wx.setStorageSync('userLocation', res)
+        },
+      })
+    } else {
+      wx.openSetting({
+        success(res) {
+          if (res.authSetting['scope.userLocation'] == true) {
+            that.setData({
+              getUserLocation: 1,
+            })
+            wx.getLocation({
+              type: 'gcj02',
+              success (res) {
+                wx.setStorageSync('userLocation', res)
+                that.Dailygoodlist()
+                that.setData({
+                  getUserLocation: 1,
+                  locationShow: true
+                })
+                let tencentMapKey = 'JAXBZ-ZVACX-OGN46-7DUJS-7UO2J-QWBYE';
+                let latitude = res.latitude;
+                let longitude = res.longitude;
+                wx.request({
+                  url: `https://apis.map.qq.com/ws/geocoder/v1/?location=${latitude},${longitude}&key=${tencentMapKey}`,
+                  success(res) {
+                    if (res.data.status == 0) {
+                      wx.setStorageSync('nowCity', res.data.result.ad_info.city)
+                    }
                   }
-                }
-              })
-            }
-          })
+                })
+              }
+            })
+          }
         }
-      }
-    })
+      })
+    }
   },
 
   //跳转详情页
@@ -341,7 +357,7 @@ Page({
     encrypt_rsa = RSA.KEYUTIL.getKey(key);
     let encStr = encrypt_rsa.encrypt(newStr1);
     encStr = RSA.hex2b64(encStr);
-    that.Bargain(encStr, good_id);
+    // that.Bargain(encStr, good_id);
     if (e.currentTarget.dataset.all.button == '砍价') {
       let closeTime = Date.parse(new Date);
       if (wx.getStorageSync('fromID') == '' || wx.getStorageSync('fromID') < closeTime) {
@@ -400,7 +416,7 @@ Page({
             that.setData({
               clickId: '',
             })
-          }, 1500)
+          }, 1200)
           that.data.goodsList.map(e => {
             if (e.id == id) {
               // 砍价+1

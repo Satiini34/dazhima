@@ -39,7 +39,8 @@ Page({
     loadComplete: false,
     goodItem_all: '',
     help_can_sort: '',
-    page: 1
+    page: 1,
+    location
   },
 
   onLoad: function (options) {

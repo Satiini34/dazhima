@@ -143,5 +143,8 @@
       <view>4.大芝麻可在法律允许范围内对活动规则进行解释</view>
       <view class='ruleClose btn' catchtap='ruleClose'>知道啦</view>
     </view>
+
+    <!-- 地理位置授权弹框 -->
+    <location-tip locationShow='{{locationTip}}' />
   </form>
   </view>

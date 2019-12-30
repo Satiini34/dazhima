@@ -4,7 +4,7 @@
     <!-- <view class='activity_info'>分享新用户砍价、最高赚10元/位</view> -->
     <image src='../../img/activity_header.png' class='activity_header'>
       <view class='activity_header_invite'>已邀请好友<text style='font-weight:bold;'>{{inviters}}位</text></view>
-      <view class='activity_header_earn'>已赚<text style='font-weight:bold;'>{{cashNum}}元</text></view>
+      <view class='activity_header_earn' bindtap='sesameDetail'>已赚<text style='font-weight:bold;'>{{cashNum}}元</text></view>
       <view class='activity_countdown'>
         距离活动结束 <view class='activity_countdownNumber' style='margin-left:18rpx;'>
           <text class='animated fadeIn'>{{days}}</text> 

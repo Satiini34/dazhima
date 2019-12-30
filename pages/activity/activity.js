@@ -21,6 +21,24 @@ Page({
 
   onLoad (options) {
     this.Activity();
+    wx.request({
+      url: 'https://kanjia.bigclient.cn/api/api/activityData',
+      method: 'POST',
+      data: {
+        user_id: wx.getStorageSync('qrop').id
+      },
+      success(res) {
+        if(res.data.code == 0){
+          wx.setStorageSync('activityData', res.data.data)
+        }
+      }
+    })
+  },
+
+  sesameDetail () {
+    wx.navigateTo({
+      url: '../myZhima/myZhima?from=activity',
+    })
   },
 
   activityRule () {

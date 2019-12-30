@@ -1,5 +1,6 @@
 const app = getApp();
 var time = require('../../utils/util.js');
+let timer;
 Page({
   data: {
     rewardList:[],
@@ -98,7 +99,7 @@ Page({
 
     //弹幕滚动
     let j = 0;
-    setInterval(function () {
+    timer = setInterval(function () {
       j++
       if (j == that.data.trendsData.length) {
         j = 0;
@@ -193,6 +194,10 @@ Page({
 
   onReady: function () {
     wx.hideShareMenu();
+  },
+
+  onUnload () {
+    clearInterval(timer)
   },
 
   onShareAppMessage: function () {
