@@ -1,0 +1,27 @@
+<form bindsubmit='submit'>
+  <view class='optionHeader'>
+    <view class='headerSon1'>问题反馈<span class='must'>*</span> </view><view class='headerSon2'>{{wordNumber}}/100</view>
+  </view>
+  <view class='optionSecond'>
+    <textarea placeholder='请填写10个字以上的问题描述，以便我们更好的提供帮助' value='{{text}}' name='content' class='textarea' bindinput="bindReplaceInput" maxlength='100'/>
+  </view>
+  <view class='optionThird'>
+    <view class='headerSon1'>上传截图</view><view class='headerSon2'>{{photoNumber}}/3</view>
+    
+    
+  </view>  
+  <view class='optionFourth'>
+    <image src='../../img/photo.png' style='width:80px;height:80px;' bindtap='addPic'></image>
+    <view class='PicShow' wx:for='{{tempFilePaths}}' wx:key="*this">
+      <image src='{{item}}' class='selectPicShow' data-index="{{index}}" mode="scaleToFill"></image>
+      <view class="deleteBtn" data-index="{{index}}" catchtap="deleteImg">X</view>
+    </view>
+  </view>
+
+  <view class='optionFive'>
+    <view class='headerSon1'>联系方式<span class='must'>*</span></view>
+    <input class='mobileInput' placeholder='请填写联系方式，以方便我们与您联系' type='number' name='mobile' maxlength="11"></input>
+  </view>
+    
+  <button form-type='submit' class='submit btn'>提交</button>
+</form>

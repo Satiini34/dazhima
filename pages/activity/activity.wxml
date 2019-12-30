@@ -1,0 +1,95 @@
+<view>
+  <image src='../../img/activity_bg.png' style='width:100%;height:2162rpx;position:relative;font-size:0;'>
+    <image src='../../img/activity_rule.png' class='activity_rule' bindtap='activityRule' />
+    <!-- <view class='activity_info'>分享新用户砍价、最高赚10元/位</view> -->
+    <image src='../../img/activity_header.png' class='activity_header'>
+      <view class='activity_header_invite'>已邀请好友<text style='font-weight:bold;'>{{inviters}}位</text></view>
+      <view class='activity_header_earn'>已赚<text style='font-weight:bold;'>{{cashNum}}元</text></view>
+      <view class='activity_countdown'>
+        距离活动结束 <view class='activity_countdownNumber' style='margin-left:18rpx;'>
+          <text class='animated fadeIn'>{{days}}</text> 
+        </view> 天 <view class='activity_countdownNumber'>
+          <text class='animated fadeIn'>{{hours}}</text> 
+        </view> 时 <view class='activity_countdownNumber'>
+          <text class='animated fadeIn'>{{minutes}}</text> 
+        </view> 分 <view class='activity_countdownNumber'>
+          <text class='animated fadeIn'>{{seconds}}</text>
+        </view> 秒
+      </view>
+      <image class='activity_header_friends' src='../../img/activity_more.png'>
+        <view class='activity_header_friendsText'>再分享<text style='color:rgb(247, 82, 44);'> {{remain_share}} </text>位好友，你就可以开启提现权啦！</view>
+      </image>
+      <view class='activity_progress' wx:if='{{cashNum <= 30}}'>
+        <view class='activity_progress_active' style="width:{{progressWidth}}%"></view>
+        <view class='activity_progress_beCash' style="width:{{beCashWidth}}%;" />
+        <image class='activity_progress_activeImg' style="left:{{progressWidth - 3}}%" src='../../img/cash_record.png' />
+        <view class='toCash' style='left:-2rpx;'>0元</view>
+        <view class='toCashNow animated pulse infinite' style="left:{{progressWidth - 5}}%">{{cashNum}}元</view>
+        <view class='toCash' style='right:0;'>30元</view>
+      </view>
+      <view class='activity_progress' wx:if='{{cashNum > 30}}'>>
+        <view class='activity_progress_active' style="width:{{progressWidth}}%;" />
+        <view class='activity_progress_beCash' style="width:{{beCashWidth}}%;" />
+        <!-- <view class='toCash' style='left:294rpx;'>120元</view> -->
+        <view class='toCash' style='left:-2rpx'>30元</view>
+        <view class='toCash' style='right:0;'>366元</view>
+        <image class='activity_progress_activeImg' style="left:{{progressWidth - 2}}%;" src='../../img/cash_record.png' />
+        <view class='toCashNow animated pulse infinite' style="left:{{progressWidth - 5}}%;">{{cashNum}}元</view>
+      </view>
+      <image src="{{ cashNum >= 30 ? '../../img/activity_canjia.png' : '../../img/activity_cash.png'}}" class='toCashBtn' bindtap='toCash'>
+        <view class='toCashBtnText'>立即提现</view> 
+      </image> 
+    </image>
+    <image src='../../img/activity_second.png' class='activity_second'>
+    <navigator url='../index/index' hover-class='none' open-type='switchTab'>
+      <image src='../../img/activity_canjia.png' class='activity_canjia'>
+        <view class='activity_canjiaBtn'>去砍价</view>
+      </image>
+    </navigator>
+    </image>
+    <image src='../../img/activity_third.png' class='activity_third' />
+    <image src='../../img/activity_fourth.png' class='activity_fourth' />
+  </image>
+</view>
+
+<view class='mask' wx:if='{{ruleShow}}' bindtap="ruleClose" />
+<view class="rule animated fadeInUp faster" wx:if='{{ruleShow}}'>
+  <view class='rule_title'>活动规则</view>
+  <view class='rule_text'><text class='rule_dot'></text>100芝麻粒=1元</view> 
+  <view class='rule_text'><text class='rule_dot'></text>凡分享一位新用户砍价，可得100芝麻粒，被分享的新用户可领1000芝麻粒</view> 
+  <view class='rule_text'><text class='rule_dot'></text>该新用户首次下单（实付金额不小于10元），分享者再得900芝麻粒</view>
+  <view class='rule_text'><text class='rule_dot'></text>活动期间获得的奖励达到3000芝麻粒，开启提现权（可提现部分仅限活动期间获得的芝麻粒）最高可提366元</view>
+  <view class='rule_text'><text class='rule_dot'></text>本活动仅限杭州用户</view>
+  <view class='rule_text'><text class='rule_dot'></text>若用户在活动期间存在违规（包括但不限于恶意刷单和小号），所有奖励不予发放，并予以封号。</view>
+  <view class='rule_text'><text class='rule_dot'></text>最终活动解释权归大芝麻所有</view>
+</view>
+
+<!-- 提现榜 -->
+<scroll-view class='activity_fourth_scrollView' scroll-y>
+  <block wx:for='{{cashRank}}' wx:key='index'>
+    <view class='activity_fourth_item'>
+      <view class='rankNo'>{{index + 1}}</view>
+      <view style='width:18%;position:relative;'>
+        <image src='{{item.headimgurl}}' class="{{index == 0 ? 'rankImgeOne' : 'rangeImg' }}" />
+        <image src='../../img/rankOne.png' style='width:34rpx;height:28rpx;position:absolute;top:-8rpx;left:-8rpx;' wx:if='{{index == 0}}' />
+      </view>
+      <view class='rankNick' style='width:18%;'>
+        {{item.nickname}}
+      </view>
+      <view class='rankNick' style='width:29%;'>
+        邀请{{item.invite_num}}人
+      </view>
+      <view class='rankMoney'>
+        已赚{{item.amount}}元
+      </view>
+    </view>
+  </block>
+</scroll-view>
+
+<!-- 弹幕 -->
+<view class='share_danmu' wx:if='{{hasDanmu}}'>
+  <image src='{{trends_info.headimgurl}}' style='width:40rpx;height:40rpx;border-radius:50%;margin-top:4rpx;' />
+  <view style='padding-left:10rpx;'>{{trends_info.bullet}}</view>
+  <!-- <view style='padding-left:10rpx;'>{{trends_info.nickname}}</view>
+  <view>刚刚提现了{{trends_info.bargain}}元</view> -->
+</view>

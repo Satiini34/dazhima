@@ -1,0 +1,29 @@
+<form report-submit='true' bindsubmit='codeSubmit'>
+  <view style='width:100%;height:100%;'>
+    <view class='sortBox'>
+      <view class='sortName'><text style='color:red;'>*</text> <text >城市</text></view>
+      <input class='sortInput' placeholder='请输入城市' name='city' value='杭州' disabled></input>
+    </view>
+    <view class='sortBox'>
+      <view class='sortName'><text style='color:red;'>*</text> <text >餐厅名称</text></view>
+      <input class='sortInput' placeholder='请输入餐厅名称' name='shop_name'></input>
+    </view>
+    <view class='sortBox'>
+      <view class='sortName'><text style='color:red;'>*</text> <text >联系人</text></view>
+      <input class='sortInput' placeholder='请输入姓名' name='contact_name'></input>
+    </view>
+    <view class='sortBox'>
+      <view class='sortName'><text style='color:red;'>*</text> <text >手机号</text></view>
+      <input class='sortInput' placeholder='请输入手机号' name='mobile' type='number'></input>
+    </view>
+    <view class='sortBox'>
+      <view class='sortName'><text style='color:red;'>*</text> <text >微信号</text></view>
+      <input class='sortInput' placeholder='请输入微信号' name='wechat'></input>
+    </view>
+    <view class='sortBox'>
+      <view class='sortName1'><text >备注</text></view>
+      <input class='sortInput' placeholder='请输入备注' name='remarks'></input>
+    </view>
+  </view>
+  <button form-type='submit' class='submitBtn btn'>确认提交</button>
+</form>

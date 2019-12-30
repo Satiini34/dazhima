@@ -1,0 +1,74 @@
+.v_nickname {
+  position: absolute;
+  width: 56%;
+  height: 46rpx;
+  bottom: 1860rpx;
+  left: 50%;
+  transform: translateX(-50%);
+  line-height: 42rpx;
+}
+.v_wechat {
+  position: absolute;
+  width: 56%;
+  height: 46rpx;
+  bottom: 1726rpx;
+  left: 50%;
+  transform: translateX(-50%);
+  line-height: 42rpx;
+}
+.v_district {
+  position: absolute;
+  width: 56%;
+  height: 46rpx;
+  bottom: 1594rpx;
+  left: 50%;
+  transform: translateX(-50%);
+  line-height: 42rpx;
+}
+.v_level {
+  position: absolute;
+  width: 56%;
+  height: 46rpx;
+  bottom: 1460rpx;
+  left: 50%;
+  transform: translateX(-50%);
+  line-height: 42rpx;
+} 
+.v_fans {
+  position: absolute;
+  width: 56%;
+  height: 46rpx;
+  bottom: 1328rpx;
+  left: 50%;
+  transform: translateX(-50%);
+  line-height: 42rpx;
+}
+.self_introduce {
+  position: absolute;
+  width: 56%;
+  height: 210rpx;
+  bottom: 992rpx;
+  left: 50%;
+  transform: translateX(-50%);
+  /* background: #f90; */
+  font-size: 22rpx;
+  line-height: 22rpx;
+}
+.v_copy {
+  position: absolute;
+  bottom: 842rpx;
+  width: 60%;
+  height: 46rpx;
+  /* background: #f90; */
+  left: 50%;
+  transform: translateX(-50%)
+}
+.v_submit {
+  width: 70%;
+  height: 80rpx;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 194rpx;
+  background: transparent;
+}

@@ -1,0 +1,33 @@
+<form bindsubmit='cashSubmit'>
+  <view class='topBar'>
+    <text class='tabBat_title'>提现金额</text> 
+    <!-- <input value='{{inputValue}}' class='money' type='number' placehold='单笔最少提现20元' bindfocus='moneyInput' bindblur='bindblur' name='zhima'></input>  -->
+    <input class='money' type='{{ cashType }}' placeholder='{{ info }}' name='zhima'></input>   
+  </view>
+  <view class='topBar'>
+    <text class='tabBat_title'>提现至</text> 
+    <view class='tabBat_content'>
+      <image src='../../img/wechat.png' style='width:18px;height:17px;font-size:0;margin-top:26rpx;'></image>
+      <text class='wechat'>微信零钱</text>
+    </view>
+  </view>
+  <view class='topBar'>
+    <text class='tabBat_title'>微信昵称</text> 
+    <view class='tabBat_content'>
+      <text class='wechat'>{{nickName}}</text>
+    </view>
+  </view>
+  <view class='middle_info_btn'>
+    <view style='font-size:22rpx;line-height:22rpx;color:#999;padding-top:30rpx;' wx:if='{{recordShow}}'>单笔提现为20.00-500.00元，单日提现不超过500.00元</view>
+    <view style='font-size:22rpx;line-height:22rpx;color:#999;padding-top:30rpx;' wx:else>单笔提现为0.30-500.00元，单日提现不超过500.00元</view>
+    <button class='cashout btn' form-type="submit">确定</button>
+  </view>
+  <view wx:for='{{cashout_record}}' class='record' wx:key='' wx:if='{{recordShow}}'>
+    <image src='../../img/cash_record.png' style='width:90rpx;height:90rpx;margin-top:40rpx;' />
+    <view class='cash_text'>芝麻粒提现到微信零钱</view>
+    <view class='cash_time'>{{item.create_time}}</view>
+    <view class='cash_amount'><text style='margin-right:-2px;'>￥</text>{{item.amount}}</view>
+    <view class='cash_hori'></view>
+  </view>
+  <view wx:if='{{!recordShow}}' class='shopCenter_record' bindtap='shopCenter_record'>流水记录</view>
+</form>

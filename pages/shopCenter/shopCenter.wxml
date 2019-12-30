@@ -1,0 +1,145 @@
+<!-- 自定义导航栏 -->
+<view class="{{scrollTop >= 180-doubleMenuRectTop ? 'navBarCustom1':'navBarCustom'}}" style='padding-top:{{menuRectTop}}px;height:42px;line-height:32px;' wx:if='{{versionBelow}}'>
+  <view class="{{scrollTop >= 180-doubleMenuRectTop?'navBarText1':'navBarText'}}">商户中心</view>
+  <view class="{{scrollTop < 180-doubleMenuRectTop ?'backCircle':'backCircle1'}}" bindtap='navBarCustomBack'>
+    <image src='../../img/back2.png' class='navBarCustomBack'></image>
+  </view> 
+</view>
+<view class='header_background'>
+  <view style='top:120px;position:relative;width:100%;height:100%;'>
+    <view class='header_img'>
+      <image class='head_portrait' src="{{shop.bind_avator}}" mode="aspectFit"></image>
+    </view>
+    <view class='turnOtherShop' catchtap='changeShop' wx:if='{{whichShop}}'>切换商家</view> 
+    <view class="{{shop.is_withdraw == 1? 'bottom_data':'bottom_data1'}}">
+      <view class='shop_name'>{{shop.shop_name}}</view>
+      <view wx:if='{{shop.is_withdraw == 1}}'>
+        <view class='shop_porfit'>{{shop.sale_profit}}</view> 
+        <view class='shop_account'>账户余额（元）</view> 
+        <view class='shop_withdrawal' bindtap='wantCash'>提现</view>
+      </view>
+      <view class="{{shop.is_withdraw == 1? 'data_box':'data_box1'}}">
+        <view class='data_box_alternate'>
+          <view class='data_box_alternate_click' bindtap='hexiao_way'>
+            <image src='../../img/use_check.png' style='width:18px;height:16px;'></image>
+            <view class='data_box_alternate_text'>核销方式</view>
+          </view>
+          <view class='data_box_alternate_click1' bindtap='hexiao_record'>
+            <image src='../../img/checkRecord.png' style='width:18px;height:16px;'></image>
+            <view class='data_box_alternate_text'>核销记录</view>
+          </view>
+        </view>
+        <view class='data_box_dataset'>
+          <view class='data_box_dataset_detail' bindtap='expose_data'>
+            <view class='data_box_dataset_content' hover-class='clickNow'>{{expose_num}}</view>
+            <view class='data_box_dataset_click'>看见我的</view>
+          </view>
+          <view class='data_box_dataset_detail' bindtap='share_data'>
+            <view class='data_box_dataset_content1' hover-class='clickNow'>{{share_num}}</view>
+            <view class='data_box_dataset_click'>传播我的</view>
+          </view>
+          <view class='data_box_dataset_detail' bindtap='click_data' hover-class='clickNow'>
+            <view class='data_box_dataset_content' hover-class='clickNow'>{{click_num}}</view>
+            <view class='data_box_dataset_click'>了解我的</view>
+          </view>
+        </view>
+      </view>
+    </view> 
+    <view class="{{shop.is_withdraw == 1? 'data_analysis':'data_analysis1'}}" id='data_analysis'>
+      <view style='font-size:17px;color:#666;font-weight:600;margin-top:5px;margin-left:2%;'>成交数据</view>
+      <view class='dealData'>
+        <view class='dealDataDetial' bindtap='deal' hover-class='dealData_btn'>
+            <image src='../../img/dealNo.png' style='width:48px;height:48px;'></image>
+            <view class='dealDataDetialTitle'>成交单数</view>
+            <view class='dealDataDetialContent'>了解每日商品成交情况</view>
+        </view>
+        <view class='border_hori1'></view>
+        <view class='dealDataDetial' bindtap='checked' hover-class='dealData_btn'>
+            <image src='../../img/checkNo.png' style='width:48px;height:48px;'></image>
+            <view class='dealDataDetialTitle'>已到店核销</view>
+            <view class='dealDataDetialContent'>了解每日到点核销情况</view>
+        </view>
+        <view class='hori'></view>
+        <view class='dealDataDetial' bindtap='unchecked' hover-class='dealData_btn'>
+            <image src='../../img/noCheckNo.png' style='width:48px;height:48px;'></image>
+            <view class='dealDataDetialTitle'>未到店核销</view>
+            <view class='dealDataDetialContent'>查看还未到店核销</view>
+        </view>
+        <view class='border_hori2'></view>
+        <view class='dealDataDetial' bindtap='expired' hover-class='dealData_btn'>
+            <image src='../../img/limitedNo.png' style='width:48px;height:48px;'></image>
+            <view class='dealDataDetialTitle'>已过期单数</view>
+            <view class='dealDataDetialContent'>查看超过使用有效期的人数</view>
+        </view>
+      </view>
+      <view class='hori_thick'></view>
+      <!-- <view class='data_analysis_info'>掌握店铺的订单数</view>
+        <view style='width: 96%;margin-top: 15px;left: 2%;position:relative;' bindtap='deal'>
+        <image src='../../img/1.png' style='width:100%;height:110px;position:relative;'>
+          <view class='data_analysis_detail'>
+            <view class='data_analysis_detail_amount'>{{deal}}</view>
+            <view>成交单数</view>
+          </view>
+        </image>
+      </view>
+      <view style='width: 96%;left: 2%;position:relative;' bindtap='checked'>
+        <image src='../../img/2.png' style='width:100%;height:110px;position:relative;'>
+          <view class='data_analysis_detail'>
+            <view class='data_analysis_detail_amount'>{{checked}}</view>
+            <view>已到店核销</view>
+          </view>
+        </image>
+      </view>
+      <view style='width: 96%;left: 2%;position:relative;' bindtap='unchecked'>
+        <image src='../../img/3.png' style='width:100%;height:110px;position:relative;'>
+          <view class='data_analysis_detail'>
+            <view class='data_analysis_detail_amount'>{{unchecked}}</view>
+            <view>未到店核销</view>
+          </view>
+        </image>
+      </view>
+      <view style='width: 96%;left: 2%;position:relative;' bindtap='expired'>
+        <image src='../../img/4.png' style='width:100%;height:110px;position:relative;'>
+          <view class='data_analysis_detail'>
+            <view class='data_analysis_detail_amount'>{{expired}}</view>
+            <view>已过期订单</view>
+          </view>
+        </image>
+      </view> -->
+      <view class='potential'>
+        <view style='font-size:34rpx;color:#333;font-weight:600;margin-top:28rpx;margin-left:2%;'>潜客分布</view>
+        <view class='data_analysis_info'>掌握客户新动态进一步转化</view>
+        <view class='data_analysis_text'> 
+          <text decode="true">浏览商品多次未消费&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<text style='letter-spacing:2px;'>{{customers.click_unpaid_num}}人</text></text>
+          <view class='see_no_consume' style='width:{{see_no_consume}}%'></view>
+        </view>
+        <view class='data_analysis_text'> 
+          <text decode="true">参与砍价多次未消费&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<text style='letter-spacing:2px;'>{{customers.bargain_unpaid_num}}人</text></text>
+          <view class='kanjia_no_consume' style='width:{{kanjia_no_consume}}%'></view>
+        </view>
+        <view class='data_analysis_text'>客户性别比例</view>
+        <canvas canvas-id="canvas1" class='canvas'></canvas>
+      </view>
+
+      <!-- <form wx:if='{{is_withdraw}}' bindsubmit="needCash">
+        <input type='digit' name='amount' />
+        <button form-type="submit">提现</button>
+      </form> -->
+    </view> 
+  </view>
+</view>
+
+<!-- 切换商家 -->
+<view class='mask' wx:if='{{shopSel}}' catchtap='faceClose' />
+<view wx:if='{{shopSel}}' class='shopSel animated fadeInUp faster'>
+  <!-- <scroll-view scroll-y> -->
+    <block wx:for='{{shops}}' wx:key='this'>
+      <view class='labelSingle' id='{{item.shop_id}}' bindtap='whichShop' hover-class='shopSeling'>
+        {{item.shop_name}}
+      </view>
+    </block>
+  <!-- </scroll-view> -->
+</view>
+
+
+

@@ -1,0 +1,58 @@
+<view style='width:100%;height:100%;'>
+  <image style='width:100%;height:420rpx;' src='http://kanjia.bigclient.cn/upload/reward1.png'></image>
+  <!-- <view class='RewardbarrageBox'>
+    <view class='rewardBarrageInfo'>{{trends_info}}</view>
+  </view> -->
+  <!-- 弹幕 -->
+  <view class='share_danmu' wx:if='{{hasDanmu}}'>
+    <view style='padding-left:10rpx;'>{{trends_info}}</view>
+  </view>
+  <view class='inviteBtn' >
+    <button open-type='share' class='shareBtn'><image src='../../img/share.png' style='width:86rpx;height:86rpx;'></image><view class='invite_text'>微信好友</view></button>
+    <button bindtap='sharePoster' class='shareBtn'><image src='../../img/friends.png' style='width:86rpx;height:86rpx;'></image><view class='invite_text'>朋友圈</view></button>
+  </view>
+  <view class='hori'></view>
+  <view class='invite_title'>
+    <view class='invite_dot_left'></view>
+    <view class='friends'>我的邀请</view>
+    <view class='invite_dot_right'></view>
+  </view>
+  
+  <view wx:for='{{rewardList}}' class='invitedPerson' wx:if='{{have_reword}}' wx:key='this'>
+    <image src='{{item.headimgurl}}' style='width:88rpx;height:88rpx;border-radius:50%;' lazy-load="true"></image>
+    <view style='width:370rpx;height:88rpx;line-height:44rpx;margin-left:30rpx;overflow:hidden;'>
+      <view>{{item.nickname}}</view>
+      <view class='inviter_time'>{{item.inviter_time}}</view>
+    </view>
+    <view class='status'>
+      <text wx:if='{{item.is_order == 0}}' class='no_order'>未下单</text>
+      <text class='yes_order' wx:else>已下单</text>
+      <text class='sesame_amount'>{{item.sesame}}</text>
+      <image src='../../img/reward_zhima.png' style='width:16rpx;height:16rpx;' class='order_sesame'></image>
+    </view>
+  </view>
+  <view class='watchMore' bindtap='watchMore' wx:if='{{watchMore}}'>查看更多</view>
+  <view wx:if='{{no_reword}}' style='text-align:center;margin-top:30rpx;'>
+    <image src='../../img/noMessage.png' style='width:436rpx;height:226rpx;'></image>
+    <view style='color:#999;margin-top:2rpx;font-size:24rpx;'>暂无数据</view>
+  </view>
+</view>
+<view class='mission_list'>
+  <text style='margin-left: 10rpx;'>奖励规则：</text>
+</view>
+<view style='position:relative;left:4%;width:92%;margin-bottom:20rpx;'>
+  <view class='zhima_rule_content'>1）分享给好友后，好友可以领取1000芝麻粒新人礼</view>
+  <view class='zhima_rule_content'>2）好友微信登录成功后邀请人获得{{1000 - bonus}}芝麻粒奖励，好友首次消费若超过10元，邀请人再获得{{bonus}}芝麻粒奖励</view>
+  <view class='zhima_rule_content'>3）芝麻粒自动存入账户，可在【个人中心】-【我的芝麻粒】查看，消费时无门槛抵扣现金使用</view>
+  <view class='zhima_rule_content'>4）邀请好友奖励可累计，邀请越多，奖励越多</view>
+  <view class='zhima_rule_content'>5）若发现作弊、造假等行为，大芝麻有权收回奖励</view>
+  <view class='zhima_rule_content'>6）大芝麻保留法律范围内允许的活动解释权</view>
+</view>
+<view style='width:100%;height:60rpx;'></view>
+
+<!-- 分享海报图 -->
+<view class='mask' wx:if='{{posterShow}}' catchtap='faceClose'></view>
+<view wx:if='{{posterShow}}' class='sharePoster' style='padding-top:{{doubleMenuRectTop}}px'>
+  <image src="{{'https://kanjia.bigclient.cn' + sharePoster}}" style='width:500rpx;height:890rpx;'></image>
+  <button bindtap='posterToPhone' class='posterBtn btn' style=''>保存图片至相册</button>
+</view>

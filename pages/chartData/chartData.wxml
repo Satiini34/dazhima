@@ -1,0 +1,12 @@
+<view class='data_name'>
+  <text style='margin-left:10rpx;'>{{data_name}}</text>
+</view>
+<view class='choose_day'>
+  <view class="{{ days == 1? 'choice_7':'normal_7'}}" bindtap='seven'>7天</view>
+  <view class="{{ days == 2? 'choice_30':'normal_30'}}" bindtap='thirty'>30天</view>
+  <view class="{{ days == 3? 'choice_90':'normal_90'}}" bindtap='ninety'>90天</view>
+</view>
+<canvas canvas-id="lineCanvas" class='canvas' bindtouchstart="touchstart" bindtouchmove="scroll" bindtouchend="touchend"></canvas>
+<view bindtap='distribution' style='text-align:center;color:rgb(253, 154, 47);font-size: 30rpx;margin-top:40rpx;' wx:if='{{canIsee}}'>点击查看用户分布</view>
+
+

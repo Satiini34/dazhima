@@ -1,0 +1,29 @@
+.sortBox {
+  width: 92%;
+  position: relative;
+  left: 4%;
+  height: 70px;
+  border-bottom: 1px solid rgb(248, 248, 248);
+}
+.sortName{
+  margin-top: 8px;
+  font-size: 26rpx;
+  margin-left:-4px;
+}
+.sortInput {
+  font-size: 30rpx;
+  margin-top: 10px;
+}
+.sortName1{
+  margin-top: 8px;
+  font-size: 26rpx;
+}
+.submitBtn {
+  width:600rpx;
+  position:relative;
+  margin-top:60rpx;
+  color:#fff;
+  font-size:36rpx;
+  letter-spacing:1px;
+  border-radius: 26px;
+}

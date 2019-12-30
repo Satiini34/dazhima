@@ -1,0 +1,35 @@
+<view class='no_picShow' wx:if='{{picShow}}'>
+  <image src='../../img/noMessage.png' style='width:436rpx;height:226rpx'></image>
+  <view style='margin-top:20rpx;'>暂无订单记录</view>
+</view>
+
+<view wx:for="{{goodsList}}" class="kan_shopBlock" wx:key='item' catchtap="kanOrder" id="{{item.orderNo}}" wx:if='{{contentShow}}'>
+  <view class='kan_orderBlock'>
+    <view class='kan_shopBlockL'>
+      <image src="{{'http://new-bigclient.oss-cn-qingdao.aliyuncs.com' +item.goods_pic}}" class='kan_shopMainPic'></image>
+    </view>
+    <view class='kan_shopBlockR'>
+      <view class="kan_shopName">
+        {{item.goods_name}}
+      </view>
+      <view class='kan_good_price'>
+        原价：￥{{item.goods_price}}
+      </view>
+      <view class='kan_subCategory'>
+        {{item.shop_name}} 
+      </view>
+    </view>
+  </view>
+  <view class='kan_hori'></view>
+  <view class='kan_pay'>
+    <view style='margin-top: 2rpx;'>实付金额：</view>
+    <view class='kan_pay_amount'>￥{{item.total_amount}}</view>
+    <view wx:if="{{item.use_sesame != 0}}" class='kan_pay_amount'>+{{item.use_sesame}}<image src='../../img/reward_zhima.png' class='zhima_use' /></view> 
+    <view wx:if="{{ item.is_use == '已过期 '}}"><image src='../../img/overtime.png' style='width:30px;height:30px;position:absolute;top:50%;transform: translateY(-50%);right:20rpx;'></image>{{item.is_use}}</view>
+    <view class="kan_is_use" catchtap="{{item.is_use == '评价赢芝麻粒'||item.is_use == '审核未通过，请重新上传'?'toWin':'' }}" id="{{item.orderNo}}" wx:else>{{item.is_use}}</view>
+  </view>
+  <view class="kan_notallow" wx:if="{{item.is_evaluate == 3}}">
+    <image src='../../img/sighMark.png' style='width:28rpx;height:28rpx;position:absolute;top:50%;transform:translateY(-50%);'></image>
+    <text style='padding-left:36rpx;font-weight:bold;'>{{item.responseText}}</text>
+  </view>
+</view>

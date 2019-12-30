@@ -1,0 +1,8 @@
+{
+  "component": true,
+  "usingComponents": {
+    "Parser": "../../Parser/index"
+  },
+  "navigationStyle": "custom",
+  "onReachBottomDistance": 50
+}

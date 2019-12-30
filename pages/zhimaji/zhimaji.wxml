@@ -1,0 +1,54 @@
+<view class='navBar' style='padding-top:{{menuRectTop}}px;height:42px'>
+  <view>
+    <image src='../../img/back2.png' class='navBarBack' catchtap='notWriteNow'></image>
+  </view>
+  <view class='navBarTitle'>芝麻记</view>
+</view>
+<view style='width:100%;height:100%;overflow-x:hidden;padding-top:{{menuRectTop + 42}}px;'>
+  <form bindsubmit='submit'>
+    <input placeholder="标题要好看，更能吸引人" value='{{titleInput}}' bindinput="titleInput" class='titleInput' placeholder-style='color:rgb(221,221,221);font-weight:normal;' name='title' />
+
+    <view class='optionSecond'>
+      <textarea placeholder='写写你对这家店的评价吧…' value='{{text}}' name='content' class='textarea' bindinput="bindReplaceInput" maxlength='800'placeholder-style='color:rgb(221, 221, 221)' />
+    </view>
+
+    <!-- <view class='optionThird'>
+      <view class='headerSon1'>上传截图</view><view class='headerSon2'>{{photoNumber}}/9</view>
+    </view>   -->
+    <view class='optionFourth'>
+      <image src='../../img/uploadPhoto.png' style='width:90px;height:90px;position:absolute;left:2%;' bindtap='addPic'></image>
+      <scroll-view scroll-x="true" class='scrollView'>
+        <view class="scroll-x">
+          <view class='PicShow' wx:for='{{tempFilePaths}}' wx:key="*this">
+            <image src='{{item}}' class='selectPicShow' data-index="{{index}}" mode="aspectFill" bindtap='viewPic'>
+              <image class="deleteBtn" data-index="{{index}}" catchtap="deleteImg" src='../../img/deleteLoadP.png' />
+            </image>
+          </view>
+        </view>
+      </scroll-view>
+    </view>
+
+    <!-- <view class='optionHeader'>
+      <view class='headerSon1'>添加内容<span class='must'>*</span> </view><view class='headerSon2'>{{wordNumber}}/800</view>
+    </view> -->
+    
+
+    <view class='optionFive' bindtap='shopChoose'>
+      <view class='headerSon1'>关联餐厅</view>
+      <view class='relateShops' >
+        <text>{{textValue}}</text>
+        <image src='../../img/relateShops.png' style='width:11px;height:11px;margin-left:20rpx;'></image>
+      </view>
+      <view class='mobileInput'>{{shopName}}</view>
+    </view>
+    <view class='selectedShop' wx:if='{{relativeShopShow}}'>
+      <view class='selectedShopName'>
+        <view class='selectedShop_name'>{{shopName}}</view>
+        <view class='selectedShop_circle'>{{shopCircle}} / {{shopSort}}</view>
+      </view>
+      <image src='../../img/abandonShop.png' class='abandonShop' bindtap='abandonShop'></image>
+    </view>
+    <button form-type='submit' class='submit btn' style='border-radius:5px;'>提交</button>
+  </form>
+</view>
+

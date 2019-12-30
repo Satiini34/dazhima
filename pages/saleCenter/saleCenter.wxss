@@ -1,0 +1,146 @@
+page {
+  background: #f1f1f1;
+}
+.header_background {
+  width: 100%;
+  height: 165px;
+  background: linear-gradient(to right, rgb(251, 192, 82),rgb(255, 136, 49));
+  text-align: center;
+}
+.salePersonalInfo {
+  width: 92%;
+  position: relative;
+  left: 4%;
+  height: 300px;
+  background: #fff;
+  border-radius: 5px;
+  top: -80rpx;
+  box-shadow: 1px 3px 2px #f0f0f0; 
+}
+.header_img {
+  width: 80px;
+  height: 80px;
+  background: #f1f1f1;
+  border-radius: 50%;
+  position: absolute; 
+  top: -40px; 
+  left: 50%;   
+  transform: translateX(-50%);
+  z-index: 88;
+  border: 1px solid #fff;
+}
+.shop_name {
+  position: absolute;
+  width: 100%;
+  height: 20px;
+  text-align: center;
+  top: 50px; 
+  font-size: 15px;
+  font-family: 'lanTing';
+  font-weight: bold;
+}
+.data_box_dataset {
+  width: 100%;
+  height: 50px;
+  display: flex;
+  position: absolute;
+  top: 100px;
+  align-items: center;
+}
+.data_box_dataset1 {
+  width: 100%;
+  height: 50px;
+  display: flex;
+  position: absolute;
+  top: 190px;
+  padding-top: 10px;
+  border-top: 1px solid #f1f1f1;
+}
+.data_box_dataset_detail {
+  width: 33.3%;
+  height: 100%;
+  text-align: center;
+  margin-top: 22px;
+}
+.data_box_dataset_content {
+  height: 21px;
+  line-height: 21px;
+  font-size: 21px;
+  color: #666;
+  font-weight: 400;
+}
+.data_box_dataset_content1 {
+  border-left: 1px solid rgb(220, 220, 220);
+  border-right: 1px solid rgb(220, 220, 220);
+  height: 21px;
+  line-height: 21px;
+  font-size: 21px;
+  color: #666;
+  font-weight: 400;
+}
+.data_box_dataset_click {
+  margin-top:9px;
+  height: 13px;
+  line-height: 13px;
+  color: #9395a2;
+  font-size: 13px;
+}
+.clickNow {
+  color: #f90;
+}
+.sale_content {
+  width: 94%;
+  position: relative;
+  left: 3%;
+  display: flex;
+  height: 100rpx;
+  border-bottom: 1px solid #ddd;
+  color: #999;
+  font-size: 22rpx;
+  justify-content: space-around;
+  align-items: center;
+} 
+.checked_content_listF {
+  width: 36%;
+  white-space: wrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  word-break: break-all;
+}
+.checked_content_listS {
+  width: 17%;
+  text-align: center;
+  /* margin-left: -7%; */
+}
+.checked_content_listT {
+  width: 17%;
+  text-align: center;
+}
+.checked_content_listFH {
+  width: 30%;
+  text-align: center;
+}
+.sesame {
+  width: 20rpx;
+  height: 20rpx;
+  vertical-align: -2rpx;
+} 
+.filterPart {
+  width: 92%;
+  height: 100rpx;
+  position: relative;
+  left: 4%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 24rpx;
+  color: #666;
+  margin-top: 40rpx;
+}
+.goodsSel {
+  max-width: 46%;
+  overflow: hidden;
+}

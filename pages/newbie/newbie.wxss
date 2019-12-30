@@ -1,0 +1,22 @@
+.rocket {
+  animation: goTop 0.2s linear 1;
+  width:96rpx;height:96rpx;position:fixed;bottom:44rpx;right:24rpx;
+  /* clip:rect(0,96rpx,74rpx,0); */
+}
+.rocket_no {
+  width:96rpx;height:96rpx;position:fixed;bottom:44rpx;right:24rpx;
+}
+@keyframes goTop {
+  0% {
+    transform: translateY(0) scale(1);
+  }
+  100% {
+    transform: translateY(-888rpx) scale(0);display: none;
+  }
+}
+.rocketShow {
+  display: block
+}
+.rocketHide {
+  display: none;
+}

@@ -1,0 +1,221 @@
+<view class='mask' wx:if='{{shareShow||newCustomer||addNow}}' bindtap='close_share_popup'></view>
+<!-- 自定义导航栏 -->
+<view class="{{scrollTop >= 700-doubleMenuRectTop ? 'navBarCustom1':'navBarCustom'}}" style='padding-top:{{menuRectTop}}px;height:42px;line-height:32px;' wx:if='{{versionBelow}}'>
+  <!-- <view class='navBarText1' wx:if='{{scrollTop >= 700-doubleMenuRectTop}}'>详情</view> -->
+  <view class="{{scrollTop < 700-doubleMenuRectTop ?'backCircle':'backCircle1'}}" bindtap='navBarCustomBack'>
+    <image src='../../img/back2.png' class='navBarCustomBack'></image> 
+  </view>
+</view>
+
+<view class='notLoad' wx:if='{{!loadComplete}}'>
+  <!-- <image src='../../img/dazhima.png' style='width:64rpx;height:64rpx;' class='notLoadImg' /> -->
+  <!-- <view class='notLoadText'>加载中请稍后</view> --> 
+</view>
+<!-- 轮播图 -->
+<form report-submit='true' bindsubmit='codeSubmit' wx:if='{{loadComplete}}'>
+  <view class='banner'>
+    <swiper indicator-dots="{{indicatorDots}}" class='swiper-box'
+      autoplay="{{autoplay}}"
+      interval="{{interval}}"
+      duration="{{duration}}" 
+      indicator-color='rgba(0,0,0,0.3)' circular='true' style='width:100%;height:750rpx;' current='{{swiperIndex}}' bindchange='swiperItemChange'>
+        <swiper-item wx:if='{{videoShow}}'>
+          <video src="{{'https://new-bigclient.oss-cn-qingdao.aliyuncs.com' + videoSrc}}" style='width: 100%;height:100%;position: absolute;' enable-play-gesture='true' object-fit='cover' vslide-gesture-in-fullscreen='true' autoplay='{{wifiAutoPlay}}' bindplay='videoPlay' bindpause='videoPause' id='myVideo' show-mute-btn bindfullscreenchange='fullScreen' poster="{{'https://new-bigclient.oss-cn-qingdao.aliyuncs.com' + banner[0] + '?x-oss-process=style/abc'}}" muted />
+        </swiper-item> 
+        <block wx:for="{{banner}}" wx:key="this">
+          <swiper-item>
+            <image src="{{'https://new-bigclient.oss-cn-qingdao.aliyuncs.com' + item}}" style='width:100%;height:100%;position: absolute;z-index:9999!important;' />
+          </swiper-item>
+        </block>
+    </swiper> 
+  </view>
+  <view class='describe'>
+    <view class='des_title'>
+      {{goodItem.goods_name}}
+    </view>
+    <view class='des_kan'> 
+      <image src='../../img/kanjia.png' style='width:28rpx;height:28rpx;margin-right:20rpx;margin-top:-4rpx;'></image> <text>{{goodItem.text}}</text>
+    </view>
+    <view class='des_price'>
+      <text class='now_price' style='font-size:36rpx;margin-right:30rpx;'> <text style='margin-right:-7px;'>￥</text> {{goodItem.current_price}}</text><text class='ori_price' style='font-size:24rpx;line-height:24rpx;margin-top:8rpx;'><text style='margin-right:-2px;'>￥</text>{{goodItem.price}}</text>
+    </view>
+  </view>
+  <view class='des_bottom' />
+  <!-- 添加芝麻君 -->
+  <view class='box addZhima'>
+    <view class='addZhimaLeft'>
+      <image src='../../img/zhima.png' style='width:28px;height:28px;'></image>
+      <view style='margin-left:32rpx;margin-top:-2rpx;'>
+        <view style='font-size:24rpx;color:#333;'>大芝麻吃喝玩乐福利群</view>
+        <view style='font-size:22rpx;color:#999;'>加芝麻君微信，享更多优惠哦</view>
+      </view>
+    </view>
+    <view>
+      <button class='clearBtn addZhimaBtn' bindtap='addZhima'>添加</button>
+    </view>
+  </view>
+  <view class='des_bottom' />
+  <!-- 芝麻记 -->
+  <view class='newSortTitle' wx:if="{{goodItem.articles != ''}}">
+    <view class='newSortTitle_left'>
+      <text>芝麻小日记</text> 
+    </view>
+    <view class='newSortTitle_right' bindtap='readrMoreZhimaji' data-id='{{goodItem.articles.id}}'>
+      <text>更多小日记</text>
+    </view>
+  </view>
+  <view class='des_bottom' wx:if="{{goodItem.articles != ''}}" />
+  <view class='shopRelaZhimaji' wx:if="{{goodItem.articles != ''}}">
+    <view class='shopRelaZhimaji_left'>
+      <image src='{{goodItem.articles.headimgurl}}' style='width:80rpx;height:80rpx;border-radius:50%;'></image>
+      <view class='shopRelaZhimaji_nick'>{{goodItem.articles.nickname}}</view>
+    </view>
+    <view class='shopRelaZhimaji_right'>{{goodItem.articles.num}}次点赞</view>
+  </view>
+  <view class='shopRelaZhimaji_second' wx:if="{{goodItem.articles != ''}}">
+    <view class='shopRelaZhimaji_title'>{{goodItem.articles.title}}</view>
+    <view class='shopRelaZhimaji_read' bindtap='toReadArticle' data-id='{{goodItem.articles.id}}'>查看原文</view>
+  </view>
+  <view class='shopRelaZhimaji_third' wx:if="{{goodItem.articles != ''}}">
+    <block wx:for='{{goodItem.articles.imgurl}}' wx:key='index'>
+      <image src="{{'http://new-bigclient.oss-cn-qingdao.aliyuncs.com' + item}}" class="{{ index == 2 ?'shopRelaZhimaji_img' : 'shopRelaZhimaji_img1'}}" mode="aspectFill"></image>
+    </block> 
+  </view>
+  <view class='des_bottom' style='margin-top:20rpx;' wx:if="{{goodItem.articles != ''}}" />
+  <view class='newSortTitle'>
+    <text class='newSortTitle_left'>商家详情</text>
+  </view>
+  <view class='des_bottom' />
+  <view class='shop_detail'>
+    <view class='shop_detail_L'>
+      <image src="{{'http://new-bigclient.oss-cn-qingdao.aliyuncs.com' + goodItem.shop_picture}}" style='width:180rpx;height:180rpx;border-radius:8px;'></image>
+    </view>
+    <view class='shop_detail_R'>
+      <view class='shop_detail_R_shop_name'>{{goodItem.shop_name}}</view>
+      <view class='shop_detail_R_category'>{{goodItem.shop_subcategory_name}}
+      <view class='scoreStars'>
+        <image src="{{heart >=1? '../../img/heartRed.png': '../../img/heart.png'}}" style='width:24rpx;height:30rpx;'></image>
+        <image src='../../img/heartHalf.png' wx:if='{{heart ==1.5}}' style='width:24rpx;height:30rpx;'></image>
+        <image src="{{heart >=2? '../../img/heartRed.png': '../../img/heart.png'}}" style='width:24rpx;height:30rpx;margin-left:8rpx;'></image>
+        <image src='../../img/heartHalf.png' wx:if='{{heart ==2.5}}' style='width:24rpx;height:30rpx;'></image>
+        <image src="{{heart >=3? '../../img/heartRed.png': '../../img/heart.png'}}" style='width:24rpx;height:30rpx;margin-left:8rpx;'></image>
+        <image src='../../img/heartHalf.png' wx:if='{{heart ==3.5}}' style='width:24rpx;height:30rpx;'></image>
+        <image src="{{heart >=4? '../../img/heartRed.png': '../../img/heart.png'}}" style='width:24rpx;height:30rpx;margin-left:8rpx;'></image>
+        <image src='../../img/heartHalf.png' wx:if='{{heart ==4.5}}' style='width:24rpx;height:30rpx;'></image>
+        <image src="{{heart >=5? '../../img/heartRed.png': '../../img/heart.png'}}" wx:if='{{!heart ==1.5 || !heart ==2.5 || !heart ==3.5 || !heart ==4.5 ||heart ==5 ||heart ==4 ||heart ==3||heart ==2||heart ==1 }}' style='width:24rpx;height:30rpx;margin-left:8rpx;'></image>
+      </view>
+      </view>
+      <view class='shop_detail_R_shop_circle_name'>
+        <text>{{goodItem.shop_circle_name}}</text><view wx:if='{{locationShow}}' style='margin:0 10rpx 0 16rpx;;height:20rpxh;width:1px;background:rgba(228 ,228 ,228, 0.8);margin-top:2rpx;'></view> <text wx:if='{{locationShow}}' style='margin-left: 10rpx;'>距我{{goodItem.distance}}公里</text> 
+      </view> 
+    </view>
+    <button catchtap='shopAddress' class='tapArea' form-type="submit"></button>
+    <view class='shop_location' catchtap='shopAddress'>
+      <view style='position:absolute;top:50%;transform:translateY(-50%);'>{{goodItem.shop_address}}</view>
+    </view>
+    <view catchtap='shopAddress' class='shopAddress'><image src='../../img/shopAddress.png' style='width:16px;height:16px;'></image></view>
+    <button class='shopTel' catchtap='shopTel' form-type="submit"><image src='../../img/shopTel.png' style='width:16px;height:16px;'></image></button>
+  </view>
+  <view class='shop_detail_bottom'></view>
+  <view class='shop_info_title'>
+    商品内容
+  </view>
+  <!-- <view class='shop_detail_bottom'></view> -->
+  <view class='shop_intro'>
+    <Parser html="{{goodItem.intro}}" html-class="contain_intro"/>
+  </view>
+  <!-- <view style='width:100%;height:1px;background:rgb(237, 238, 238);'></view> -->
+  <view class='shop_info_title'>
+    使用说明
+  </view>
+  <!-- <view class='shop_detail_bottom'></view> -->
+  <view class='shop_info'>
+    <Parser html="{{goodItem.info}}" html-class="contain"/>
+  </view>
+  <view style='width:100%;height:2px;background:rgb(237, 238, 238);'></view>
+  <view class='other_recommand'>
+    <image src='../../img/recommand.png' style='width:157px;height:12px;' class='recommand_img'>
+      <view class='IcanNow'>相关推荐</view>
+    </image>
+    <view wx:for="{{recommad_list}}" class="shopBlock" wx:key='item' catchtap="goodItem" id="{{item.id}}">
+      <view class='shopBlockL'>
+        <image src="{{'http://new-bigclient.oss-cn-qingdao.aliyuncs.com' +item.goods_pic}}" lazy-load='true' class='shopMainPic'>
+          <view class='dailyGoodsRecmmoand' wx:if='{{ item.is_recommend == 1 }}'>今日推荐</view>
+          <view class='dailyGoodsNew' wx:if='{{ item.is_recommend != 1 && item.is_new == 1 }}'>新品上线</view>
+        </image>
+      </view>
+      <view class='shopBlockR'>
+        <view class="shopName">
+          {{item.name}}
+        </view>
+        <view class='good_price'>
+          <text class='now_price' wx:if='{{clickId == item.id}}'>砍掉{{bargainPrice}}</text><text class='now_price' wx:else> <text style='margin-right:-5px;'>￥</text> {{item.current_price}}</text><text class='ori_price'><text style='margin-right:-2px;'>￥</text>{{item.price}}</text>
+        </view>
+        <view class='subCategory'>
+          <view style='word-break:break-all;text-overflow:ellipsis;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;align-vertical:middle;'>
+            {{item.shop_name}}
+          </view>  
+        </view>
+        <button class="{{item.button == '已抢完' ?'sellout':'bargin'}} {{item.button == '继续砍' ?'share':'bargin'}}" id="{{item.id}}" data-price="{{item.price}}" data-curprice="{{item.current_price}}" catchtap='bargin' data-img='{{item.goods_pic}}' wx:if="{{userLogin == false && item.current_price > 1 || item.button == '已抢完'}}" form-type="submit">
+          {{item.button}}
+        </button>
+        <button class="toBuy" id="{{item.id}}" wx:if="{{userLogin == false && item.current_price <= 1 && item.button != '已抢完'}}" hover-class="none" form-type='submit'>
+          立即抢
+        </button>
+        <button class="{{item.button == '已抢完' ?'sellout':'bargin'}}" open-type="getUserInfo" lang="zh_CN" bindgetuserinfo="Getuserinfo" wx:if="{{userLogin == true}}" form-type="submit" catchtap='test'>
+          {{item.button}}
+        </button>
+        <view class='circleName'>
+          {{item.circle_name}}  <text class='circleDistance' wx:if='{{locationShow}}'>距我{{item.distance}}km</text>
+        </view>
+        <view class='bottom_part'>
+          <view><image src='../../img/clickNum.png' style='width:14px;height:14px;'></image> <text style='margin-left:5px;vertical-align:3px;'>{{item.click_num}}</text> </view><view style='margin-left:20px;'><image src='../../img/barginNum.png' style='width:14px;height:14px;'></image> <text style='margin-left:5px;vertical-align:3px;'>{{item.bargain_num}}</text></view>
+        </view>    
+      </view>
+    </view>
+  </view>
+
+  <view class='cantbuyNow' wx:if="{{goodItem.button == '已抢完'}}">已抢完</view>
+  <view class='buyNow' wx:else>
+    <button open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber" class='clearBtn' style='color:#fff;line-height:120rpx;' wx:if='{{bindMobileShow == 2}}' form-type="submit">立即抢购</button>
+    <button bindgetuserinfo="bindgetuserinfo" open-type="getUserInfo" lang="zh_CN" class='clearBtn' style='color:#fff;line-height:120rpx;' wx:if='{{bindMobileShow == 1}}' form-type="submit">立即抢购</button>
+    <button bindtap='buyNow' class='clearBtn' style='color:#fff;line-height:120rpx;' wx:if='{{bindMobileShow == 3}}' form-type="submit">立即抢购</button>
+  </view>
+  <!-- 分享弹窗 -->
+  <image class='share_popup animated veryFaster zoomIn' wx:if='{{shareShow}}' src='../../img/shareFriends.png'>
+    <!-- <view class='share_popup_top'>每分享 <text class='share_popup_txt'>1</text> 位好友即可获赠 <text class='share_popup_txt'>1</text> 刀</view>
+    <view class='share_popup_middle'>邀请好友砍价，砍到心理价位购买</view> -->
+    <view class='share_popup_top'>全网美食最低价</view>
+    <view class='share_popup_middle'>分享好友砍价提 <text class='share_popup_txt'>￥366</text> 红包</view>
+    <view class='share_popup_bottom'>
+      <button open-type='share' class='share_popup_top_L' form-type="submit" bindtap='share_num'><image src='../../img/share1.png' style='width:86rpx;height:86rpx;'></image><view class='share_popup_text'>微信好友</view></button>
+  <button bindtap='savePoster' class='share_popup_top_L' form-type="submit"><image src='../../img/friends1.png' style='width:86rpx;height:86rpx;'></image><view class='share_popup_text'>朋友圈</view></button>
+    </view>
+  </image>
+  <!-- 分享海报图 -->
+  <view class='mask' wx:if='{{posterShow}}' catchtap='faceClose'></view>
+  <view wx:if='{{posterShow}}' class='sharePoster' >
+    <image src="{{'https://kanjia.bigclient.cn' + sharePoster}}" style='width:500rpx;height:760rpx;'></image>
+    <button bindtap='posterToPhone' class='posterBtn btn' form-type="submit">保存图片至相册</button>
+  </view>
+
+  <!-- 弹幕 -->
+  <!-- <view class='share_danmu' wx:if='{{hasDanmu}}' style='margin-top:{{doubleMenuRectTop + 16}}px;'>
+    <image src='{{trends_info.headimgurl}}' style='width:40rpx;height:40rpx;border-radius:50%;margin-top:4rpx;'></image>
+    <view style='padding-left:10rpx;'>{{trends_info.nickname}}</view>
+    <view>刚刚砍掉了{{trends_info.bargain}}元</view>
+  </view> -->
+
+  <!-- 添加芝麻记弹窗 -->
+  <view class='addZhimaPop' wx:if='{{addNow}}'>
+    <view class='headerBack'>
+      <image src='../../img/forfun.png' style='width:384rpx;height:96rpx;margin-top:76rpx;'></image>
+      <text class='headerBackText'>+</text>
+    </view>
+    <view class='addZhimaPopText'>点击“去回复”，发送“1”</view>
+    <view class='addZhimaPopText'>添加芝麻君微信</view>
+    <button open-type="contact" class='clearBtn zhimajun' bindtap='toAnswer'>去回复</button>
+  </view>
+</form>
+
+

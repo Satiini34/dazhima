@@ -1,0 +1,14 @@
+.imageCount {
+  position: absolute;
+  top: 10rpx;
+  right: 20rpx;
+  color: #fff;
+  width: 100rpx;
+  font-size: 26rpx;
+  height: 46rpx;
+  line-height: 46rpx;
+  background: #333;
+  opacity: 0.8;
+  border-radius: 24rpx;
+  text-align: center;
+}

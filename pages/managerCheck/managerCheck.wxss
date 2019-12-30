@@ -1,0 +1,38 @@
+.qrCode {
+  width: 100%;
+  height: 640rpx;
+  padding-top: 50rpx;
+  text-align: center;
+  background: #fff;
+}
+.checkInput {
+  margin-top: 60rpx;
+  width: 92%;
+  position: relative;
+  left: 4%;
+  height: 80rpx;
+  border: 1px solid rgb(235, 235, 235);
+}
+.inputNow {
+  color: rgb(125, 125, 125);
+  font-size: 26rpx;
+  height: 50rpx;
+  line-height: 26rpx;
+  margin-top: 15rpx;
+  padding-left: 20rpx;
+}
+.confrimCheck {
+  margin-top: 60rpx;
+  width: 92%;
+  height: 80rpx;
+  background: linear-gradient(90deg, #fbc756, #ff8831);
+  color: #fff;
+  font-weight: 500;
+  font-size: 34rpx;
+  text-align: center;
+  line-height: 80rpx;
+  border-radius: 20px;
+}
+.confrimCheck::after {
+  border: none;
+}

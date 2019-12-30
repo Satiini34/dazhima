@@ -1,0 +1,88 @@
+<view class='mask' wx:if='{{shareShow}}' bindtap='close_share_popup'></view>
+<view class='notLoad' wx:if='{{!loadComplete}}'></view>
+<view wx:else>
+  <view class='header_'>
+    <image src='{{zhimajiSingle.headimgurl}}' style='width:68rpx;height:68rpx;' class='headimg' />
+    <text class='nickname'>{{zhimajiSingle.nickname}}</text>
+  </view>
+  <view style='height:750rpx;width:100%;position:relative;' bindtap='viewPic' id='{{zhimajiSingle.id}}'>
+    <swiper indicator-color='rgba(0,0,0,0.3)' style="width:100%;height:100%;" easing-function='easeInOutCubic' bindchange="swiperChange" 
+    id='{{item.id}}'>
+        <block wx:for="{{zhimajiSingle.imgurl}}" wx:key="*this">
+          <swiper-item>
+            <image src="{{'https://new-bigclient.oss-cn-qingdao.aliyuncs.com' + item + '?x-oss-process=style/abc'}}" mode="aspectFit" style='width:100%;height:100%;display:block;'/>
+          </swiper-item>
+        </block>
+    </swiper> 
+    <view class="imageCount" wx:if='{{swiperId == item.id}}'>{{current+1}} / {{zhimajiSingle.imgurl.length}}</view>
+    <view class="imageCount" wx:if='{{swiperId != item.id}}'>1 / {{zhimajiSingle.imgurl.length}}</view>
+  </view>
+  <swiper class='scrollGood' wx:if='{{zhimajiSingle.goods.length != 0}}' next-margin="35">
+    <block wx:for='{{zhimajiSingle.goods}}' wx:key='index'>
+      <swiper-item>
+        <view class='shopGood' catchtap='toGoodItem' data-shopid='{{item.id}}'>
+          <view class='shopGood_left'>
+            <image src="{{'https://new-bigclient.oss-cn-qingdao.aliyuncs.com' + item.goods_pic + '?x-oss-process=style/abc'}}" mode='aspectFit' style='width:100%;height:100%;border-radius:6px!important;margin-left:-6rpx;'></image>
+          </view>
+          <view class='shopGood_right'>
+            <button class="{{item.button == '已抢完' ?'sellout':'bargin'}} {{item.button == '继续砍' ?'share':'bargin'}}" id="{{item.id}}" data-price="{{item.price}}" data-sort="{{item.subcategory_name}}" catchtap='bargin' data-img='{{item.goods_pic}}' wx:if="{{userLogin == false}}" form-type="submit">
+              {{item.button}}
+            </button>
+            <button class="{{item.button == '已抢完' ?'sellout':'bargin'}}" open-type="getUserInfo" lang="zh_CN" bindgetuserinfo="Getuserinfo" catchtap='test' wx:if="{{userLogin == true}}" form-type="submit">
+              {{item.button}}
+            </button>
+            <text class='goodName'>{{item.name}}</text>
+            <view class='goodPrice'>
+              <text class='now_price' wx:if='{{clickId == item.id}}'>砍掉{{bargainPrice}}</text>
+              <text class='nowPrice' wx:else>￥{{item.current_price}}</text>
+              <text class='price'>￥{{item.price}}</text>
+            </view>
+            <view class='bottom_part'>
+              <image src='../../img/clickNum.png' style='width:14px;height:14px;'></image> 
+              <text style='margin-left:5px;vertical-align:3px;'>{{item.click_num}}</text>
+              <view style='margin-left:20px;'><image src='../../img/barginNum.png' style='width:14px;height:14px;'></image> <text style='margin-left:5px;vertical-align:3px;'>{{item.bargain_num}}</text></view>
+            </view>  
+          </view>
+        </view>
+      </swiper-item>
+    </block>
+  </swiper>
+  <view class='goodTitle'>{{zhimajiSingle.title}}</view>
+  <view class="goodContentSingle">
+    <text >{{zhimajiSingle.content}}</text>
+  </view> 
+  <view class='goodTagRange'>
+    <text class='goodTag' wx:if='{{zhimajiSingle.goods.length != 0}}'>#{{zhimajiSingle.goods[0].name}}#</text>
+  </view>
+  <view class='goodBottomPart'>
+    <view style='position:absolute;right:66rpx;height:100%;display:flex;align-items:center;bottom:0;'>
+      <view style='marign-top:2rpx;'>
+        <image src="{{ zhimajiSingle.status == 1? '../../img/detailLiked.png':'../../img/detailLike.png'}}" style='width:36rpx;height:36rpx;' id='{{zhimajiSingle.id}}' bindtap='bingo' />
+      </view>
+      <view class='goodBottomPart1Text'>
+        {{zhimajiSingle.num}}
+      </view>
+    </view>
+    <view style='position:absolute;right:0;display:flex;align-items:center;height:100%;bottom:6rpx;'>
+      <button class='zhimajiDetail_share' open-type="share"><image src='../../img/detailShare.png' style='width:36rpx;height:36rpx;' /></button>
+    </view>
+  </view>
+</view>
+
+<!-- 分享弹窗 -->
+<image class='share_popup animated veryFaster zoomIn' wx:if='{{shareShow}}' src='../../img/shareFriends.png'>
+  <!-- <view class='share_popup_top'>每分享 <text class='share_popup_txt'>1</text> 位好友即可获赠 <text class='share_popup_txt'>1</text> 刀</view>
+  <view class='share_popup_middle'>邀请好友砍价，砍到心理价位购买</view> -->
+  <view class='share_popup_top'>全网美食最低价</view>
+  <view class='share_popup_middle'>分享好友砍价提 <text class='share_popup_txt'>￥366</text> 红包</view>
+  <view class='share_popup_bottom'>
+    <button open-type='share' class='share_popup_top_L' form-type="submit"><image src='../../img/share1.png' style='width:86rpx;height:86rpx;'></image><view class='share_popup_text'>微信好友</view></button>
+<button bindtap='savePoster' class='share_popup_top_L' form-type="submit"><image src='../../img/friends1.png' style='width:86rpx;height:86rpx;'></image><view class='share_popup_text'>朋友圈</view></button>
+  </view>
+</image>
+<!-- 分享海报图 -->
+<view class='mask' wx:if='{{posterShow}}' catchtap='faceClose'></view>
+<view wx:if='{{posterShow}}' class='sharePoster' >
+  <image src="{{'https://kanjia.bigclient.cn' + sharePoster}}" style='width:500rpx;height:760rpx;'></image>
+  <button bindtap='posterToPhone' class='posterBtn btn' form-type="submit">保存图片至相册</button>
+</view>

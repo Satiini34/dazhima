@@ -1,0 +1,87 @@
+  <view class='deal_tabbar'>
+    <view class="{{choice == 1 ? 'tabbar_item_choice':'tabbar_item'}}" bindtap='deal'>成交单数</view>
+    <view class="{{choice == 2 ? 'tabbar_item_choice':'tabbar_item'}}" bindtap='checked'>已到店核销</view>
+    <view class="{{choice == 3 ? 'tabbar_item_choice':'tabbar_item'}}" bindtap='uncheck'>未到店核销</view>
+    <view class="{{choice == 4 ? 'tabbar_item_choice':'tabbar_item'}}" bindtap='expire'>已过期订单</view>
+  </view>
+  <!-- <view catchtouchstart="touch1.start" catchtouchmove="touch1.move" catchtouchend="touch1.end" catchtouchcancel="touch1.cancel" style='width:100%;min-height:1200rpx;'> -->
+  <view bindtouchstart="touchStart" bindtouchend="touchEnd" style='width:100%;min-height:1200rpx;'>
+  <view class='deal animated fadeIn' wx:if='{{choice == 1}}' >
+    <view class='deal_title' wx:if='{{dealShow}}'>
+      <view class='checked_detail' style='width:38%;text-align:left;'>顾客</view>
+      <view class='checked_detail' style='width:18%;'>成交金额</view>
+      <view class='checked_detail' style='width:32%;'>成交时间</view>
+      <view class='checked_detail' style='width:12%;'>状态</view>
+    </view>
+    <view class='deal_content' wx:for='{{deal_}}' wx:key='item'>
+      <view class='checked_content_listF'>
+        <image src="{{item.headimgurl}}" style='width:56rpx;height:56rpx;border-radius:50%;margin-top:14rpx;flex-shrink:0;'></image><view>{{item.nickname}}</view>
+      </view> 
+      <view class='checked_content_listS'>
+        <view>￥{{item.total_amount}}</view>
+      </view>
+      <view class='checked_content_listT'>
+        <view>{{item.create_time}}</view>
+      </view>
+      <view class='checked_content_listFH'>
+        <view wx:if='{{item.is_use == 0}}' style='color:rgb(77, 204, 214)'>未核销</view>
+        <view wx:if='{{item.is_use == 1}}'>已核销</view>
+        <view wx:if='{{item.is_use == 2}}' style='color:rgb(248, 174, 126)'>已过期</view>
+      </view>
+    </view>
+  </view>
+  <view class='checked animated fadeIn' wx:if='{{choice == 2}}'> 
+    <view class='deal_title' wx:if='{{checkedShow}}'>
+      <view class='deal_detail' style='width:40%;'>顾客</view>
+      <view class='deal_detail' style='width:30%;'>成交金额</view>
+      <view class='deal_detail' style='width:30%;'>核销时间</view>
+    </view>
+    <view class='deal_content' wx:for='{{checked_}}' wx:key='item'>
+      <view class='deal_content_listF' >
+        <image src="{{item.headimgurl}}" style='width:60rpx;height:60rpx;border-radius:50%;margin-top:12rpx;flex-shrink:0;'></image><view>{{item.nickname}}</view>
+      </view>
+      <view class='deal_content_listS'>
+        <view>￥{{item.total_amount}}</view>
+      </view>
+      <view class='deal_content_listT' >
+        <view>{{item.use_time}}</view>
+      </view>
+    </view>
+  </view>
+  <view class='uncheck animated fadeIn' wx:if='{{choice == 3}}'> 
+    <view class='deal_title' wx:if='{{uncheckShow}}'>
+      <view class='deal_detail' style='width:40%;'>顾客</view>
+      <view class='deal_detail' style='width:30%;'>成交金额</view>
+      <view class='deal_detail' style='width:30%;'>到期时间</view>
+    </view>
+    <view class='deal_content' wx:for='{{uncheck_}}' wx:key='item'>
+      <view class='deal_content_listF' >
+        <image src="{{item.headimgurl}}" style='width:60rpx;height:60rpx;border-radius:50%;margin-top:12rpx;flex-shrink:0;'></image><view>{{item.nickname}}</view>
+      </view>
+      <view class='deal_content_listS'>
+        <view>￥{{item.total_amount}}</view>
+      </view>
+      <view class='deal_content_listT' >
+        <view>{{item.expire_time}}</view>
+      </view>
+    </view>
+  </view>
+  <view class='expired animated fadeIn' wx:if='{{choice == 4}}'> 
+    <view class='deal_title' wx:if='{{expireShow}}'>
+      <view class='deal_detail' style='width:40%;'>顾客</view>
+      <view class='deal_detail' style='width:30%;'>成交金额</view>
+      <view class='deal_detail' style='width:30%;'>过期时间</view>
+    </view>
+    <view class='deal_content' wx:for='{{expire_}}' wx:key='item'>
+      <view class='deal_content_listF' >
+        <image src="{{item.headimgurl}}" style='width:60rpx;height:60rpx;border-radius:50%;margin-top:12rpx;flex-shrink:0;'></image><view>{{item.nickname}}</view>
+      </view>
+      <view class='deal_content_listS'>
+        <view>￥{{item.total_amount}}</view>
+      </view>
+      <view class='deal_content_listT' >
+        <view>{{item.expire_time}}</view>
+      </view>
+    </view>
+  </view>
+</view>

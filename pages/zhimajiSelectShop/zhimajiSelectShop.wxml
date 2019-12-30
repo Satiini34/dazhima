@@ -1,0 +1,18 @@
+<view style='width:100%:;height:100%;'>
+  <!-- <view class='shopsHeader'> -->
+    <!-- <view class='closeShops' bindtap='closeInput'>X</view> -->
+  <!-- </view> -->
+  <scroll-view class='shopsScrollView' scroll-y>
+    <view wx:for='{{shops}}' class='shopChooseBlock' wx:key='' id='{{item.shop_id}}' data-all='{{item}}' data-shopname='{{item.shop_name}}' bindtap='shopChoose'>
+      <view class='shopChooseBlock_left'>
+        <image src='../../img/shopPre.png' style="width:48rpx;height:48rpx;"></image>
+      </view>
+      <view class='shopChooseBlock_right'>
+        <view class='shopChoose' id='{{item.shop_id}}' data-all='{{item}}'>{{item.shop_name}}</view>
+        <view class='shopChooseCircle'>
+          {{item.circle_name}}  /  {{item.subcategory_name}}
+        </view>
+      </view>
+    </view>
+  </scroll-view>
+</view>

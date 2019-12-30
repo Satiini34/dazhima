@@ -1,0 +1,76 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/mine/mine",
+    "pages/optionBack/optionBack",
+    "pages/reward/reward",
+    "pages/share/share",
+    "pages/goodItem/goodItem",
+    "pages/cooperation/cooperation",
+    "pages/kanOrderList/kanOrderList",
+    "pages/payment/payment",
+    "pages/kanOrder/kanOrder",
+    "pages/shopCenter/shopCenter",
+    "pages/managerCheck/managerCheck",
+    "pages/map/map",
+    "pages/mission/mission",
+    "pages/myZhima/myZhima",
+    "pages/shopCenterSale/shopCenterSale",
+    "pages/chartData/chartData",
+    "pages/buySuccess/buySuccess",
+    "pages/newbie/newbie",
+    "pages/vvip/vvip",
+    "pages/becomev/becomev",
+    "pages/shopCenterCash/shopCenterCash",
+    "pages/earnZhima/earnZhima",
+    "pages/commit/commit",
+    "pages/zhimaji/zhimaji",
+    "pages/zhimajiDetail/zhimajiDetail",
+    "pages/zhimajiSingle/zhimajiSingle",
+    "pages/zhimajiSelectShop/zhimajiSelectShop",
+    "pages/activity/activity",
+    "pages/saleCenter/saleCenter",
+    "pages/saleChart/saleChart"
+  ],
+  "window": {
+    "backgroundTextStyle": "dark",
+    "navigationBarBackgroundColor": "#fff",
+    "navigationBarTextStyle": "black",
+    "backgroundColor": "#fff"
+  },
+  "tabBar": {
+    "color": "#666",
+    "selectedColor": "#ff8a32",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "iconPath": "./img/index.png",
+        "selectedIconPath": "./img/indexSel.png",
+        "text": "探店"
+      },
+      {
+        "pagePath": "pages/commit/commit",
+        "iconPath": "./img/zhimaji.png",
+        "selectedIconPath": "./img/zhimajiSel.png",
+        "text": "芝麻记"
+      },
+      {
+        "pagePath": "pages/mine/mine",
+        "iconPath": "./img/mine.png",
+        "selectedIconPath": "./img/mineSel.png",
+        "text": "个人中心"
+      }
+    ]
+  },
+  "networkTimeout": {
+    "request": 7000,
+    "downloadFile": 7000
+  },
+  "permission": {
+    "scope.userLocation": {
+      "desc": "你的位置信息将用于推荐附近商家"
+    }
+  },
+  "sitemapLocation": "sitemap.json",
+  "cloud": false
+}

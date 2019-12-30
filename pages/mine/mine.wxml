@@ -1,0 +1,278 @@
+<view class='mask' wx:if='{{shareShow}}' bindtap='close_share_popup'></view>
+<view class='mask' wx:if='{{isShow}}' style='opacity:0.9'></view>
+<view style='overflow-x:hidden'> 
+  <view class='top_part'>
+    <view class='top_part_left'>
+      <image src='{{userInfo.headimgurl}}' style='width:100rpx;height:100rpx;border-radius:50%;'></image>
+      <view class='top_part_left_nickName'>
+        <text>{{userInfo.nickname}}</text>
+        <image src='../../img/daV.png' style='width:13px;height:13px;margin-left:3px;' wx:if='{{isbigV}}' />
+        <image wx:if='{{genderShow}}' src="{{gender == true? '../../img/male.jpg':'../../img/female.jpg' }}" style='width:24rpx;height:24rpx;margin-top: 2rpx;margin-left:10rpx;'/>
+      </view>
+      <view class='top_part_middle'>剩余芝麻粒：<text style='color: rgb(255, 159, 88);font-size:30rpx;letter-spacing:2rpx;'>{{all_sesame}}</text></view>
+      <view class='top_part_right'>
+        <image src='../../img/signed.png' style='width:96rpx;height:40rpx;' class='top_part_right_img'></image>
+        <view class='top_part_right_text'>已连续签到{{sign_in_day}}天</view>
+      </view>
+    </view>
+  </view>
+  <view class='middle_part'>
+    <view class='middle_part_content' bindtap='order'>
+      <image src='../../img/order.png' style='width:22px;height:22px;'></image>
+      <view class='middle_part_text'>我的订单</view>
+      <view class='badege' wx:if='{{redDot}}'>1</view>
+    </view>
+    <view class='middle_part_content' bindtap='myreward'>
+      <image src='../../img/reward.png' style='width:22px;height:22px;'></image>
+      <view class='middle_part_text'>推荐奖励</view>
+    </view>
+    <view class='middle_part_content' bindtap='myzhima'>
+      <image src='../../img/zhima.png' style='width:22px;height:22px;'></image>
+      <view class='middle_part_text'>我的芝麻粒</view>
+    </view>
+    <view class='middle_part_content' catchtap='cooperate'>
+      <image src='../../img/coopera.png' style='width:22px;height:22px;'></image>
+      <view class='middle_part_text'>商务合作</view>
+    </view>
+    <view class='middle_part_content' catchtap='feedback'>
+      <image src='../../img/feedback.png' style='width:22px;height:22px;'></image>
+      <view class='middle_part_text'>意见反馈</view>
+    </view>
+    <view class='middle_part_content' catchtap='newbie'>
+      <image src='../../img/rookie.png' style='width:22px;height:22px;'></image>
+      <view class='middle_part_text'>新手指南</view>
+    </view>
+    <view class='middle_part_content' catchtap='becomeV'>
+      <image src='../../img/bigV.png' style='width:22px;height:22px;'></image>
+      <view class='middle_part_text'>达人招募</view>
+    </view>
+    <view class='middle_part_content' wx:if='{{ isManager }}' catchtap='shopCenter'>
+      <image src='../../img/shopCenter.png' style='width:22px;height:20px;'></image>
+      <view class='middle_part_text'>{{managerName}}</view>
+    </view>
+  </view>
+
+  <!-- 新添加内容 -->
+  <view class='mine_column'>
+    <view class="mine_column_sort">
+      <text class="{{current == 0?'mine_column_sort_text_sele':'mine_column_sort_text'}}" bindtap='selectNote'>笔记</text>
+    </view>
+    <view class="mine_column_sort">
+      <text class="{{current == 1?'mine_column_sort_text_sele':'mine_column_sort_text'}}" bindtap='selectKan'>砍过</text>  
+    </view>
+    <view class="mine_column_sort">
+      <text class="{{current == 2?'mine_column_sort_text_sele':'mine_column_sort_text'}}" bindtap='selectLike'>赞过</text>
+    </view>
+  </view>
+  <swiper class='swiperChange' bindchange='swiperChange' current='{{current}}' style='height:{{swiperHeight}}px;'>
+    <swiper-item style='width:100%;height:100%;'>
+      <!-- <view style='width:100%;margin-top:40rpx;' id='mjltest'>
+        <view wx:if='{{!norelease}}'>
+          <view class="{{ myReleaseLess == true?'waterfallFatherLess':'waterfallFather'}}">
+            <view class='waterfall animated slideInUp' wx:for='{{myRelease}}' wx:key='index' bindtap='toDetail' id='{{index}}' data-detail='{{item}}'>
+              <image mode='widthFix' src="{{'http://new-bigclient.oss-cn-qingdao.aliyuncs.com' + item.imgurl}}" class='waterfallImage' />
+              <view class='waterfall_title'>
+                <text class='waterfall_title_text'>
+                  {{item.title}}
+                </text>
+              </view>
+              <view class='waterfall_like'>
+                <view class='waterfall_like_left'>
+                  <image src='{{item.headimgurl}}' style='width:32rpx;height:32rpx;border-radius:50%;'></image>
+                  <text class='waterfall_like_left_nick'>{{item.nickname}}</text>
+                </view>
+                <view class='waterfall_like_right' catchtap='bingoRelease' id='{{item.id}}' >
+                  <image src="{{ item.status == 1? '../../img/zhimajiLiked.png':'../../img/zhimajiLike.png'}}" style='width:20rpx;height:20rpx;vertical-align:4rpx;' />
+                  <text class='waterfall_like_left_nick'>{{ item.num }}</text>
+                </view>
+              </view>
+            </view>
+          </view>
+        </view> -->
+        <view style='width:98%;margin-top:40rpx;height:auto;position:relative;left:1%;' id='mjltest'>
+        <view wx:if='{{!norelease}}' style='display:flex;flex:1;'>
+          <view class="waterfallFather_mine">
+            <view class='waterfall_mine animated slideInUp' wx:for='{{myRelease}}' wx:key='index' bindtap='toDetail' id='{{index}}' data-detail='{{item}}' wx:if='{{index%2==0}}'>
+              <image mode='widthFix' src="{{'http://new-bigclient.oss-cn-qingdao.aliyuncs.com' + item.imgurl}}" class='waterfallImage' />
+              <view class='waterfall_title'>
+                  {{item.title}}
+              </view>
+              <view class='waterfall_like'>
+                <view class='waterfall_like_left'>
+                  <image src='{{item.headimgurl}}' style='width:32rpx;height:32rpx;border-radius:50%;vertical-align:-6rpx;'></image>
+                  <text class='waterfall_like_left_nick'>{{item.nickname}}</text>
+                </view>
+                <view class='waterfall_like_right' catchtap='bingoLike' id='{{item.id}}' >
+                  <image src="{{ item.status == 1? '../../img/zhimajiLiked.png':'../../img/zhimajiLike.png'}}" style='width:28rpx;height:28rpx;vertical-align:-4rpx;' />
+                  <text class='waterfall_like_left_num'>{{ item.num }}</text>
+                </view>
+              </view>
+            </view>
+          </view>
+          <view class="waterfallFather_mine">
+            <view class='waterfall_mine animated slideInUp' wx:for='{{myRelease}}' wx:key='index' bindtap='toDetail' id='{{index}}' data-detail='{{item}}' wx:if='{{index%2==1}}'>
+              <image mode='widthFix' src="{{'http://new-bigclient.oss-cn-qingdao.aliyuncs.com' + item.imgurl}}" class='waterfallImage' />
+              <view class='waterfall_title'>
+                  {{item.title}}
+              </view>
+              <view class='waterfall_like'>
+                <view class='waterfall_like_left'>
+                  <image src='{{item.headimgurl}}' style='width:32rpx;height:32rpx;border-radius:50%;vertical-align:-6rpx;'></image>
+                  <text class='waterfall_like_left_nick'>{{item.nickname}}</text>
+                </view>
+                <view class='waterfall_like_right' catchtap='bingoLike' id='{{item.id}}' >
+                  <image src="{{ item.status == 1? '../../img/detailLiked.png':'../../img/detailLike.png'}}" style='width:28rpx;height:28rpx;vertical-align:-4rpx;' />
+                  <text class='waterfall_like_left_num'>{{ item.num }}</text>
+                </view>
+              </view>
+            </view>
+          </view>
+        </view>
+        <view wx:else class='picShow'>
+          <image src='../../img/noRecord.png' style='width:160px;height:102px;margin:20rpx 0;'></image>
+            <view>暂无记录</view>
+        </view>
+      </view>
+    </swiper-item>
+    <swiper-item>
+      <view class='bottom_part_content' id='mykanjia'>
+        <view class='picShow' wx:if='{{picShow}}'>
+          <image src='../../img/noRecord.png' style='width:160px;height:102px;margin:20rpx 0;'></image>
+            <view>暂无记录</view>
+        </view>
+        <view wx:for="{{goodsList}}" class="shopBlock" wx:key='item' catchtap="goodItem" id="{{item.id}}" wx:if='{{!picShow}}'>
+          <view class='shopBlockL'>
+            <image src="{{'http://new-bigclient.oss-cn-qingdao.aliyuncs.com' + item.goods_pic + '?x-oss-process=style/abc'}}" lazy-load='true' class='shopMainPic'>
+              <!-- <view class='dailyGoodsRecmmoand' wx:if='{{ item.is_recommend == 1 }}'>今日推荐</view>
+              <view class='dailyGoodsNew' wx:if='{{ item.is_recommend != 1 && item.is_new == 1 }}'>新品上线</view> -->
+            </image>
+          </view>
+          <view class='shopBlockR'>
+            <view class="shopName">
+              {{item.name}}
+            </view>
+            <view class='good_price'>
+              <text class='now_price' wx:if='{{clickId == item.id}}'>砍掉{{bargainPrice}}</text><text class='now_price' wx:else> <text style='margin-right:-5px;'>￥</text> {{item.current_price}}</text><text class='ori_price'><text style='margin-right:-2px;'>￥</text>{{item.price}}</text>
+            </view>
+            <view class='subCategory'>
+              <view style='word-break:break-all;text-overflow:ellipsis;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;align-vertical:middle;'>
+                {{item.shop_name}}
+              </view>  
+            </view>
+            <button class="{{item.button == '已抢完' ?'sellout':'bargin'}} {{item.button == '继续砍' ?'share':'bargin'}}" id="{{item.id}}" data-all="{{item}}" catchtap='bargin' data-img='{{item.goods_pic}}' hover-class="none" wx:if="{{item.current_price > 1 || item.button == '已抢完'}}">
+              {{item.button}}
+            </button>
+            <button class="toBuy" id="{{item.id}}" wx:if="{{item.current_price <= 1 && item.button != '已抢完'}}" hover-class="none" form-type='submit'>
+              立即抢
+            </button>
+            <view class='circleName'>
+              {{item.circle_name}}  <text class='circleDistance' wx:if='{{locationShow}}'>距我{{item.distance}}km</text>
+            </view>
+            <view class='bottom_part'>
+              <view><image src='../../img/clickNum.png' style='width:14px;height:14px;'></image> <text style='margin-left:5px;vertical-align:3px;'>{{item.click_num}}</text> </view><view style='margin-left:20px;'><image src='../../img/barginNum.png' style='width:14px;height:14px;'></image> <text style='margin-left:5px;vertical-align:3px;'>{{item.bargain_num}}</text></view>
+            </view>    
+          </view>
+        </view>
+      </view>
+      <view style='width:100%;height:124rpx;background:rgb(246, 247, 249);'></view>
+    </swiper-item>
+    <swiper-item>
+    <view style='width:98%;margin-top:40rpx;height:auto;position:relative;left:1%;' id='mjltest2'>
+      <view wx:if='{{!noLiked}}' style='display:flex;flex:1;'>
+        <view class="waterfallFather_mine">
+          <view class='waterfall_mine animated slideInUp' wx:for='{{myLiked}}' wx:key='index' bindtap='toDetail' id='{{index}}' data-detail='{{item}}' wx:if='{{index%2==0}}'>
+            <image mode='widthFix' src="{{'http://new-bigclient.oss-cn-qingdao.aliyuncs.com' + item.imgurl + '?x-oss-process=style/abc'}}" class='waterfallImage' />
+            <view class='waterfall_title'>
+                {{item.title}}
+            </view>
+            <view class='waterfall_like'>
+              <view class='waterfall_like_left'>
+                <image src='{{item.headimgurl}}' style='width:32rpx;height:32rpx;border-radius:50%;vertical-align:-6rpx;'></image>
+                <text class='waterfall_like_left_nick'>{{item.nickname}}</text>
+              </view>
+              <view class='waterfall_like_right' catchtap='bingoLike' id='{{item.id}}' >
+                <image src="{{ item.status == 1? '../../img/detailLiked.png':'../../img/detailLike.png' }}" style='width:28rpx;height:28rpx;vertocal-align:-4rpx;' />
+                <text class='waterfall_like_left_num'>{{ item.num }}</text>
+              </view>
+            </view>
+          </view>
+        </view>
+        <view class="waterfallFather_mine">
+          <view class='waterfall_mine animated slideInUp' wx:for='{{myLiked}}' wx:key='index' bindtap='toDetail' id='{{index}}' data-detail='{{item}}' wx:if='{{index%2==1}}'>
+            <image mode='widthFix' src="{{'http://new-bigclient.oss-cn-qingdao.aliyuncs.com' + item.imgurl + '?x-oss-process=style/abc'}}" class='waterfallImage' />
+            <view class='waterfall_title'>
+                {{item.title}}
+            </view>
+            <view class='waterfall_like'>
+              <view class='waterfall_like_left'>
+                <image src='{{item.headimgurl}}' style='width:32rpx;height:32rpx;border-radius:50%;vertical-align:-6rpx;'></image>
+                <text class='waterfall_like_left_nick'>{{item.nickname}}</text>
+              </view>
+              <view class='waterfall_like_right' catchtap='bingoLike' id='{{item.id}}' >
+                <image src="{{ item.status == 1? '../../img/detailLiked.png':'../../img/detailLike.png'}}" style='width:28rpx;height:28rpx;vertical-align:-4rpx;' />
+                <text class='waterfall_like_left_num'>{{ item.num }}</text>
+              </view>
+            </view>
+          </view>
+        </view>
+      </view>
+      <view wx:else class='picShow'>
+        <image src='../../img/noRecord.png' style='width:160px;height:102px;margin:20rpx 0;' />
+          <view>暂无记录</view>
+      </view>
+      </view>
+    </swiper-item>
+  </swiper>
+</view>
+<view class="release">
+  <image src='../../img/release.png' style='width:80rpx;height:80rpx;' catchtap='toRelease'></image>
+</view>
+
+<!-- 分享弹窗 -->
+<image class='share_popup animated veryFaster zoomIn' wx:if='{{shareShow}}' src='../../img/shareFriends.png' style='margin-top:-80rpx;'>
+  <!-- <view class='share_popup_top'>每分享 <text class='share_popup_txt'>1</text> 位好友即可获赠 <text class='share_popup_txt'>1</text> 刀</view>
+  <view class='share_popup_middle'>邀请好友砍价，砍到心理价位购买</view> -->
+  <view class='share_popup_top'>全网美食最低价</view>
+  <view class='share_popup_middle'>分享好友砍价提 <text class='share_popup_txt'>￥366</text> 红包</view>
+  <view class='share_popup_bottom'>
+    <button open-type='share' class='share_popup_top_L'><image src='../../img/share1.png' style='width:86rpx;height:86rpx;'></image><view class='share_popup_text'>微信好友</view></button>
+<button bindtap='savePoster' class='share_popup_top_L'><image src='../../img/friends1.png' style='width:86rpx;height:86rpx;'></image><view class='share_popup_text'>朋友圈</view></button>
+  </view>
+</image>
+
+<!-- 授权 -->
+<view class='loginContent' wx:if="{{isShow}}">
+  <view class="loginTitle">微信登录授权</view><br/>
+  <text>申请获得你的公开信息(昵称，头像等)</text>
+  <button class='loginBottom' bindgetuserinfo="bindgetuserinfo" open-type="getUserInfo" lang="zh_CN">
+    授权登录
+  </button>
+</view>
+
+<!-- 新手奖励弹窗 -->
+<!-- <image src='https://kanjia.bigclient.cn/upload/reward4.png' style='width:620rpx;height:872rpx;position:fixed;top:54%;left:50%;transform:translate(-50%,-50%);z-index:999;' wx:if='{{newCustomer}}'>
+  <button class='newBeeToLook' bindtap='newBeeToLook'>立即查看</button>
+</image> -->
+  
+<!-- 自动签到 -->
+<view class='mask' wx:if='{{signInShow}}' bindtap='closeSign'></view>
+<view class="signIn" wx:if='{{signInShow}}'>
+  <image src='../../img/signIn.png' style='width: 624rpx;height:792rpx;position:relative;'>
+    <!-- <image src='../../img/close.png' style='width:48rpx;height:48rpx;position:absolute;right:20rpx;top:20rpx;' bindtap='closeSign'></image> -->
+    <text class='signIn_days'>第<text style='font-size: 72rpx;'>{{sign_in_day}}</text>天</text>
+    <text class='signIn_success'>签到成功</text>
+    <view class='signIn_zhimali'>
+      <view>恭喜你签到成功获得{{zhimali}}芝麻粒</view>  
+      <view style='margin-top: 40rpx;'>完成任务获得更多芝麻粒</view>
+    </view>
+    <view class='signIn_mission btn' bindtap='toMission'>去做任务</view>
+  </image>
+</view>
+
+<!-- 分享海报图 -->
+<view class='mask' wx:if='{{posterShow}}' catchtap='faceClose'></view>
+<view wx:if='{{posterShow}}' class='sharePoster'>
+  <image src="{{'https://kanjia.bigclient.cn' + sharePoster}}" style='width:500rpx;height:890rpx;'></image>
+  <button bindtap='posterToPhone' class='posterBtn btn' style=''>保存图片至相册</button>
+  <!-- <image src='../../img/close.png' style='width:24px;height:24px;margin-top:30rpx;' bindtap='faceClose'></image> -->
+</view>

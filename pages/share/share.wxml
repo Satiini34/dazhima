@@ -1,0 +1,147 @@
+<view style='width:100%;overflow-x:hidden;'>
+<view class='notLoad' wx:if='{{!loadComplete}}'>
+  <!-- <image src='../../img/dazhima.png' style='width:64rpx;height:64rpx;' class='notLoadImg'></image> -->
+</view>
+<form report-submit='true' bindsubmit='codeSubmit' wx:if='{{loadComplete}}'>
+  <view class="shopBlock" wx:key='item' catchtap="thisGoodItem">
+    <view class='shopBlockL'>
+      <image src="{{'http://new-bigclient.oss-cn-qingdao.aliyuncs.com' + goods.goods_pic}}" class='shopMainPic'>
+        <view class='dailyGoodsRecmmoand' wx:if='{{ goods.is_recommend == 1 }}'>今日推荐</view>
+      </image>
+    </view>
+    <view class='shopBlockR'>
+      <view class="shopName">
+        {{goods.goods_name}}
+      </view>
+      <view class='good_price'>
+        <!-- <text class='now_price'> <text style='margin-right:-7px;'>￥</text> {{goods.current_price}}</text><text class='ori_price'><text style='margin-right:-2px;'>￥</text>{{goods.price}}</text> -->
+         <text class="{{helpClick == true?'kan_price':'now_price'}}" wx:if='{{helpClick == true}}'>砍掉{{helpBargainPrice}}</text><text class='now_price' wx:else> <text style='margin-right:-2px;'>￥</text>{{goods.current_price}}</text><text class='ori_price'><text style='margin-right:-2px;'>￥</text>{{goods.price}}</text>
+      </view>
+      <view class='subCategory_share'>
+        <view class='shopName_share'>{{goods.shop_name}}</view> 
+      </view>
+      <view class='circleNameShare'>
+        {{goods.shop_circle_name}}  
+        <text class='circleDistance' wx:if='{{locationShow}}'>距我{{goods.distance}}km</text>
+      </view>
+      <view class='bottom_part'>
+        <view><image src='../../img/clickNum.png' style='width:14px;height:14px;'></image><text style='margin-left:5px;vertical-align:3px;'>{{goods.click_num}}</text> </view><view style='margin-left:20px;'><image src='../../img/barginNum.png' style='width:14px;height:14px;'></image><text style='margin-left:5px;vertical-align:3px;'>{{goods.bargain_num}}</text></view>
+      </view>    
+    </view>
+  </view>
+  <view class='share_kan'>
+    <button class="clearBtn share_helpCan" wx:if='{{kanjiaBtn == 1}}' bindgetuserinfo="bindgetuserinfo" open-type="getUserInfo" lang="zh_CN" form-type="submit">{{goods.button}}</button>
+    <button class="clearBtn {{goods.button == '继续砍'?'share_Can':'share_helpCan'}}" catchtap='help_can' wx:if='{{kanjiaBtn == 2 && goods.current_price > 1}}' form-type="submit">{{goods.button}}</button>
+    <button class="clearBtn share_overtime" wx:if='{{kanjiaBtn == 3}}' form-type="submit">{{goods.button}}</button>
+    <button class='clearBtn share_buyNow' bindtap='buyNow' wx:if='{{ kanjiaBtn != 3 }}' form-type="submit">直接抢购</button>
+  </view>
+  <view class='share_countDown'>
+    <view wx:if='{{kanjiaBtn != 3}}'>还剩 <text style='color:rgb(254, 152, 59);'>{{hours}}:{{minutes}}:{{seconds}}</text> 结束，再不下手就被抢走了!</view> 
+    <view wx:else>来晚一步！该商品已被别人抢走啦，看看其他的吧~</view>
+  </view>
+  <view style='width:100%;height:50rpx;margin-top:46rpx;'>
+    <button class='share_rule clearBtn' catchtap='rule' form-type="submit">
+      <view> 活动规则 <image src='../../img/activeRule.png' style='width:9px;height:9px;' /></view>
+    </button>
+  </view>
+  
+  <view class='share_axe'>
+    <view class='share_axe_title'>{{userInfo.nickname}}的斧头帮</view>
+    <view class='share_axe_tip'>
+      <text wx:if='{{hasFriend == true}}'>已有{{friends.count}}位小伙伴帮砍价，{{friends.text}}</text>
+      <text wx:else>邀请好友砍价到心理价位下单</text>      
+    </view>
+    <view class='share_info' wx:for='{{friends.info}}' wx:key=''>
+      <image src='{{item.headimgurl}}' class='share_info_head'></image>
+      <view class='share_info_nick'>{{item.nickname}}</view>
+      <view class='share_info_kanjia'>来一起砍价啦</view>
+      <view class='share_info_bargain'>砍掉{{item.bargain}}元</view>
+    </view>
+    <view class='share_info_loadMore' wx:if='{{isShow}}' catchtap='loadMore'>
+      <image src='../../img/InfoLoadMore.png' style='width:24rpx;height:24rpx;'></image>
+    </view>
+  </view>
+  <view class='share_recommand'>
+    <view class='share_recommand_title'>相关推荐</view>
+    <view wx:for="{{goodsList}}" class="shopBlock" wx:key='item' catchtap="goodItem" id="{{item.id}}">
+      <view class='shopBlockL'>
+        <image src="{{'http://new-bigclient.oss-cn-qingdao.aliyuncs.com' +item.goods_pic}}" lazy-load='true' class='shopMainPic'>
+          <view class='dailyGoodsRecmmoand' wx:if='{{ item.is_recommend == 1 }}'>今日推荐</view>
+          <view class='dailyGoodsNew' wx:if='{{ item.is_recommend != 1 && item.is_new == 1 }}'>新品上线</view>
+        </image>
+      </view>
+      <view class='shopBlockR'>
+        <view class="shopName">
+          {{item.name}}
+        </view>
+        <view class='good_price'>
+           <text class="{{clickId == item.id?'kan_price':'now_price'}}" wx:if='{{clickId == item.id}}'>砍掉{{bargainPrice}}</text><text class='now_price' wx:else> <text style='margin-right:-5px;'>￥</text> {{item.current_price}}</text><text class='ori_price'><text style='margin-right:-2px;'>￥</text>{{item.price}}</text>
+        </view>
+        <view class='subCategory'>
+          <view style='word-break:break-all;text-overflow:ellipsis;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;align-vertical:middle;'>
+            {{item.shop_name}}
+          </view>  
+        </view>
+        <button class="{{item.button == '已抢完' ?'sellout':'bargin'}} {{item.button == '继续砍' ?'share':'bargin'}}" id="{{item.id}}" data-price="{{item.price}}" catchtap='bargin' data-img='{{item.goods_pic}}'wx:if="{{userLogin == false && item.current_price > 1 || item.button == '已抢完'}}" data-all='{{item}}' form-type="submit">
+          {{item.button}}
+        </button>
+        <button class="toBuy" id="{{item.id}}" wx:if="{{userLogin == false && item.current_price <= 1 && item.button != '已抢完'}}" hover-class="none" form-type='submit'>
+          立即抢
+        </button>
+        <button class="{{item.button == '已抢完' ?'sellout':'bargin'}}" open-type="getUserInfo" lang="zh_CN" bindgetuserinfo="Getuserinfo" catchtap='test' wx:if="{{userLogin == true}}" form-type="submit">
+          {{item.button}}
+        </button>
+        <view class='circleName'>
+          {{item.circle_name}}  <text class='circleDistance' wx:if='{{locationShow}}'>距我{{item.distance}}km</text>
+        </view>
+        <view class='bottom_part'>
+          <view><image src='../../img/clickNum.png' style='width:14px;height:14px;'></image> <text style='margin-left:5px;vertical-align:3px;'>{{item.click_num}}</text> </view><view style='margin-left:20px;'><image src='../../img/barginNum.png' style='width:14px;height:14px;'></image> <text style='margin-left:5px;vertical-align:3px;'>{{item.bargain_num}}</text></view>
+        </view>    
+      </view>
+    </view>
+  </view>
+
+  <!-- 弹幕 -->
+  <view class='share_danmu' wx:if='{{hasDanmu}}'>
+    <image src='{{trends_info.headimgurl}}' style='width:40rpx;height:40rpx;border-radius:50%;margin-top:4rpx;'></image>
+    <view style='padding-left:10rpx;'>{{trends_info.nickname}}</view>
+    <view>刚刚砍掉了{{trends_info.bargain}}元</view>
+  </view>
+
+  <!-- 新手奖励弹窗 -->
+  <!-- <image src='https://kanjia.bigclient.cn/upload/reward4.png' style='width:620rpx;height:872rpx;position:fixed;top:48%;left:50%;transform:translate(-50%,-50%);z-index:999;' wx:if='{{newCustomer}}'>
+   <button class='newBeeToLook' bindtap='newBeeToLook' form-type="submit">立即查看</button>
+  </image> -->
+  
+  <view class='mask' wx:if='{{shareShow}}' bindtap='close_share_popup'></view>
+  <!-- 分享弹窗 -->
+    <image class='share_popup animated veryFaster zoomIn' wx:if='{{shareShow}}' src='../../img/shareFriends.png' style='top:42%;'>
+      <!-- <view class='share_popup_top'>每分享 <text class='share_popup_txt'>1</text> 位好友即可获赠 <text class='share_popup_txt'>1</text> 刀</view>
+      <view class='share_popup_middle'>邀请好友砍价，砍到心理价位购买</view> -->
+      <view class='share_popup_top'>全网美食最低价</view>
+      <view class='share_popup_middle'>分享好友砍价提 <text class='share_popup_txt'>￥366</text> 红包</view>
+      <view class='share_popup_bottom'>
+        <button open-type='share' class='share_popup_top_L' form-type="submit"><image src='../../img/share1.png' style='width:86rpx;height:86rpx;'></image><view class='share_popup_text'>微信好友</view></button>
+    <button bindtap='savePoster' class='share_popup_top_L' form-type="submit"><image src='../../img/friends1.png' style='width:86rpx;height:86rpx;'></image><view class='share_popup_text'>朋友圈</view></button>
+      </view>
+    </image>
+    <!-- 分享海报图 -->
+    <view class='mask' wx:if='{{posterShow}}' catchtap='faceClose'></view>
+    <view wx:if='{{posterShow}}' class='sharePoster' >
+      <image src="{{'https://kanjia.bigclient.cn' + sharePoster}}" style='width:500rpx;height:890rpx;'></image>
+      <button bindtap='posterToPhone' class='posterBtn btn' form-type="submit">保存图片至相册</button>
+      <!-- <image src='../../img/close.png' style='width:24px;height:24px;margin-top:30rpx;' bindtap='faceClose'></image> -->
+    </view>
+
+    <!-- 活动规则 -->
+    <view class='mask' wx:if='{{ruleShow}}' bindtap='ruleClose' />
+    <view class='rule animated slideInUp faster' wx:if="{{ruleShow}}">
+      <view class='rule_title'>活动规则</view>
+      <view>1.大芝麻精选套餐，每日每组仅限一份；</view>
+      <view>2.每次砍价金额随机，成交价你来定；</view>
+      <view>3.分享多少个好友砍价，即可获得相应的砍价机会；</view>
+      <view>4.大芝麻可在法律允许范围内对活动规则进行解释</view>
+      <view class='ruleClose btn' catchtap='ruleClose'>知道啦</view>
+    </view>
+  </form>
+  </view>

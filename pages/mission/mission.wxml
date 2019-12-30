@@ -1,0 +1,74 @@
+<image src='../../img/mission.png' class='header_img'>
+  <view class='zhimali_info'>{{allzhima}}芝麻粒 = {{allzhima/100}}元</view>
+  <navigator url='../myZhima/myZhima' hover-class='none'>
+    <image src='../../img/zhimali_detail.png' class='zhimali_detail' />
+  </navigator>
+  <image src='../../img/withdraw.png' class='isVvip' style='' wx:if='{{isVvip}}' bindtap='isVvip'></image>
+</image>
+<view class='mission_list' wx:if='{{isVvip}}'>
+  <text style='margin-left: 10rpx;'>大V特权</text>
+</view>
+<view class='mission_block_vip' wx:if='{{isVvip}}'>
+  <view class='mission_block_title'>尊享权益</view>
+  <view class='mission_block_content'>1、无门槛抵现</view>
+  <view class='mission_block_content'>2、芝麻粒提现</view>
+  <view class='mission_block_content'>3、尊享双倍芝麻粒</view>
+</view>
+
+<view class='mission_list'>
+  <text style='margin-left: 10rpx;'>推荐任务</text>
+</view>
+<view class='mission_block'>
+  <view class='mission_block_title'>分享用户砍价赚芝麻粒</view>
+  <view class='mission_block_content'>分享一个新用户砍价赚{{new_.default_num}}个芝麻粒</view>
+  <view class='mission_block_content'>分享一个老用户砍价赚{{old_.default_num}}个芝麻粒</view>
+  <view class='mission_block_content'>邀请新用户完成<text style='color:rgb(253, 192, 141)'> {{new_.num}}</text>/{{new_.limit}}</view>
+  <view class='mission_block_content'>邀请老用户完成<text style='color:rgb(253, 192, 141)'> {{old_.num}}</text>/{{old_.limit}}</view>
+  <view class='mission_block_content'>今日最多可得{{new_.default_num * new_.limit + old_.default_num * old_.limit}}个芝麻粒</view>
+  <navigator open-type="switchTab" url='../index/index' wx:if='{{sharefinish == false}}'>
+    <view class='mission_block_unfinished btn'>去完成</view>
+  </navigator>
+  <image src='../../img/complete.png' style='width:80rpx;height:80rpx;' class='mission_block_complete' wx:else />
+</view>
+<view class='mission_block'>
+  <view class='mission_block_title'>砍价得芝麻粒</view>
+  <view class='mission_block_content'>每次砍价得{{bargain.default_num}}个芝麻粒</view>
+  <view class='mission_block_content'>完成<text style='color:rgb(253, 192, 141)'> {{bargain.num}}</text>/{{bargain.limit}}  今日最多可获得{{bargain.default_num * bargain.limit}}个芝麻粒</view>
+  <navigator open-type="switchTab" url='../index/index' wx:if='{{kanfinish == false}}'>
+    <view class='mission_block_unfinished btn'>去砍价</view>
+  </navigator>
+  <image src='../../img/complete.png' style='width:80rpx;height:80rpx;' class='mission_block_complete' wx:else></image>
+</view>
+<view class='mission_block'>
+  <view class='mission_block_title'>关注公众号</view>
+  <view class='mission_block_content'>关注公众号，获得50个芝麻粒</view>
+  <image src='../../img/complete.png' style='width:80rpx;height:80rpx;' class='mission_block_complete_' wx:if='{{followfinish}}'></image>
+  <view class='mission_block_unfinished_' wx:else bindtap='mpweixin'>去关注</view>
+</view>
+<view class='mission_block'>
+  <view class='mission_block_title'>每日签到</view>
+  <view class='mission_block_content'>连续登录奖励</view>
+  <view class='mission_block_content'>每天依次可领取5、10、15、15、20、25、30芝麻粒</view>
+  <view class='mission_block_content'>已连续签到<text style='color:rgb(253, 192, 141)'>{{sign_in_day}}</text>天   今日签到获得 <text style='color:rgb(253, 192, 141)'>{{zhimali}}</text>个芝麻粒</view>
+  <image src='../../img/complete.png' style='width:80rpx;height:80rpx;' class='mission_block_complete'></image>
+</view>
+<view class='mission_list'>
+  <text style='margin-left: 10rpx;'>芝麻粒规则</text>
+</view>
+<view style='position:relative;left:4%;width:92%;margin-bottom:50rpx;'>
+  <view class='zhimali_rule_title'>1、什么是芝麻粒</view>
+  <view class='zhima_rule_content'>芝麻粒是大芝麻推出的专属虚拟货币，能在购物砍价商品时抵扣现金。</view>
+  <view class='zhimali_rule_title'>2、芝麻粒抵扣现金的比例</view>
+  <view class='zhima_rule_content'>100芝麻粒等于1元人民币，可在购买砍价商品时使用，芝麻粒抵扣的金额比例不得超过{{precent}}%。</view>
+  <view class='zhimali_rule_title'>3、如何获得芝麻粒</view>
+  <view class='zhima_rule_content'>你可以通过邀请好友，砍价等方式获取芝麻粒，更多芝麻粒奖励将陆续上线，敬请期待。</view>
+</view>
+
+<view class='mask' wx:if='{{mpweixinShow}}' catchtap='closeMp'></view>
+<view class='mpweixin' wx:if='{{mpweixinShow}}' >
+   <image src='../../img/mpweixin.jpg' style='width:600rpx;height:736rpx;position:relative;' class='mpPic' />
+   <!-- <view class='mptext'>微信搜索大芝麻公众号或截图保存图片识别二维码添加,获得奖励哦！</view>  -->
+</view>
+
+
+

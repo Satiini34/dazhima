@@ -1,0 +1,11 @@
+<form report-submit='true' bindsubmit='codeSubmit'>
+  <view class='qrCode'>
+    <image src="{{'https://kanjia.bigclient.cn' + src}}" style="width:640rpx;height:640rpx;"></image>
+  </view>
+  <view class='checkInput'>
+    <input class='inputNow' type='number' placeholder='请输入核销码' name='cdkey'></input>
+  </view>
+  <button class='confrimCheck' form-type='submit'>
+    确认核销
+  </button>
+</form>

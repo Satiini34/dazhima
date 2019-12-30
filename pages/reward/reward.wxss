@@ -1,0 +1,224 @@
+.RewardbarrageBox {
+  width:100%;
+  height:30px;
+  line-height:30px;
+  background:#000;
+  color:#fff;
+  overflow:hidden;
+  display:flex;
+  direction: row;
+  justify-content:center;
+  box-shadow:5px 5px 5px #ddd; 
+  position: relative;
+  text-align: center;
+}
+@keyframes move {
+  0% {
+    bottom: -20px;
+  }
+  20% {
+    bottom: 0px;
+  }
+  70% {
+    bottom: 0px;
+  }
+  85% {
+    bottom: 30px;
+  }
+  100% {
+    bottom: 30px;
+  }
+}
+.rewardBarrageInfo {
+  width: 96%;
+  left: 2%;
+  justify-content: center;
+  display: flex;
+  flex-direction: row;
+  position: absolute;
+  font-size:14px;
+  color:#fff;
+  line-height:30px;
+  letter-spacing:2px;
+  animation:  move 5s linear infinite;
+}
+
+.inviteBtn {
+  margin:50rpx 0; 
+  width:100%;
+  height: 132rpx;
+  display: flex;
+  direction: row;
+  justify-content: center;
+  /* justify-items: center; */
+}
+.shareBtn {
+  padding:0;
+  background: #fff;
+  width: 50%;
+  line-height: 0;
+}
+.shareBtn::after{ 
+  border: none;
+}
+.invite_text{
+  font-size: 26rpx;
+  color: #333;
+  height: 26prx;
+  margin-top: 30rpx;
+  font-weight: 500;
+}
+.hori {
+  width:100%;
+  height: 10rpx;
+  background: #f1f1f1;
+  margin-top:40rpx;
+}
+.invite_title {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  height: 64rpx;
+  line-height: 64rpx;
+  position: relative;
+  color: #333;
+  font-size: 26rpx;
+  font-weight: 600;
+  letter-spacing: 2px;
+  margin: 30rpx 0;
+}
+.invite_dot_left {
+  width: 34%;
+  height: 30rpx;
+  position: absolute;
+  border-top: 1px dashed rgb(221, 221, 221);
+  bottom: 0rpx;
+  left: 4%;
+}
+.invite_dot_right {
+  width: 34%;
+  height: 30rpx;
+  position: absolute;
+  border-top: 1px dashed rgb(221, 221, 221);
+  bottom: 0rpx;
+  right: 4%;
+}
+.inviter_time {
+  margin-top: 2rpx;
+}
+
+.friends{
+  color:#666;
+  font-size:30rpx;
+  text-align:center;
+}
+.invitedPerson {
+  width:92%;
+  position: relative;
+  left: 4%;
+  height:108rpx;
+  line-height:108rpx;
+  display:flex;
+  direction:row;
+  font-size:12px;
+  color:#333;
+  margin-top:12rpx;
+  border-bottom:1px solid #f1f1f1;
+  box-sizing:border-box;
+  justify-content: flex-start;
+}
+.watchMore {
+  width:186rpx;
+  height: 48rpx;
+  line-height: 48rpx;
+  border:1px solid #666;
+  border-radius:10rpx;
+  font-size:26rpx;
+  color:#333;
+  margin:30rpx auto;
+  letter-spacing:6prx;
+  text-align:center;
+  padding-left:6rpx;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+.no_order {
+  color: #666;
+  font-size: 26rpx;
+}
+.yes_order {
+  font-size: 26rpx;
+  color: rgb(255, 138, 50);
+}
+.status {
+  display: flex;
+  flex: 1;
+}
+.order_sesame {
+  margin-left: 10rpx;
+  margin-top: 46rpx;
+  font-size: 0;
+}
+.sesame_amount {
+  color: rgb(255, 138, 50);
+  font-size: 22rpx;
+  margin-left: 16rpx;
+}
+.mission_list {
+  width: 92%;
+  position: relative;
+  left: 4%;
+  height: 34rpx;
+  line-height: 34rpx;
+  font-size: 34rpx;
+  color: #333;
+  font-weight: 600;
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  margin: 40rpx 0 36rpx 0;
+  border-left: 6rpx solid rgb(253, 160, 63);
+  margin-top: 60rpx;
+}
+.zhima_rule_content {
+  font-size: 24rpx;
+  line-height: 40rpx;
+  color: #666;
+  margin-top: 4rpx;
+}
+
+/* danmu */
+.share_danmu {
+  width: auto;
+  height: 50rpx;
+  line-height: 50rpx;
+  background: #333;
+  position: absolute;
+  top: 10rpx;
+  left: 10rpx;
+  color: #fff;
+  font-size: 24rpx;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-weight: 520;
+  border-radius: 20px;
+  animation: move 6s linear infinite;
+  padding:0 30rpx 0 20rpx;
+  display: flex;
+  flex: 1; 
+  letter-spacing: 2px;
+}
+@keyframes move {
+  0% {
+    opacity: 0;
+  }
+  20% {
+    opacity: 0.8;
+  }
+  60% {
+    opacity: 0.8;
+  }
+  79% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 0;
+  }
+}

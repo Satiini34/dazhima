@@ -1,0 +1,14 @@
+<view class='record' wx:key='' wx:for='{{cashout_record}}' wx:if='{{picShow}}'>
+  <image src='../../img/cash_record.png' style='width:90rpx;height:90rpx;margin-top:40rpx;' />
+  <view class='cash_text' wx:if='{{item.num < 0}}'>账号余额提现到微信零钱</view>
+  <view class='cash_text' wx:if='{{item.num > 0}}'>商家收入</view>
+  <view class='cash_time'>{{item.create_time}}</view>
+  <view class='cash_amount'>
+    <!-- <text style='margin-right:-2px;'>￥</text> -->
+    {{item.num}}元</view>
+  <view class='cash_hori'></view>
+</view>
+<view wx:if='{{!picShow}}' class='picShow'>
+  <image src='../../img/noRecord.png' style='width:140px;height:140px'></image>
+  <view>暂无提现记录</view>
+</view>

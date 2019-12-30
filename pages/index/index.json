@@ -1,0 +1,9 @@
+{
+  "usingComponents": {
+    "add-tips": "../../components/weplug-add-tips-master/index",
+    "location-tip": "../../components/location-tip/location"
+  },
+  "navigationStyle": "custom",
+  "onReachBottomDistance": 50,
+  "enablePullDownRefresh": true
+}

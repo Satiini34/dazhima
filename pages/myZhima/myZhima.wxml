@@ -1,0 +1,5 @@
+<view wx:for='{{zhima_detail}}' wx:key='item' class='detail_block'>
+  <view class='detail_block_info'>{{item.info}}</view>
+  <view class='detail_block_time'>{{item.create_time}}</view>
+  <view class='detail_block_num' class="{{item.num < 0? 'detail_block_num_minus' : 'detail_block_num'}}">{{item.num}}</view>
+</view>

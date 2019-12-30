@@ -1,0 +1,12 @@
+<form bindsubmit='becomeV'>
+  <image src='https://kanjia.bigclient.cn/upload/reward7.png' style='width:100%;height:4260rpx;position:relative;'>
+    <input class='v_nickname' name='nickname' value="{{empty}}"></input>
+    <input class='v_wechat' name='wechat'  value="{{empty}}"></input>
+    <input class='v_district' name='district'  value="{{empty}}"></input>
+    <input class='v_level' name='level'  value="{{empty}}"></input>
+    <input class='v_fans' name='fans'  value="{{empty}}"></input>
+    <textarea class='self_introduce' maxlength="200" name='introduce'  value="{{empty}}"></textarea>
+    <text bindtap='copy' class='v_copy'></text>
+    <button class='v_submit' form-type="submit"></button>
+  </image>
+</form>

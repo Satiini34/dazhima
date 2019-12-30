@@ -1,0 +1,79 @@
+<view class="order_shopBlock" wx:key='item' wx:if='{{contentShow}}'>
+  <view class='kan_orderBlock'>
+    <view class='kan_shopBlockL'>
+      <image src="{{'http://new-bigclient.oss-cn-qingdao.aliyuncs.com' +item.goods_pic}}" class='kan_shopMainPic'></image>
+    </view>
+    <view class='kan_shopBlockR'>
+      <view class="kan_shopName">
+        {{item.goods_name}}
+      </view>
+      <view class='kan_good_price'>
+        原价：￥{{item.goods_price}}
+      </view>
+      <view class='kan_subCategory'>
+        {{item.shop_name}} 
+      </view>
+    </view>
+  </view>
+</view>
+<view class='kan_horiii'></view>
+<view class='kan_coupon_detail' wx:if='{{commentStatusShow}}'>
+  <text class='commentLeft'>上传测评分享截图获芝麻粒</text>  
+  <text class='commentRight' bindtap="{{commentStatus == '立即申请'||commentStatus == '审核未通过，请重新上传' ? 'toWin':''}}">{{commentStatus}}</text>
+</view>
+<view class='kan_horiiii'></view>
+<view class='kan_coupon'>
+  消费券码
+</view>
+<view class='kan_horiiii'></view>
+<view class='kan_coupon_detail'>
+  <view wx:if='{{item.is_use == 0}}'>{{item.cdkey}}</view><view class='cdkey_use' wx:else>{{item.cdkey}}</view>
+  <view wx:if='{{item.is_use == 0}}'><text class='kan_coupon_scan' bindtap='scan'>到店扫商家二维码核销</text><image src='../../img/scan.png' style='width:48rpx;height:44rpx;margin-top:18rpx;position:absolute;right:-10rpx;' bindtap='scan'></image></view>
+  <view wx:if='{{item.is_use == 1}}' class='kan_coupon_scan_used'>已使用</view>
+</view>
+<view class='shop_detail_bottom' />
+<view wx:if='{{item.is_use == 1}}' class='kan_coupon_detail'>
+  <view>使用时间</view>
+  <view class='kan_coupon_expire'>{{item.use_time}}</view>
+</view>
+<view class='shop_detail_bottom' wx:if='{{item.is_use == 1}}'></view>
+<view class='kan_coupon_detail'>
+  <view>使用有效期至</view>
+  <view class='kan_coupon_expire'>{{item.expire_day}}</view>
+</view>
+<view class='shop_detail_bottom' />
+<!-- 店铺详情 -->
+<view class='shopDetail'>
+  <image src="{{'http://new-bigclient.oss-cn-qingdao.aliyuncs.com' +item.shop_main_picture}}" class='shopDetailImg' />
+  <view class='shopDetailShopName'>{{item.shop_name}}</view>
+  <view class='shopDetailSub'>{{item.shop_subcategory_name}}</view>
+  <view class='shopDetailScoreStars'>
+    <image src="{{heart >=1? '../../img/heartRed.png': '../../img/heart.png'}}" style='width:21rpx;height:24rpx;'></image>
+    <image src='../../img/heartHalf.png' wx:if='{{heart ==1.5}}' style='width:21rpx;height:24rpx;'></image>
+    <image src="{{heart >=2? '../../img/heartRed.png': '../../img/heart.png'}}" style='width:21rpx;height:24rpx;margin-left:8rpx;'></image>
+    <image src='../../img/heartHalf.png' wx:if='{{heart ==2.5}}' style='width:21rpx;height:24rpx;'></image>
+    <image src="{{heart >=3? '../../img/heartRed.png': '../../img/heart.png'}}" style='width:21rpx;height:24rpx;margin-left:8rpx;'></image>
+    <image src='../../img/heartHalf.png' wx:if='{{heart ==3.5}}' style='width:21rpx;height:24rpx;'></image>
+    <image src="{{heart >=4? '../../img/heartRed.png': '../../img/heart.png'}}" style='width:21rpx;height:24rpx;margin-left:8rpx;'></image>
+    <image src='../../img/heartHalf.png' wx:if='{{heart ==4.5}}' style='width:21rpx;height:24rpx;'></image>
+    <image src="{{heart >=5? '../../img/heartRed.png': '../../img/heart.png'}}" wx:if='{{!heart ==1.5 || !heart ==2.5 || !heart ==3.5 || !heart ==4.5 ||heart ==5 ||heart ==4 ||heart ==3||heart ==2||heart ==1 }}' style='width:21rpx;height:24rpx;margin-left:8rpx;'></image>
+  </view>
+  <view class='shopDetailLocation'>{{item.shop_address}}</view>
+  <view catchtap='shopAddress' class='ShopDetailShopAddress'><image src='../../img/shopAddress.png' style='width:16px;height:16px;'></image></view>
+  <view class='ShopDetailShopTel' catchtap='shopTel'><image src='../../img/shopTel.png' style='width:16px;height:16px;'></image></view>
+</view>
+<view class='shop_detail_bottom'></view>
+<view class='shop_info_title'>
+  商品内容
+</view>
+<!-- <view class='shop_detail_bottom'></view> -->
+<view class='shop_intro'>
+  <Parser html="{{item.intro}}" html-class="contain_intro"/>
+</view>
+<view style='width:100%;height:1px;background:rgb(238, 238, 238);'></view>
+<view class='shop_info_title'>
+  使用说明
+</view>
+<view class='shop_info' style='padding:0;'>
+  <Parser html="{{item.info}}" html-class="contain"/>
+</view>

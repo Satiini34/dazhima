@@ -1,0 +1,285 @@
+page {
+  background: rgb(252, 106, 30);
+  width: 100%;
+  height: 100%;
+}
+.activity_rule {
+  width: 110rpx;
+  height: 78rpx;
+  position: fixed;
+  right: 0;
+  top: 16rpx;
+  z-index: 10;
+}
+.activity_info {
+  position: absolute;
+  left: 14rpx;
+  top: 8rpx;
+  color: #fff;
+  font-size: 24rpx;
+  line-height: 28rpx;
+  letter-spacing: 2rpx;
+  font-family: Arial, Helvetica, sans-serif;
+}
+.activity_header {
+  width: 98%;
+  height: 536rpx;
+  position: absolute;
+  left: 1%;
+  top: 248rpx;
+}
+.activity_header_invite {
+  position: absolute;
+  top: 24rpx;
+  left: 98rpx;
+  color: #A14A10;
+  font-size: 30rpx;
+  letter-spacing: 2rpx;
+  font-family: 'lanting';
+}
+.activity_header_earn {
+  position: absolute;
+  right: 138rpx;
+  top: 24rpx;
+  color: #A14A10;
+  font-size: 30rpx;
+  letter-spacing: 2rpx;
+  font-family: 'lanting';
+}
+.activity_countdown {
+  position: absolute;
+  top: 110rpx;
+  left: 36rpx;
+  color: #FC7823;
+  font-size: 30rpx;
+  letter-spacing: 2rpx;
+  font-family: 'lanTing';
+  display: flex;
+  height: 30rpx;
+  align-items: center;
+}
+.activity_countdownNumber {
+  font-weight: bold;
+  color: #fff;
+  width: 42rpx;
+  height: 42rpx;
+  border-radius: 6rpx;
+  background: linear-gradient(360deg, #FC7623, #FDB22B);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 10rpx;
+  font-size: 28rpx;
+  font-family: Arial, Helvetica, sans-serif;
+}
+.activity_header_friends {
+  width: 610rpx;
+  height: 70rpx;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  top: 200rpx;
+}
+.activity_header_friendsText {
+  font-size: 28rpx;
+  color: #A14A10;
+  font-family: 'lanTing';
+  position: absolute;
+  left: 30rpx;
+  bottom: 18rpx;
+}
+.activity_progress {
+  width: 660rpx;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  top: 338rpx;
+  background: rgb(255, 224, 160);
+  border-radius: 200rpx;
+  height: 16rpx;
+}
+.activity_progress_active {
+  height: 100%;
+  position: absolute;
+  left: 0;
+  background: linear-gradient(360deg, #FC7623, #FDB22B);
+  border-radius: 200rpx;
+  transition: all 0.6s linear 0.3s;
+}
+.activity_progress_beCash {
+  height: 100%;
+  position: absolute;
+  left: 0;
+  background: rgb(174, 174, 174);
+  transition: width 0.6s ;
+  border-radius: 200rpx;
+}
+.activity_progress_activeImg {
+  position: absolute;
+  width: 32rpx;
+  height: 32rpx;
+  top: -8rpx;
+  transition: all 0.6s linear .3s;
+}
+.toCash {
+  font-size: 30rpx;
+  color: #FC7623;
+  font-weight: bold;
+  position: absolute;
+  top: 34rpx;
+  font-family: 'lanTing';
+}
+.toCashEnd {
+  font-size: 30rpx;
+  color: #FC7623;
+  position: absolute;
+  top: 372rpx;
+  font-family: 'lanTing';
+}
+.toCashNow {
+  font-size: 28rpx;
+  color: #FC7623; 
+  position: absolute;
+  /* top: 290rpx;  */
+  top: -48rpx;
+  font-weight: bold;
+  font-family: 'lanTing';
+  white-space: nowrap;
+}
+.toCashBtn {
+  width: 340rpx;
+  height: 90rpx;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 40rpx;
+}
+.toCashBtnText {
+  position: absolute;
+  left: 50%;
+  top: 14rpx;
+  transform: translateX(-50%);
+  font-size: 36rpx;
+  color: #fff;
+  font-weight: bold;
+}
+.activity_second {
+  width: 98%;
+  height: 474rpx;
+  position: absolute;
+  left: 1%;
+  top: 776rpx;
+}
+.activity_third {
+  width: 98%;
+  height: 406rpx;
+  position: absolute;
+  left: 1%;
+  top: 1244rpx;
+}
+/* 提现榜 */
+.activity_fourth {
+  width: 98%;
+  height: 518rpx;
+  position: absolute;
+  left: 1%;
+  top: 1644rpx;
+}
+.activity_fourth_scrollView {
+  width: 96%;
+  height: 398rpx;
+  position: absolute;
+  top: 1744rpx;
+  left: 2%;
+  background: transparent;
+}
+.activity_fourth_item {
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  justify-items: center;
+  height: 130rpx;
+}
+.rangeImg {
+  width:80rpx;height:80rpx;border-radius:50%;
+}
+.rankImgeOne {
+  width:80rpx;height:80rpx;border-radius:50%;border: 2rpx solid rgb(255, 221, 58);
+}
+.rankNo {
+  width: 10%;
+  color: #FC7823;
+  font-size: 40rpx;
+  font-weight: bold;
+  display: flex;
+  justify-content: center;
+}
+.rankNick {
+  color:#A14A10;
+  font-size: 30rpx;
+  font-family: 'lanTing';
+}
+.rankMoney {
+  width: 29%;
+  color: #FC7823;
+  font-weight: bold;
+  font-size: 30rpx;
+}
+
+.activity_canjia {
+  width: 340rpx;
+  height: 90rpx;
+  position: absolute;
+  top: 338rpx;
+  left: 50%;
+  transform: translateX(-50%);
+}
+.activity_canjiaBtn {
+  font-size: 36rpx;
+  color: #fff;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  top: 14rpx;
+  font-weight: bold;
+}
+
+/* 活动规则 */
+.rule {
+  width: 76%;
+  position: fixed;
+  left: 9%;
+  height: 760rpx;
+  top: 15%;
+  background: #fff;
+  padding: 3% 3%;
+  color: #333;
+  font-size: 26rpx;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  border-radius: 20rpx;
+  font-weight: 555;
+  z-index: 999;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+.rule_title {
+  font-size: 36rpx;
+  font-weight: 600;
+  margin:16rpx 0 16rpx 0;
+  text-align: center;
+}
+.rule_text {
+  line-height: 40rpx;
+  padding: 8rpx 0;
+}
+.rule_dot {
+  background:rgb(252, 141, 38);
+  width: 12rpx;
+  height: 12rpx;
+  margin-right: 20rpx;
+  vertical-align: 2rpx;
+  border-radius: 50%;
+  display: inline-block;
+}

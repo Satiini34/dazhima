@@ -1,0 +1,10 @@
+<view class='locationTip animated fadeIn'>
+  <view class='tipText'>
+    {{text}}
+  </view>
+  <view class='tipBtns'>
+    <view class='cancelTxt'>{{cancelTxt}}</view>
+    <view class='confirmTxt'>{{confirmTxt}}</view>
+  </view>
+</view>
+<view class='mask' />

@@ -1,0 +1,18 @@
+<form bindsubmit='submit'>
+  <view class='headerSon1'>提示:</view>
+  <view class='tipText'>
+    请将本次消费体验分享到朋友圈，文案需体现“大芝麻”平台和商家名字。截图并上传后，芝麻君将在3个工作日内审核完成，审核通过即可收到10%的芝麻粒返还。
+  </view>
+  <view class='optionThird'>
+    <view class='headerSon1'>上传截图</view>
+    <view class='headerSon2'>{{photoNumber}}/1</view>
+  </view>  
+  <view class='optionFourth'>
+    <image src='../../img/photo.png' style='width:80px;height:80px;' bindtap='addPic'></image>
+    <view class='PicShow' wx:for='{{tempFilePaths}}' wx:key="*this">
+      <image src='{{item}}' class='selectPicShow' data-index="{{index}}" mode="scaleToFill"></image>
+      <view class="deleteBtn" data-index="{{index}}" catchtap="deleteImg">X</view>
+    </view>
+  </view>
+  <button form-type='submit' class='submit btn'>提交</button>
+</form>

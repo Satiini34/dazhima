@@ -1,0 +1,117 @@
+<view class='navBar' style='padding-top:{{menuRectTop}}px;height:42px' wx:if='{{versionBelow}}'>
+  <view>
+    <image src='../../img/back2.png' class='navBarBack' catchtap='notPayNow'></image>
+  </view>
+  <view class='navBarTitle'>支付页</view>
+</view>
+<view class='notLoad' wx:if='{{!loadComplete}}' />
+<view style='overflow-x:hidden;padding-top: {{menuRectTop + 36}}px;' wx:if='{{ !paySuccess && loadComplete }}'>
+  <view class="order_shopBlock" wx:key='item'>
+    <view class='kan_orderBlock'>
+      <view class='kan_shopBlockL'>
+        <image src="{{'http://new-bigclient.oss-cn-qingdao.aliyuncs.com' + item.goods_pic}}" class='kan_shopMainPic'></image>
+      </view>
+      <view class='kan_shopBlockR'>
+        <view class="kan_shopName">
+          {{item.goods_name}}
+        </view>
+        <view class='kan_good_price'>
+          原价：￥{{item.price}}
+        </view>
+        <view class='kan_subCategory'>
+          {{item.shop_name}} 
+        </view>
+      </view>
+    </view>
+  </view>
+  <view class='hori'></view>
+  <view style='width:100%;background:#fff;'>
+    <view class='current_pay'>
+      <view>
+        当前金额：<text style='margin-right: -4rpx;color:rgb(255, 137, 50)'>￥</text><text style='color: rgb(255, 137, 50)'>{{item.current_price}}</text> 
+      </view>
+    </view>
+    <view class='current_pay'>
+      <view>
+        可用<text style='color: rgb(255, 137, 50)'>{{sesame}}</text>芝麻粒 抵用<text style='color: rgb(255, 137, 50)'>{{sesame/100}}元</text>
+        <!-- 可用<text style='color: rgb(255, 137, 50)'>{{sesame}}</text>芝麻粒 抵用<text style='color: rgb(255, 137, 50)' wx:if='{{sesame_pay == true}}'>{{sesame/100}}</text> -->
+        <!-- <text style='color: rgb(255, 137, 50)' wx:else>0</text>元 -->
+      </view>
+      <view style='margin-top: -4rpx;'>
+        <switch style='zoom:0.8;' color='rgb(255, 118, 26)' bindchange='deduction' checked></switch>
+      </view>
+    </view>
+    <view class='current_mobile'>
+      联系手机号
+    </view>
+    <view class='current_pay'>
+      <view wx:if="{{mobile !=''}}">{{mobile}}</view>
+      <view wx:else>未绑定手机号</view>
+      <view>
+        <button open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber" class='phone_btn'>切换绑定</button>
+      </view>
+    </view>
+    <view class='hori'></view>
+    <view class='current_mobile' style='margin-top:80rpx;'>
+      使用说明
+    </view>
+    <view class='shop_info'>
+      <Parser html="{{item.info}}" html-class="contain"/>
+    </view>
+    <view class='instructions'>
+      <checkbox-group  bindchange="checkboxChange">
+        <checkbox color='rgb(252, 178, 74)' value="{{haveRead}}" checked="{{haveRead}}">我已认真阅读完套餐的使用说明</checkbox> 
+      </checkbox-group>
+    </view>
+    <view style='width:100%;height:100rpx;'></view>
+  </view>
+</view>
+<view class='pay_tabbar'  wx:if='{{ !paySuccess && loadComplete }}'>
+  <view class='current_price_pay'>实付金额：<text style='color:rgb(255, 137, 50);font-weight:400;'>￥{{pay_amount}}</text></view>
+  <!-- <view class='pay_payNow'> -->
+    <button bindtap='payNow' class='pay_btn' hover-class="taping">结算</button>
+  <!-- </view> -->
+</view>
+
+<!-- 支付成功后页面 -->
+<view style='overflow-x:hidden;padding-top: {{menuRectTop + 66}}px;' wx:if='{{paySuccess}}'>
+  <view style='text-align:center;margin-top:50rpx;'>
+    <image src='../../img/buySuccess.png' style='width:200rpx;height:200rpx;'></image>
+  </view>
+  <view class='successText'>支付成功</view>
+  <view bindtap='back' class='backIndex btn'>返回首页</view>
+  <view class='success_hori'></view>
+  <view class='related'>相关推荐</view>
+  <view wx:for="{{goodsList}}" class="shopBlock" wx:key='item' catchtap="goodItem" id="{{item.id}}">
+    <view class='shopBlockL'>
+      <image src="{{'http://new-bigclient.oss-cn-qingdao.aliyuncs.com' +item.goods_pic}}" class='shopMainPic'>
+        <view class='dailyGoodsRecmmoand' wx:if='{{ item.is_recommend == 1 }}'>今日推荐</view>
+        <view class='dailyGoodsNew' wx:if='{{ item.is_recommend != 1 && item.is_new == 1 }}'>新品上线</view>
+      </image>
+    </view>
+    <view class='shopBlockR'>
+      <view class="shopName">
+        {{item.name}}
+      </view>
+      <view class='good_price'>
+        <text class="{{clickId == item.id?'kan_price':'now_price'}}" wx:if='{{clickId == item.id}}'>砍掉{{bargainPrice}}</text><text class='now_price' wx:else> <text style='margin-right:-5px;'>￥</text> {{item.current_price}}</text><text class='ori_price'><text style='margin-right:-2px;'>￥</text>{{item.price}}</text>
+      </view>
+      <view class='subCategory'>
+        <view style='word-break:break-all;text-overflow:ellipsis;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;align-vertical:middle;'>
+          {{item.shop_name}}
+        </view>  
+      </view>
+      <button class="{{item.button == '已抢完' ?'sellout':'bargin'}} {{item.button == '继续砍' ?'share':'bargin'}}" catchtap='bargin' id="{{item.id}}" data-img='{{item.goods_pic}}' form-type='submit'>
+        {{item.button}}
+      </button>
+      <view class='circleName'>
+        {{item.circle_name}}<text class='circleDistance' wx:if='{{locationShow}}'>距我{{item.distance}}km</text>
+      </view>
+      <view class='bottom_part'>
+        <view><image src='../../img/clickNum.png' style='width:14px;height:14px;'></image> <text style='margin-left:5px;vertical-align:3px;'>{{item.click_num}}</text> </view><view style='margin-left:20px;'><image src='../../img/barginNum.png' style='width:14px;height:14px;'></image> <text style='margin-left:5px;vertical-align:3px;'>{{item.bargain_num}}</text></view>
+      </view>    
+    </view>
+  </view>
+  <view style='width:100%;height:20rpx;background:rgb(249, 249, 249);'></view>
+</view>
+

@@ -1,0 +1,213 @@
+page {
+  width: 100%;
+  height: 100%;
+  overflow-x: hidden;
+}
+.share_countDown {
+  margin-top: 46rpx;
+  font-size: 32rpx;
+  height: 40rpx;
+  text-align: center;
+  font-weight: 500;
+  position: relative;
+}
+.share_rule {
+  width: 182rpx;
+  height: 50rpx;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgb(255, 200, 162);
+  color: #fff;
+  font-size: 22rpx;
+  border-radius: 24rpx;
+}
+.share_kan {
+  width: 86%;
+  position: relative;
+  left: 7%;
+  height: 80rpx;
+  margin-top: 60rpx;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  justify-items: center;
+}
+.share_helpCan{
+  width: 280rpx;
+  height: 80rpx;
+  line-height: 80rpx;
+  color: #fff;
+  font-size: 34rpx;
+  font-weight: 550;
+  background: rgb(255, 117, 15);
+  letter-spacing: 2px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  border-radius: 14rpx;
+}
+.share_Can {
+  width: 280rpx;
+  height: 80rpx;
+  line-height: 80rpx;
+  color: #fff;
+  font-size: 34rpx;
+  font-weight: 550;
+  background: linear-gradient(90deg, #8ed73a, #77c221);
+  letter-spacing: 2px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  border-radius: 14rpx;
+}
+.share_overtime {
+  width: 280rpx;
+  height: 80rpx;
+  line-height: 80rpx;
+  color: #fff;
+  font-size: 34rpx;
+  font-weight: 550;
+  background: #ccc;
+  letter-spacing: 2px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+.share_buyNow {
+  width: 280rpx;
+  height: 78rpx;
+  line-height: 74rpx;
+  color: rgb(254, 169, 119);
+  border: 1px solid rgb(254, 169, 119);
+  box-sizing: border-box;
+  font-size: 34rpx;
+  font-weight: 550;
+  background: #fff;
+  letter-spacing: 4rpx;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  padding-left: 32rpx;
+  border-radius: 14rpx;
+}
+.share_axe {
+  width: 94%;
+  position: relative;
+  left: 3%;
+  margin-top: 60rpx;
+  background: rgb(255, 249, 235);
+  border-radius: 5px;
+  box-shadow: 0px 2px 5px #f0f0f0;
+  padding-bottom: 30rpx;
+}
+.share_axe_title {
+  text-align: center;
+  width: 100%;
+  height: 76rpx;
+  font-weight: 600;
+  font-size: 30rpx;
+  line-height:76rpx;
+  color: rgb(118, 82, 12);
+  border-bottom:1px solid rgb(238, 238, 238);
+}
+.share_axe_tip {
+  text-align: center;
+  width: 100%;
+  color: rgb(118, 82, 12);
+  font-size: 22rpx;
+  height: 88rpx;
+  line-height: 88rpx;
+}
+.share_info {
+  width: 100%;
+  height: 90rpx;
+  display: flex;
+  position: relative;
+  margin-top: 10rpx;
+}
+.share_info_head{
+  width: 70rpx;
+  height: 68rpx;
+  border-radius: 50%;
+  position: absolute;
+  left: 30rpx;
+  top: 50%;
+  transform: translateY(-50%);
+}
+.share_info_nick{
+  font-size: 26rpx;
+  position: absolute;
+  font-family: Arial, Helvetica, sans-serif;
+  left: 120rpx;
+  top: 12rpx;
+  color: rgb(102, 102, 102);
+}
+.share_info_bargain{
+  font-size: 28rpx;
+  position: absolute;
+  right: 30rpx;
+  top: 50%;
+  transform: translateY(-50%);
+  color: rgb(102, 102, 102);
+}
+.share_info_kanjia {
+  font-size: 24rpx;
+  position: absolute;
+  left: 120rpx;
+  top: 46rpx;
+  color: rgb(102, 102, 102);
+}
+.share_info_loadMore{
+  width: 100%;
+  text-align: center;
+  padding: 30rpx 0;
+  background: rgb(255, 249, 235);
+}
+.share_recommand {
+  width: 100%;
+  background: #fff;
+  margin-bottom: 30rpx;
+}
+.share_recommand_title {
+  position: relative;
+  left: 4%;
+  font-size: 34rpx;
+  font-weight: 600;
+  font-family: Arial, Helvetica, sans-serif;
+  margin: 36rpx 0;
+}
+
+/* 活动规则 */
+.rule {
+  width: 64%;
+  position: fixed;
+  left: 16%;
+  height: 550rpx;
+  top: 26%;
+  background: #fff;
+  padding: 16rpx 24rpx;
+  color: #333;
+  font-size: 26rpx;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  line-height: 56rpx;
+  border-radius: 10rpx;
+  font-weight: 555;
+  z-index: 999;
+}
+.rule_title {
+  text-align: center;
+  font-size: 30rpx;
+  font-weight: 600;
+  margin:30rpx 0 16rpx 0;
+}
+
+
+
+.circleNameShare {
+  margin-top: 8rpx;
+  display: flex;
+  direction: row;
+  font-size: 20rpx;
+  color: #c1c1c1;
+  height: 20rpx;
+  line-height: 20rpx;
+}
+.shopName_share {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+}
+

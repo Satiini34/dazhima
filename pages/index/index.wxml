@@ -1,0 +1,120 @@
+<!-- 自定义导航栏 -->
+<view class='navBar' style='padding-top:{{menuRectTop}}px;height:42px' wx:if='{{versionBelow}}'>
+  <view class='navbar_left'>
+    <image src='../../img/position.png' class='navBarBack' />
+    <view class='navbar_left_text' wx:if='{{getUserLocation == 1}}'>杭州</view>
+    <view class='navbar_left_text' wx:if='{{getUserLocation == 2}}'>定位中</view>
+    <view class='navbar_left_text animated pulse infinite' catchtap='getLocation' wx:if='{{getUserLocation == 3}}'>授权位置</view>
+  </view>
+  <view class='navBarTitle'>大芝麻</view>
+</view>
+<view class='mask' wx:if='{{shareShow || popShow}}' bindtap='close_share_popup' />
+<view class='mask' wx:if='{{posterShow}}' catchtap='faceClose' />
+<form report-submit='true' bindsubmit='codeSubmit'>
+  <!-- <official-account style='bottom:0;position:fixed;z-index:9999;width:100%;' /> -->
+  <view style="padding-top: {{menuRectTop + 38}}px;">
+    <!-- <navigator url='../saleCenter/saleCenter'>销售中心</navigator> -->
+    <!-- banner -->
+    <view class="banner"> 
+      <swiper style='width:100%;height:100%;' autoplay="true" interval="6000" circular="true" duratio="500">
+        <block wx:for="{{bannerimgUrls}}" wx:key="index">
+          <swiper-item>
+            <image wx:if='{{index == bannerimgUrls.length - 1}}' src="{{'https://kanjia.bigclient.cn/upload/' + item}}" mode="scaleToFill" bindtap='imageUrlFixed' class='bannerPic'></image>
+            <image wx:if='{{index != bannerimgUrls.length - 1}}' src="{{'https://new-bigclient.oss-cn-qingdao.aliyuncs.com' + item.banner_pic + '?x-oss-process=style/abc'}}" data-url='{{item.link_url}}' mode="scaleToFill" bindtap='imageUrl' class='bannerPic'></image>
+          </swiper-item>
+        </block>
+      </swiper> 
+    </view>
+    <!-- 添加小程序 -->
+    <add-tips duration="1000" id='addTip' />
+    <location-tip />
+    <view wx:for="{{goodsList}}" class="shopBlock" wx:key='item' catchtap="goodItem" id="{{item.id}}">
+      <view class='shopBlockL'>
+        <image src="{{'http://new-bigclient.oss-cn-qingdao.aliyuncs.com' + item.goods_pic + '?x-oss-process=style/abc'}}" class='shopMainPic' binderror='imgLoadErr'>
+          <view class='dailyGoodsRecmmoand' wx:if='{{ item.is_recommend == 1 }}'>今日推荐</view>
+          <view class='dailyGoodsNew' wx:if='{{ item.is_recommend != 1 && item.is_new == 1 }}'>新品上线</view>
+        </image>
+      </view>
+      <view class='shopBlockR'>
+        <view class="shopName">
+          {{item.name}}
+        </view>
+        <view class='good_price'>
+          <text class="{{clickId == item.id?'kan_price':'now_price'}}" wx:if='{{clickId == item.id}}'>砍掉{{bargainPrice}}</text><text class='now_price' wx:else> <text style='margin-right:-4px;'>￥</text> {{item.current_price}}</text><text class='ori_price'><text style='margin-right:-1px;'>￥</text>{{item.price}}</text>
+        </view>
+        <view class='subCategory'>
+          <view style='word-break:break-all;text-overflow:ellipsis;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;align-vertical:middle;'>
+            {{item.shop_name}}
+          </view>  
+        </view>
+        <button class="{{item.button == '已抢完' ?'sellout':'bargin'}} {{item.button == '继续砍' ?'share':'bargin'}}" id="{{item.id}}" data-price="{{item.price}}" data-nowprice="{{item.current_price}}" catchtap='bargin' data-img='{{item.goods_pic}}' wx:if="{{userLogin == false && item.current_price > 1 || item.button == '已抢完'}}" data-all='{{item}}' hover-class="none" form-type='submit'>
+          {{item.button}}
+        </button>
+        <button class="toBuy" id="{{item.id}}" wx:if="{{userLogin == false && item.current_price <= 1 && item.button != '已抢完'}}" hover-class="none" form-type='submit'>
+          立即抢
+        </button>
+        <button class="{{item.button == '已抢完' ?'sellout':'bargin'}}" open-type="getUserInfo" lang="zh_CN" bindgetuserinfo="bindgetuserinfo" wx:if="{{userLogin == true}}" catchtap="test" id="{{item.id}}" >
+          {{item.button}}
+        </button>
+        <view class='circleName'>
+          {{item.circle_name}}<text class='circleDistance' wx:if='{{locationShow}}'>距我{{item.distance}}km</text>
+        </view>
+        <view class='bottom_part'>
+          <view><image src='../../img/clickNum.png' style='width:14px;height:14px;'></image><text style='margin-left:5px;vertical-align:3px;'>{{item.click_num}}</text></view><view style='margin-left:20px;'><image src='../../img/barginNum.png' style='width:14px;height:14px;'></image> <text style='margin-left:5px;vertical-align:3px;'>{{item.bargain_num}}</text></view>
+        </view>   
+        <view class='myfavour' catchtap='beTop' id="{{item.id}}" wx:if='{{item.is_top != undefined}}'>
+          <image src="{{item.is_top == 1?'../../img/top.png':'../../img/cancelTop.png'}}" style='width:39px;height:14px;'></image>
+        </view>
+      </view>
+    </view>
+    <view style='width:100%;height:30rpx;background:rgb(249 ,249 ,249);'></view>
+    <view class='infoMore' wx:if='{{isBottom}}'>更多美食拼命上架中</view>
+    <view class='infoMore' wx:if='{{!isBottom && isLoaded}}'>下拉加载更多内容哦</view>
+  </view>
+  <!-- 分享弹窗 -->
+  <image class="share_popup animated veryFaster zoomIn" wx:if='{{shareShow}}' src='../../img/shareFriends.png'>
+    <!-- <view class='share_popup_top'>每分享 <text class='share_popup_txt'>1</text> 位好友即可获赠 <text class='share_popup_txt'>1</text> 刀</view>
+    <view class='share_popup_middle'>邀请好友砍价，砍到心理价位购买</view> -->
+    <view class='share_popup_top'>全网美食最低价</view>
+    <view class='share_popup_middle'>分享好友砍价提 <text class='share_popup_txt'>￥366</text> 红包</view>
+    <view class='share_popup_bottom'>
+      <button open-type='share' class='share_popup_top_L' form-type="submit" bindtap='share_num' data-share='{{allGoodDetail}}'><image src='../../img/share1.png' style='width:86rpx;height:86rpx;'></image><view class='share_popup_text'>微信好友</view></button>
+  <button bindtap='savePoster' class='share_popup_top_L' form-type="submit"><image src='../../img/friends1.png' style='width:86rpx;height:86rpx;'></image><view class='share_popup_text'>朋友圈</view></button>
+    </view>
+  </image>
+  <!-- 分享海报图 -->
+  <view wx:if='{{posterShow}}' class='sharePoster' style='padding-top:{{doubleMenuRectTop}}px'>
+    <image src="{{'https://kanjia.bigclient.cn' + sharePoster}}" style='width:500rpx;height:890rpx;'></image>
+    <button bindtap='posterToPhone' class='posterBtn btn' form-type="submit">保存图片至相册</button>
+  </view>
+
+  <!-- 新手奖励弹窗 -->
+  <!-- <image src='https://kanjia.bigclient.cn/upload/reward4.png' style='width:620rpx;height:872rpx;position:fixed;top:54%;left:50%;transform:translate(-50%,-50%);z-index:999;' wx:if='{{newCustomer}}'>
+    <button class='newBeeToLook' bindtap='newBeeToLook' form-type="submit">立即查看</button>
+  </image> -->
+
+   <!-- 芝麻记 -->
+  <!-- <movable-area style='' class="release">
+    <movable-view direction='all' inertia='true' bindchange='moveableChange' class='releaseItem' x='{{x}}'
+      y='{{y}}'>
+      <image src='../../img/release.png' style='width:80rpx;height:80rpx;' catchtap='toRelease'></image>
+    </movable-view>
+  </movable-area> -->
+  <!-- <view class="{{ releaseState == true ? 'release animated fadeInRight faster' : 'releaseAway'}}">
+    <image src='../../img/release.png' style='width:80rpx;height:80rpx;' catchtap='toRelease'></image>
+  </view> -->
+  <view class="activity_pop animated slideInUp" wx:if='{{popShow}}'>
+    <image class='popPic' src="{{'https://new-bigclient.oss-cn-qingdao.aliyuncs.com' + pop[0].pop_pic + '?x-oss-process=style/abc'}}" mode='widthFix' bindtap="imageUrl" data-url='{{pop[0].link_url}}' bindload='popImg'>
+    <!-- <image class='popPic' src="../../img/redbagpop.png" mode='widthFix' bindtap="imageUrl" data-url='{{pop[0].link_url}}' bindload='popImg'> -->
+      <image src='../../img/redbagbtn.png' class='redbagbtn'>
+        <view class='redbagbtntext'>立即前往</view>
+      </image>
+    </image>
+    <!-- <view class="cu-bar" bindtap="imageUrl" data-url='{{pop[0].link_url}}'>
+      <view>前往了解</view>
+    </view> -->
+    <view style='margin-top:34rpx;text-align:center;'>
+      <image src='../../img/close.png' style='width:24px;height:24px;' bindtap='closePop' />
+    </view>
+  </view>
+</form> 

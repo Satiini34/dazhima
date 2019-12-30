@@ -1,0 +1,78 @@
+<view class='header_background'></view>
+<view class='salePersonalInfo'>
+  <image class='header_img' src="{{userInfo.headimgurl}}" mode="aspectFit" />
+  <view class='shop_name'>{{userInfo.nickname}}</view>
+  <view class='turnOtherShop' catchtap='changeShop'>切换商家</view> 
+  <view class='data_box_dataset'>
+    <view class='data_box_dataset_detail' bindtap='sale_yesterday'>
+      <view class='data_box_dataset_content' hover-class='clickNow'>{{allContent.sale_total.yesterday}}</view>
+      <view class='data_box_dataset_click'>昨日销售额</view>
+    </view>
+    <view class='data_box_dataset_detail' bindtap='sale_week'>
+      <view class='data_box_dataset_content1' hover-class='clickNow'>{{allContent.sale_total.week}}</view>
+      <view class='data_box_dataset_click'>本周销售额</view>
+    </view>
+    <view class='data_box_dataset_detail' bindtap='sale_month' hover-class='clickNow'>
+      <view class='data_box_dataset_content' hover-class='clickNow'>{{allContent.sale_total.month}}</view>
+      <view class='data_box_dataset_click'>本月销售额</view>
+    </view>
+  </view>
+  <view class='data_box_dataset1'>
+    <view class='data_box_dataset_detail' bindtap='saleA_yesterday'>
+      <view class='data_box_dataset_content' hover-class='clickNow'>{{allContent.sale_num.yesterday}}</view>
+      <view class='data_box_dataset_click'>昨日成交量</view>
+    </view>
+    <view class='data_box_dataset_detail' bindtap='saleA_week'>
+      <view class='data_box_dataset_content1' hover-class='clickNow'>{{allContent.sale_num.week}}</view>
+      <view class='data_box_dataset_click'>本周成交量</view>
+    </view>
+    <view class='data_box_dataset_detail' bindtap='saleA_month' hover-class='clickNow'>
+      <view class='data_box_dataset_content' hover-class='clickNow'>{{allContent.sale_num.month}}</view>
+      <view class='data_box_dataset_click'>本月成交量</view>
+    </view>
+  </view>
+</view>
+<view style='font-size:17px;color:#666;font-weight:600;margin-left:3%;margin-top:-12px;'>成交数据</view>
+<view class='filterPart'>
+  <picker mode='date' bindchange='timeStart'>{{startTime}}</picker>
+  <picker mode='date' bindchange='timeOver'>{{overTime}}</picker>
+  <picker range='{{allContent.goods}}' range-key='goods_name' bindchange='goodsSel' class='goodsSel'>{{goodsSel}}</picker>
+</view>
+<view style='margin-top:30rpx;text-align:center;'>
+  <button size='mini' type='primary' class='fliter' bindtap='fliter'>筛选</button>
+</view>
+<view class='deal_title' style="margin-top:60rpx;">
+  <view class='checked_detail' style='width:36%;text-align:left;'>商品名</view>
+  <view class='checked_detail' style='width:17%;'>起砍价</view>
+  <view class='checked_detail' style='width:17%;'>砍价次数</view>
+  <view class='checked_detail' style='width:30%;'>成交金额</view>
+</view>
+<view class='sale_content' wx:for='{{allContent.goods_sale}}' wx:key='item'>
+  <view class='checked_content_listF'>
+    <view>{{item.name}}</view>
+  </view> 
+  <view class='checked_content_listS'>
+    <view>${{item.start_price}}</view>
+  </view>
+  <view class='checked_content_listT'>
+    <view>{{item.daily_all_bargain_num}}</view>
+  </view>
+  <view class='checked_content_listFH'>
+    ${{item.total_amount}} + 
+    <image src='../../img/reward_zhima.png' class='sesame' />
+    {{item.use_sesame}}
+  </view>
+</view>
+
+<!-- 切换商家 -->
+<view class='mask' wx:if='{{shopSel}}' catchtap='faceClose' />
+<view wx:if='{{shopSel}}' class='shopSel animated fadeInUp faster'>
+  <!-- <scroll-view scroll-y> -->
+    <block wx:for='{{allContent.shops}}' wx:key='this'>
+      <view class='labelSingle' id='{{item.shop_id}}' bindtap='whichShop' hover-class='shopSeling'>
+        {{item.shop_name}}
+      </view>
+    </block>
+  <!-- </scroll-view> -->
+</view>
+

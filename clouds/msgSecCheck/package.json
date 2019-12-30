@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "openapi": [
+      "security.msgSecCheck"
+    ]
+  },
+  "dependencies": {
+    "wx-server-sdk": "^1.5.0"
+  }
+}

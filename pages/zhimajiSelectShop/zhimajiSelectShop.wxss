@@ -1,0 +1,54 @@
+/* 关联商家 */
+/* .shopsHeader {
+  width: 100%;
+  height: 50rpx;
+  line-height: 50rpx;
+  font-size: 34rpx;
+  font-family: 'lanTing';
+  font-weight: bold;
+  text-align: center;
+  position: relative;
+  letter-spacing: 4rpx;
+} */
+.closeShops {
+  position: absolute;
+  top: 50%;
+  font-size: 40rpx;
+  transform: translateY(-50%);
+  left: 4%;
+  font-family: Arial, Helvetica, sans-serif;
+}
+.shopsScrollView {
+  width: 92%;
+  position: relative;
+  left: 4%;
+  height: 90%;
+  background: #fff;
+  /* margin-top: 40rpx; */
+}
+.shopChooseBlock {
+  padding: 10rpx 0;
+  border-bottom: 1px solid rgb(246, 246, 246);
+  display: flex;
+  flex-direction: row;
+}
+.shopChooseBlock_left {
+  position: relative;
+}
+.shopChooseBlock_right {
+  margin-left: 20rpx;
+}
+.shopChoose {
+  font-size: 30rpx;
+  line-height: 50rpx;
+  letter-spacing: 2rpx;
+  color: #333;
+  font-weight: bold;
+  font-family: 'lanTing';
+}
+.shopChooseCircle {
+  font-size: 22rpx;
+  letter-spacing: 2rpx;
+  color: #999;
+  font-family: 'lanTing';
+}

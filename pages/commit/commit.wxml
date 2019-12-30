@@ -1,0 +1,128 @@
+<view class='notLoad' wx:if='{{!loadComplete}}'></view>
+<view wx:else>
+  <view class='header'>
+    <view class="{{clickNo == 1?'headerRecClick':'headerRec'}}" bindtap='recommand'>热门</view>
+    <view class="{{clickNo == 2?'headerDisClick':'headerDis'}}" bindtap='distance'>附近</view>
+  </view>
+  <swiper style='width:100%;' bindchange="swiperChange" current='{{current}}' class='swiperChange'>
+    <swiper-item>
+      <scroll-view scroll-y bindscrolltolower='beDownTrigger' bindscrolltoupper='reFresh' lower-threshold='{{bottomDistance}}' upper-threshold='-50' bindscroll='scrolling' scroll-top='{{presetDistance}}'>
+      <view style='display:flex;flex:1;width:98%;position:relative;left:1%;'>
+        <view class="waterfallFather_mine" id='waterfallLeft'>
+          <view class='waterfall_mine animated fast slideInUp' wx:for='{{articleList}}' wx:key='index' bindtap='toDetail' id='{{item.id}}' data-detail='{{item}}' wx:if='{{index%2==0}}'>
+            <image mode='widthFix' src="{{'http://new-bigclient.oss-cn-qingdao.aliyuncs.com' + item.imgurl + '?x-oss-process=style/abc'}}" class='waterfallImage' bindload='waterfallImageLeft' lazy-load="true" />
+            <view class='waterfall_title'>
+              <text decode="true">{{item.title}}</text>
+            </view>
+            <!-- <view class='waterfall_like'>
+              <view class='waterfall_like_left'>
+                <image src='{{item.headimgurl}}' style='width:34rpx;height:34rpx;border-radius:50%;vertical-align:-6rpx;'></image>
+                <text class='waterfall_like_left_nick'>{{item.nickname}}</text>
+              </view>
+              <view class='waterfall_like_right' id='{{item.id}}' wx:if='{{clickNo == 1}}' catchtap="{{!isShow ? 'bingo': 'bingoTest'}}">
+                <button class='clearBtn' style='padding:0;display:inline;' open-type="getUserInfo" lang="zh_CN" bindgetuserinfo="bindgetuserinfo" wx:if='{{isShow}}'>
+                  <image src='../../img/detailLike.png' style='width:28rpx;height:28rpx;vertical-align:-6rpx;' />
+                </button>
+                <image src="{{ item.status == 1? '../../img/detailLiked.png':'../../img/detailLike.png'}}" style='width:28rpx;height:28rpx;vertical-align:-6rpx;' wx:if='{{!isShow}}' />
+                <text class='waterfall_like_left_num'>{{ item.num }}</text>
+              </view>
+            </view> -->
+            <view class='waterfall_like_dis '>
+              <view class='waterfall_like_left_dis'>
+                <image src='{{item.headimgurl}}' style='width:34rpx;height:34rpx;border-radius:50%;vertical-align:-6rpx;'></image>
+                <text class='waterfall_like_left_nick' decode="true">{{item.nickname}}</text>
+              </view>
+              <view class='waterfall_like_right_dis' id='{{item.id}}' catchtap="{{!isShow ? 'bingo': 'bingoTest'}}">
+                <button class='clearBtn' style='padding:0;display:inline;line-height:0;' open-type="getUserInfo" lang="zh_CN" bindgetuserinfo="bindgetuserinfo" wx:if='{{isShow}}'>
+                  <image src='../../img/detailLike.png' style='width:28rpx;height:28rpx;vertical-align:-6rpx;' />
+                </button>
+                <image src="{{ item.status == 1? '../../img/detailLiked.png':'../../img/detailLike.png'}}" style='width:28rpx;height:28rpx;vertical-align:-4rpx;margin-right:6rpx;' wx:if='{{!isShow}}' />
+                <text class='waterfall_like_left_num_dis'>{{ item.num }}</text>
+              </view>
+            </view>
+          </view>
+        </view>
+        <view class="waterfallFather_mine">
+          <view class='waterfall_mine animated fast slideInUp' wx:for='{{articleList}}' wx:key='index' bindtap='toDetail' id='{{item.id}}' data-detail='{{item}}' wx:if='{{index%2==1}}'>
+            <image mode='widthFix' src="{{'http://new-bigclient.oss-cn-qingdao.aliyuncs.com' + item.imgurl}}" class='waterfallImage' bindload='waterfallImageRight' lazy-load="true" />
+            <view class='waterfall_title'>
+              <text decode="true">{{item.title}}</text>
+            </view>
+            <view class='waterfall_like_dis '>
+              <view class='waterfall_like_left_dis'>
+                <image src='{{item.headimgurl}}' style='width:34rpx;height:34rpx;border-radius:50%;vertical-align:-6rpx;'></image>
+                <text class='waterfall_like_left_nick' decode="true">{{item.nickname}}</text>
+              </view>
+              <view class='waterfall_like_right_dis' id='{{item.id}}' catchtap="{{!isShow ? 'bingo': 'bingoTest'}}">
+                <button class='clearBtn' style='padding:0;display:inline;line-height:0;' open-type="getUserInfo" lang="zh_CN" bindgetuserinfo="bindgetuserinfo" wx:if='{{isShow}}'>
+                  <image src='../../img/detailLike.png' style='width:28rpx;height:28rpx;vertical-align:-6rpx;' />
+                </button>
+                <image src="{{ item.status == 1? '../../img/detailLiked.png':'../../img/detailLike.png'}}" style='width:28rpx;height:28rpx;vertical-align:-4rpx;margin-right:6rpx;' wx:if='{{!isShow}}' />
+                <text class='waterfall_like_left_num_dis'>{{ item.num }}</text>
+              </view>
+            </view>
+            <!-- <view class='waterfall_like'>
+              <view class='waterfall_like_left'>
+                <image src='{{item.headimgurl}}' style='width:34rpx;height:34rpx;border-radius:50%;vertical-align:-6rpx;'></image>
+                <text class='waterfall_like_left_nick'>{{item.nickname}}</text>
+              </view>
+              <view class='waterfall_like_right' bindtap="{{ !isShow ? 'bingo': 'bingoTest' }}" id='{{item.id}}' wx:if='{{clickNo == 1}}'>
+                <button class='clearBtn' style='padding:0;display:inline;font-size:0!important;' open-type="getUserInfo" lang="zh_CN" bindgetuserinfo="bindgetuserinfo" wx:if='{{isShow}}'>
+                  <image src='../../img/detailLike.png' style='width:28rpx;height:28rpx;vertical-align:-6rpx;' />
+                </button>
+                <image src="{{ item.status == 1? '../../img/detailLiked.png':'../../img/detailLike.png'}}" style='width:28rpx;height:28rpx;vertical-align:-6rpx;' wx:if='{{!isShow}}' />
+                <text class='waterfall_like_left_num'>{{ item.num }}</text>
+              </view>
+            </view> -->
+          </view>
+        </view>
+      </view>
+    </scroll-view>
+  </swiper-item>
+  <swiper-item>
+    <scroll-view scroll-y bindscrolltolower='beDownTrigger' bindscrolltoupper='reFresh' lower-threshold='{{bottomDistance}}' upper-threshold='{{topDistance}}' bindscroll='scrolling' scroll-top='{{presetDistance}}'>
+      <view style='display:flex;flex:1;width:98%;position:relative;left:1%;'>
+        <view class="waterfallFather_mine" id='waterfallRight'>
+          <view class='waterfall_mine animated fast delay-1s slideInUp' wx:for='{{articleList_bak}}' wx:key='index' bindtap='toDetail' id='{{item.id}}' data-detail='{{item}}' wx:if='{{index%2==0}}'>
+            <image mode='widthFix' src="{{'http://new-bigclient.oss-cn-qingdao.aliyuncs.com' + item.imgurl}}" class='waterfallImage' bindload='waterfallImageLeft' lazy-load="true" />
+            <view class='waterfall_title'>
+              <text decode="true">{{item.title}}</text>
+            </view>
+            <view class='waterfall_like_dis'>
+              <view class='waterfall_like_left_dis'>
+                <image src='{{item.headimgurl}}' style='width:34rpx;height:34rpx;border-radius:50%;vertical-align:-6rpx;'></image>
+                <text class='waterfall_like_left_nick' decode="true">{{item.nickname}}</text>
+              </view>
+              <view class='waterfall_like_right_dis'>
+                <image src='../../img/locationIcon.png' style='width:28rpx;height:28rpx;vertical-align:-4rpx;' />
+                <text class='waterfall_like_left_num_dis'>{{ item.distance }}km</text>
+              </view>
+            </view>
+          </view>
+        </view>
+        <view class="waterfallFather_mine">
+          <view class='waterfall_mine animated fast delay-1s slideInUp' wx:for='{{articleList_bak}}' wx:key='index' bindtap='toDetail' id='{{item.id}}' data-detail='{{item}}' wx:if='{{index%2==1}}'>
+            <image mode='widthFix' src="{{'http://new-bigclient.oss-cn-qingdao.aliyuncs.com' + item.imgurl}}" class='waterfallImage' bindload='waterfallImageRight' lazy-load="true" />
+            <view class='waterfall_title'>
+              <text decode="true">{{item.title}}</text>
+            </view>
+            <view class='waterfall_like_dis'>
+              <view class='waterfall_like_left_dis'>
+                <image src='{{item.headimgurl}}' style='width:34rpx;height:34rpx;border-radius:50%;vertical-align:-6rpx;'></image>
+                <text class='waterfall_like_left_nick' decode="true">{{item.nickname}}</text>
+              </view>
+              <view class='waterfall_like_right_dis'>
+                <image src='../../img/locationIcon.png' style='width:28rpx;height:28rpx;vertical-align:-4rpx;' />
+                <text class='waterfall_like_left_num_dis'>{{ item.distance }}km</text>
+              </view>
+            </view>
+          </view>
+        </view>
+      </view>
+    </scroll-view>
+  </swiper-item>
+  </swiper>
+  <view class="release" wx:if='{{loginIn}}'>
+    <image src='../../img/release.png' style='width:80rpx;height:80rpx;' catchtap='toRelease'></image>
+  </view>
+</view>

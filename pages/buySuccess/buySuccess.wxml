@@ -1,0 +1,34 @@
+<view style='text-align:center;margin-top:50rpx;'>
+  <image src='../../img/buySuccess.png' style='width:200rpx;height:200rpx;'></image>
+</view>
+<view class='successText'>支付成功</view>
+<view style='text-align:center;margin-top:40rpx;'>
+  <image src='../../img/backIndex.png' bindtap='back' style='width:310rpx;height:72rpx;'></image>
+</view>
+<view class='success_hori'></view>
+<view class='related'>相关推荐</view>
+<view wx:for="{{goodsList}}" class="shopBlock" wx:key='item' catchtap="goodItem" id="{{item.id}}" wx:if='{{!picShow}}'>
+  <view class='shopBlockL'>
+    <image src="{{'http://new-bigclient.oss-cn-qingdao.aliyuncs.com' +item.goods_pic}}" class='shopMainPic'></image>
+  </view>
+  <view class='shopBlockR'>
+    <view class="shopName">
+      {{item.name}}
+    </view>
+    <view class='good_price'>
+      <text class='now_price'> <text style='margin-right:-7px;'>￥</text> {{item.current_price}}</text><text class='ori_price'><text style='margin-right:-2px;'>￥</text>{{item.price}}</text>
+    </view>
+    <view class='subCategory'>
+      {{item.shop_name}} 
+    </view>
+    <button class="{{item.button == '已抢完' ?'sellout':'bargin'}}" catchtap='bargin' id="{{item.id}}" data-img='{{item.goods_pic}}' form-type='submit'>
+      {{item.button}}
+    </button>
+    <view class='circleName'>
+      {{item.circle_name}}<text class='circleDistance' wx:if='{{locationShow}}'>距我{{item.distance}}km</text>
+    </view>
+    <view class='bottom_part'>
+      <view><image src='../../img/clickNum.png' style='width:14px;height:14px;'></image> <text style='margin-left:5px;vertical-align:3px;'>{{item.click_num}}</text> </view><view style='margin-left:20px;'><image src='../../img/barginNum.png' style='width:14px;height:14px;'></image> <text style='margin-left:5px;vertical-align:3px;'>{{item.bargain_num}}</text></view>
+    </view>    
+  </view>
+</view>

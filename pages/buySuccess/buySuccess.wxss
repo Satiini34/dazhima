@@ -1,0 +1,26 @@
+.successText {
+  font-size: 36rpx;
+  color: rgb(254, 174, 114);
+  font-weight: 600;
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  text-align: center;
+  margin-top: 40rpx;
+  letter-spacing: 4rpx;
+  padding-left: 4rpx;
+}
+.success_hori {
+  width: 100%;
+  height: 2rpx;
+  background: rgb(232, 232, 232);
+  margin-top: 50rpx;
+}
+.related {
+  width: 92%;
+  position: relative;
+  left: 4%;
+  font-size: 32rpx;
+  color: #333;
+  margin: 30rpx 0;
+  letter-spacing: 4rpx;
+  font-weight: 555;
+}

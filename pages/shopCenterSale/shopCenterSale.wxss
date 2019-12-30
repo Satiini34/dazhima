@@ -1,0 +1,50 @@
+.deal_tabbar {
+  width: 100%;
+  background: #fff;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 50rpx;
+}
+.tabbar_item {
+  width: 19%;
+  color: #999;
+  font-size: 26rpx;
+  line-height: 26rpx;
+  padding: 24rpx 0 20rpx 0;
+  text-align: center;
+  margin: 0 3%;
+}
+.tabbar_item_choice {
+  width: 19%;
+  font-weight: 550;
+  text-align: center;
+  font-size: 26rpx;
+  line-height: 26rpx;
+  padding: 24rpx 0 20rpx 0;
+  margin: 0 3%;
+  color: rgb(249, 186, 144);
+  border-bottom: 4rpx solid rgb(249, 186, 144);
+  transition: color 500ms;
+}
+.checked_content_listF {
+  width: 38%;
+  /* display: flex; */
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  display: block;
+  display: -webkit-box;
+}
+.checked_content_listS {
+  width: 18%;
+  text-align: center;
+  /* margin-left: -7%; */
+}
+.checked_content_listT {
+  width: 32%;
+  text-align: center;
+}
+.checked_content_listFH {
+  width: 12%;
+  text-align: center;
+}
