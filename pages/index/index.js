@@ -33,6 +33,7 @@ Page({
     releaseState: true,
     pop: '',
     popShow: false,
+    popShowDelay: false,
     locationTip: false
   },
 
@@ -59,19 +60,15 @@ Page({
     //扫小程序码进
     if (options.scene != undefined) {
       let sharePosterQr = options.scene;
-      if (sharePosterQr.length >= 15){
-      /* //不拼接当天日期
-        let scan_goods_id = sharePosterQr.substr(0, 14)
-        let scan_share_id = sharePosterQr.substr(14, sharePosterQr.length - 1)
-        that.setData({
-          goods_id: scan_goods_id,
-          goods_id_share: scan_goods_id,
-          share_id: scan_share_id
-        })
+      // 扫优惠券二维码
+      let reg_c = /coupon\d+/g;
+      if (reg_c.test(sharePosterQr) == true) {
+        let couponId = sharePosterQr.replace("coupon", "");
         wx.navigateTo({
-          url: '../share/share?share_id=' + scan_share_id + '&goods_id=' + scan_goods_id
+          url: `../coupon/coupon?id=${couponId}`,
         })
-        */
+      }
+      if (sharePosterQr.length >= 15){
         // 自动拼接当天日期
         let scan_share_id = sharePosterQr.substr(14, sharePosterQr.length - 1)
         let scan_goods_id = sharePosterQr.substr(0, 14);
@@ -154,6 +151,11 @@ Page({
       })
     }
 
+    // 用户首次进入首页未加载数据屏幕空白(手机拒绝授权微信GPS信息未知是否会走getLocation的sueccess或fail事件???)
+    if (wx.getStorageSync('nowCity') == '') {
+      that.Dailygoodlist();
+    } 
+    
     //地理位置授权
     wx.getLocation({
       type: 'gcj02',
@@ -168,10 +170,13 @@ Page({
           success(res) {
             if (res.data.status == 0) {
               wx.setStorageSync('nowCity', res.data.result.ad_info.city)
+              that.setData({
+                popShowDelay: true
+              })
             }
           }
         })
-        that.Dailygoodlist();
+        that.DailygoodlistBak();
         setTimeout( () => {
           that.setData({
             getUserLocation: 1,
@@ -180,7 +185,7 @@ Page({
         },250)
       },
       fail () {
-        if(wx.getStorageSync('locationTip') == ''){
+        if (wx.getStorageSync('locationTip') == ''){
           that.setData({
             locationTip: true
           })
@@ -213,6 +218,9 @@ Page({
         }
       }
     })
+
+    // 弹窗顺序
+    if(wx.getStorageSync('locationTip') == 'showed') that.setData({ popShowDelay: true })
 
     // banner图
     wx.request({
@@ -263,46 +271,45 @@ Page({
 
   getLocation() {
     var that = this;
-    if(wx.getStorageSync('nowCity') == ''){
-      wx.getLocation({
-        type: 'gcj02',
-        success(res) {
-          wx.setStorageSync('userLocation', res)
-        },
-      })
-    } else {
-      wx.openSetting({
-        success(res) {
-          if (res.authSetting['scope.userLocation'] == true) {
-            that.setData({
-              getUserLocation: 1,
-            })
-            wx.getLocation({
-              type: 'gcj02',
-              success (res) {
-                wx.setStorageSync('userLocation', res)
-                that.Dailygoodlist()
-                that.setData({
-                  getUserLocation: 1,
-                  locationShow: true
-                })
-                let tencentMapKey = 'JAXBZ-ZVACX-OGN46-7DUJS-7UO2J-QWBYE';
-                let latitude = res.latitude;
-                let longitude = res.longitude;
-                wx.request({
-                  url: `https://apis.map.qq.com/ws/geocoder/v1/?location=${latitude},${longitude}&key=${tencentMapKey}`,
-                  success(res) {
-                    if (res.data.status == 0) {
-                      wx.setStorageSync('nowCity', res.data.result.ad_info.city)
-                    }
-                  }
-                })
-              }
-            })
-          }
+    wx.openSetting({
+      success(res) {
+        if (res.authSetting['scope.userLocation'] == undefined) {
+          wx.setStorageSync('leftHand', true)
         }
-      })
-    }
+        if (res.authSetting['scope.userLocation'] == true) {
+          wx.getLocation({
+            type: 'gcj02',
+            success (res) {
+              wx.setStorageSync('userLocation', res)
+              that.setData({
+                getUserLocation: 1,
+                locationShow: true,
+                locationTip: false
+              })
+              that.DailygoodlistBak()
+              let tencentMapKey = 'JAXBZ-ZVACX-OGN46-7DUJS-7UO2J-QWBYE';
+              let latitude = res.latitude;
+              let longitude = res.longitude;
+              wx.request({
+                url: `https://apis.map.qq.com/ws/geocoder/v1/?location=${latitude},${longitude}&key=${tencentMapKey}`,
+                success(res) {
+                  if (res.data.status == 0) {
+                    wx.setStorageSync('nowCity', res.data.result.ad_info.city)
+                  }
+                }
+              })
+            }
+          })
+        }
+      }
+    })
+  },
+
+  okEvent () {
+    this.setData({
+      popShowDelay: true,
+      locationTip: false
+    })
   },
 
   //跳转详情页
@@ -357,44 +364,44 @@ Page({
     encrypt_rsa = RSA.KEYUTIL.getKey(key);
     let encStr = encrypt_rsa.encrypt(newStr1);
     encStr = RSA.hex2b64(encStr);
-    // that.Bargain(encStr, good_id);
-    if (e.currentTarget.dataset.all.button == '砍价') {
-      let closeTime = Date.parse(new Date);
-      if (wx.getStorageSync('fromID') == '' || wx.getStorageSync('fromID') < closeTime) {
-        let x = new Date(new Date(new Date().toLocaleDateString()).getTime() + 24 * 60 * 60 * 1000 - 1);
-        let y = Date.parse(x);
-        wx.requestSubscribeMessage({
-          tmplIds: ['AZ2nuVrm8yt4KTZ7pvTKX87u2mlBmshPSnyC08SkwuI'],
-          success (res) {
-            if (res.AZ2nuVrm8yt4KTZ7pvTKX87u2mlBmshPSnyC08SkwuI === 'accept') {
-              wx.setStorage({
-                key: 'fromID',
-                data: y,
-              })
-            } else {
-              wx.setStorageSync('formReject', parseInt(wx.getStorageSync('formReject') + 1))
-              if(wx.getStorageSync('formReject') == 2) {
-                wx.setStorage({
-                  key: 'fromID',
-                  data: y,
-                })
-                wx.setStorage({
-                  key: 'formReject',
-                  data: 0,
-                })
-              }
-            }
-          },
-          complete (res) {
-            that.Bargain(encStr, good_id);
-          }
-        })
-      } else {
-        that.Bargain(encStr, good_id);
-      }
-    } else {
-      that.Bargain(encStr, good_id);
-    }
+    that.Bargain(encStr, good_id);
+    // if (e.currentTarget.dataset.all.button == '砍价') {
+    //   let closeTime = Date.parse(new Date);
+    //   if (wx.getStorageSync('fromID') == '' || wx.getStorageSync('fromID') < closeTime) {
+    //     let x = new Date(new Date(new Date().toLocaleDateString()).getTime() + 24 * 60 * 60 * 1000 - 1);
+    //     let y = Date.parse(x);
+    //     wx.requestSubscribeMessage({
+    //       tmplIds: ['AZ2nuVrm8yt4KTZ7pvTKX87u2mlBmshPSnyC08SkwuI'],
+    //       success (res) {
+    //         if (res.AZ2nuVrm8yt4KTZ7pvTKX87u2mlBmshPSnyC08SkwuI === 'accept') {
+    //           wx.setStorage({
+    //             key: 'fromID',
+    //             data: y,
+    //           })
+    //         } else {
+    //           wx.setStorageSync('formReject', parseInt(wx.getStorageSync('formReject') + 1))
+    //           if(wx.getStorageSync('formReject') == 2) {
+    //             wx.setStorage({
+    //               key: 'fromID',
+    //               data: y,
+    //             })
+    //             wx.setStorage({
+    //               key: 'formReject',
+    //               data: 0,
+    //             })
+    //           }
+    //         }
+    //       },
+    //       complete (res) {
+    //         that.Bargain(encStr, good_id);
+    //       }
+    //     })
+    //   } else {
+    //     that.Bargain(encStr, good_id);
+    //   }
+    // } else {
+    //   that.Bargain(encStr, good_id);
+    // }
   },
 
   Bargain (n ,id) {
@@ -470,19 +477,51 @@ Page({
 
   onShow () {
     var that = this;
+    if (wx.getStorageSync('leftHand') == true) {
+      wx.getLocation({
+        type: 'gcj02',
+        success(res) {
+          wx.setStorageSync('userLocation', res)
+          that.setData({
+            getUserLocation: 1,
+            locationShow: true,
+            popShowDelay: true
+          })
+          that.DailygoodlistBak();
+          that.setData({ locationTip: false })
+        },
+        fail () {
+          // wx.removeStorageSync('leftHand');
+          if (wx.getStorageSync('locationTip') == '') that.setData({ locationTip: true })
+        }
+      })
+    }
     // 判断新老用户(服务器端是否有数据)
     setTimeout( () => {
       wx.getStorageSync('qrop') != '' ? that.setData({ userLogin: false }) : that.setData({ userLogin: true })
     }, 599)
 
-    // 判断是否为分享页返回，是刷新页面数据
-    if (wx.getStorageSync('shareUnLoad') == true) {
-      that.setData({page: 1})
-      setTimeout(()=> {
-        that.FirstPageData();
-        wx.removeStorageSync('shareUnLoad');
-      },500)
+    // // 判断是否为分享页返回，是刷新页面数据
+    // if (wx.getStorageSync('shareUnLoad') == true) {
+    //   that.setData({page: 1})
+    //   setTimeout(()=> {
+    //     that.FirstPageData();
+    //     wx.removeStorageSync('shareUnLoad');
+    //   },500)
+    // }
+
+    // 组件加载授权地理位置刷新列表
+    if(wx.getStorageSync('refreshMainList') == true) {
+      setTimeout( ()=> {
+        that.DailygoodlistBak();
+        wx.removeStorageSync('refreshMainList')
+      }, 1111)
     }
+
+    // 分享页点击允许地理位置授权
+    setTimeout( ()=> {
+      if (wx.getStorageSync('userLocation') != '') that.setData({ locationTip: false })
+    }, 500)
   },
 
   // 加载第一页数据
@@ -503,9 +542,6 @@ Page({
       },
       success(res) {
         if (res.data.code == 0) {
-          // for (let k = 0; k < res.data.data.length; k++) {
-          //   res.data.data[k].shop_name.length > 20 ? res.data.data[k].shop_name = res.data.data[k].shop_name.slice(0, 19) + '…' : res.data.data[k].shop_name = res.data.data[k].shop_name
-          // }
           that.setData({
             goodsList: res.data.data
           })
@@ -560,9 +596,6 @@ Page({
               })
             }, 500)
           }
-          // for(let k=0;k<res.data.data.length;k++){
-          //   res.data.data[k].shop_name.length > 20 ? res.data.data[k].shop_name = res.data.data[k].shop_name.slice(0, 19) + '…' : res.data.data[k].shop_name = res.data.data[k].shop_name
-          // }
           that.setData({
             goodsList: that.data.goodsList.concat(res.data.data)
           })
@@ -570,6 +603,49 @@ Page({
       },
       fail () {
         setTimeout( () => {
+          wx.reLaunch({
+            url: '../index/index',
+          })
+        }, 1000)
+      }
+    })
+  },
+
+  DailygoodlistBak() {
+    var that = this;
+    let dail_good_url, userId;
+    if (wx.getStorageSync('qrop') != '') {
+      dail_good_url = 'dailyGoodsList'
+      userId = wx.getStorageSync('qrop').id;
+    } else {
+      dail_good_url = 'dailyGoodsList2';
+      userId = ''
+    }
+    wx.request({
+      url: 'https://kanjia.bigclient.cn/api/api/' + dail_good_url,
+      method: 'POST',
+      data: {
+        latitude: wx.getStorageSync('userLocation').latitude,
+        longitude: wx.getStorageSync('userLocation').longitude,
+        user_id: userId,
+        type: 1,
+        p: 1
+      },
+      success(res) {
+        if (res.data.code == 0) {
+          that.setData({
+            isBottom: true,
+            isLoaded: false
+          })
+          that.setData({
+            goodsList: res.data.data,
+            getUserLocation: 1,
+            locationShow: true
+          })
+        }
+      },
+      fail() {
+        setTimeout(() => {
           wx.reLaunch({
             url: '../index/index',
           })

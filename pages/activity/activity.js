@@ -83,7 +83,7 @@ Page({
               if (pareInt(that.data.actData.withdraw_amount) + parseInt(that.data.actData.amount) >= 366) {
                 withdraw = 366 - parseInt(that.data.actData.withdraw_amount);
               }else {
-                withdraw = that.data.actData.withdraw_amount;
+                withdraw = that.data.actData.amount;
               }
               let newStr = {
                 user_id: wx.getStorageSync('qrop').id,

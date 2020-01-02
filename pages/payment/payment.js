@@ -22,7 +22,10 @@ Page({
     userDisconut: [],
     useDiscountNow: false,
     canBuyNow: false,
-    discount: ''
+    discount: '',
+    discountChoice: '使用优惠券',
+    cardUseColor: '#ff8831',
+    sesmaeDisabled: false
   },
 
   onLoad: function (options) {
@@ -31,38 +34,9 @@ Page({
       title: '支付准备中',
     })
     wx.removeStorageSync('quitPay');
-    if (wx.getStorageSync('qrop') != '') {
-      wx.request({
-        url: 'https://kanjia.bigclient.cn/api/api/getUserInfo',
-        method: 'POST',
-        data: {
-          user_id: wx.getStorageSync('qrop').id
-        },
-        success (res) {
-          if (res.data.code == 0) {
-            wx.setStorageSync('qrop', res.data.data);
-            let discountList = res.data.data.discount;
-            let list = [{name: '不使用',pick: true}];
-            let obj = {};
-            discountList.map( e => {
-              obj.name = e * 10 + '折优惠券';
-              obj.discount = e;
-              obj.pick = false;
-              list.push(obj);
-            })
-            if(res.data.data.discount != '') {
-              that.setData({
-                userDisconut: list
-              })
-              console.log(that.data.userDisconut)
-            }
-          }
-        }
-      })
-    }
     //获取版本信息
     wx.getSystemInfo({
-      success: function (res) {
+      success (res) {
         let user_version = res.version.slice(0, 1)
         if (user_version >= 7) {
           that.setData({
@@ -142,6 +116,40 @@ Page({
       }
     })
 
+    if (wx.getStorageSync('qrop') != '') {
+      wx.request({
+        url: 'https://kanjia.bigclient.cn/api/api/getUserInfo',
+        method: 'POST',
+        data: {
+          user_id: wx.getStorageSync('qrop').id
+        },
+        success(res) {
+          if (res.data.code == 0) {
+            wx.setStorageSync('qrop', res.data.data);
+            let discountList = res.data.data.discount;
+            let list = [{ id: 0, coupon_name: '不使用', pick: true }];
+            discountList.map(e => {
+              let everyThing = e;
+              e.discountShow = e.discount * 10 + '折';
+              e.pick = false;
+              e.not_allow.split(',').map(e => {
+                if (e == goods_id.slice(0, 6)) {
+                  everyThing.disabled = true;
+                }else {
+                  everyThing.disabled = false;
+                }
+              })
+            })
+            if (res.data.data.discount != '') {
+              that.setData({
+                userDisconut: list.concat(discountList)
+              })
+            }
+          }
+        }
+      })
+    }
+
     this.setData({
       goodsList: wx.getStorageSync('other_goods'),
     })
@@ -178,13 +186,13 @@ Page({
     if (that.data.canBuyNow == true){
       that.setData({ haveRead: false, canBuyNow: false })
       // 订阅消息
-      wx.requestSubscribeMessage({
-        tmplIds: ['NM_WzhT-F-aUIZV32VrPMNsTJEgNCV5m6cvwQHC8Jr0', 'HLpsnFLOrQVWYqNM1eenvF1Qc8u18qMQXHYfWH6xODE', 'IKffD556V0KbPV9R07JgUoOCozD3d4ia6AUPPSv3v4I'],
-        success (res) {
-          that.Nofeedback_rsa();
-        }
-      })
-      // that.Nofeedback_rsa();
+      // wx.requestSubscribeMessage({
+      //   tmplIds: ['NM_WzhT-F-aUIZV32VrPMNsTJEgNCV5m6cvwQHC8Jr0', 'HLpsnFLOrQVWYqNM1eenvF1Qc8u18qMQXHYfWH6xODE', 'IKffD556V0KbPV9R07JgUoOCozD3d4ia6AUPPSv3v4I'],
+      //   success (res) {
+      //     that.Nofeedback_rsa();
+      //   }
+      // })
+      that.Nofeedback_rsa();
     }else {
       wx.pageScrollTo({
         scrollTop: 600,
@@ -203,36 +211,39 @@ Page({
   //是否使用芝麻粒
   deduction: function (e) {
     var that = this;
-    let true_false = !that.data.sesame_pay
-    this.setData({
-      sesame_pay: true_false
-    })
-    if (true_false) {
+    if (this.data.sesame_pay == false && this.data.sesmaeDisabled != false) {
       wx.showToast({
         title: '折扣券与芝麻粒不能同时使用',
         icon: 'none'
       })
-      that.setData({
-        sesame_pay: true,
-        pay_amount: that.data.fake_pay
+    } else {
+      let true_false = !that.data.sesame_pay
+      this.setData({
+        sesame_pay: true_false
       })
-      if (that.data.userDisconut != '') {
-        that.data.userDisconut.map( e => {
-          if(e.name == '不使用') {
-            e.pick = true
-          }else {
-            e.pick = false
-          }
-        })
+      if (true_false) {
         that.setData({
-          userDisconut: that.data.userDisconut
+          sesame_pay: true,
+          pay_amount: that.data.fake_pay
+        })
+        if (that.data.userDisconut != '') {
+          that.data.userDisconut.map( e => {
+            if(e.id == 0) {
+              e.pick = true
+            }else {
+              e.pick = false
+            }
+          })
+          that.setData({
+            userDisconut: that.data.userDisconut
+          })
+        }
+      }else {
+        that.setData({
+          sesame_pay: false,
+          pay_amount: that.data.real_pay
         })
       }
-    }else {
-      that.setData({
-        sesame_pay: false,
-        pay_amount: that.data.real_pay
-      })
     }
   },
 
@@ -437,7 +448,7 @@ Page({
     var that= this;
     this.setData({ useDiscountNow: false })
     this.data.userDisconut.map (e => {
-      if(e.name != '不使用') {
+      if(e.coupon_name != '不使用') {
         if(e.pick == true) {
           that.setData({
             pay_amount: that.data.item.price * e.discount,
@@ -455,25 +466,38 @@ Page({
     })
   },
 
+  cantUse () {
+    wx.showToast({
+      title: '抱歉，无法使用此优惠券',
+      icon: 'none'
+    })
+  },
+
   cardUse (e) {
     var that = this;
-    let nameHave = e.currentTarget.dataset.name;
+    let idHave = e.currentTarget.id;
     this.data.userDisconut.map( e => {
-      if (e.name == nameHave) {
-        e.pick = true;
-      }
-      if (nameHave != '不使用') {
-        if( e.name == '不使用') e.pick = false;
+      if (idHave != 0) {
+        if (e.id == idHave) {
+          e.pick = true;
+        } else {
+          e.pick = false
+        }
         that.setData({
-          sesame_pay: false,
-          pay_amount: that.data.real_pay
+          pay_amount: that.data.real_pay,
+          discountChoice: e.discountShow + '券',
+          cardUseColor: '#ff8831',
+          sesmaeDisabled: true,
+          sesame_pay: false
         })
       }else {
-        if (e.name == '不使用') {
+        if (e.id == 0) {
           e.pick = true;
           that.setData({
-            sesame_pay: true,
-            pay_amount: that.data.fake_pay
+            pay_amount: that.data.fake_pay,
+            cardUseColor: '#999',
+            discountChoice: '不使用',
+            sesmaeDisabled: false
           })
         }else {
           e.pick = false

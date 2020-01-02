@@ -30,7 +30,9 @@
     "pages/zhimajiSelectShop/zhimajiSelectShop",
     "pages/activity/activity",
     "pages/saleCenter/saleCenter",
-    "pages/saleChart/saleChart"
+    "pages/saleChart/saleChart",
+    "pages/coupon/coupon",
+    "components/main-block/main"
   ],
   "window": {
     "backgroundTextStyle": "dark",

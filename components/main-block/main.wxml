@@ -1,0 +1,52 @@
+<view wx:for="{{goodListShow}}" class="shopBlock" wx:key='item' id="{{item.id}}">
+  <view class='shopBlockL'>
+    <image src="{{'http://new-bigclient.oss-cn-qingdao.aliyuncs.com' + item.goods_pic + '?x-oss-process=style/abc'}}" class='shopMainPic'>
+      <view class='dailyGoodsRecmmoand' wx:if='{{ item.is_recommend == 1 }}'>今日推荐</view>
+      <view class='dailyGoodsNew' wx:if='{{ item.is_recommend != 1 && item.is_new == 1 }}'>新品上线</view>
+    </image>
+  </view>
+  <view class='shopBlockR'>
+    <view class="shopName">
+      {{item.name}}
+    </view>
+    <view class='good_price'>
+      <text class="{{clickId == item.id?'kan_price':'now_price'}}" wx:if='{{clickId == item.id}}'>砍掉{{bargainPrice}}</text><text class='now_price' wx:else> <text style='margin-right:-4px;'>￥</text> {{item.current_price}}</text><text class='ori_price'><text style='margin-right:-1px;'>￥</text>{{item.price}}</text>
+    </view>
+    <view class='subCategory'>
+      <view style='word-break:break-all;text-overflow:ellipsis;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;align-vertical:middle;'>
+        {{item.shop_name}}
+      </view>  
+    </view>
+    <button class="{{item.button == '已抢完' ?'sellout':'bargin'}} {{item.button == '继续砍' ?'share':'bargin'}}" id="{{item.id}}" catchtap='bargin' wx:if="{{userLogin == false || item.button == '已抢完'}}" data-all='{{item}}' hover-class="none" form-type='submit'>
+      {{item.button}}
+    </button>
+    <button class="{{item.button == '已抢完' ?'sellout':'bargin'}}" open-type="getUserInfo" lang="zh_CN" bindgetuserinfo="bindgetuserinfo" wx:if="{{userLogin == true}}" catchtap="test" id="{{item.id}}" >
+      {{item.button}}
+    </button>
+    <view class='circleName'>
+      {{item.circle_name}}
+      <!-- <text class='circleDistance' wx:if='{{locationShow}}'>距我{{item.distance}}km</text> -->
+    </view>
+    <view class='bottom_part'>
+      <view><image src='../../img/clickNum.png' style='width:14px;height:14px;'></image><text style='margin-left:5px;vertical-align:3px;'>{{item.click_num}}</text></view><view style='margin-left:20px;'><image src='../../img/barginNum.png' style='width:14px;height:14px;'></image> <text style='margin-left:5px;vertical-align:3px;'>{{item.bargain_num}}</text></view>
+    </view>   
+    <!-- <view class='myfavour' catchtap='beTop' id="{{item.id}}" wx:if='{{item.is_top != undefined}}'>
+      <image src="{{item.is_top == 1?'../../img/top.png':'../../img/cancelTop.png'}}" style='width:39px;height:14px;'></image>
+    </view> -->
+  </view>
+</view>
+
+<!-- 分享弹窗 -->
+<!-- <image class="share_popup animated veryFaster zoomIn" wx:if='{{shareShow}}' src='../../img/shareFriends.png'>
+  <view class='share_popup_top'>每分享 <text class='share_popup_txt'>1</text> 位好友即可获赠 <text class='share_popup_txt'>1</text> 刀</view>
+  <view class='share_popup_middle'>邀请好友砍价，砍到心理价位购买</view>
+  <view class='share_popup_bottom'>
+    <button open-type='share' class='share_popup_top_L' form-type="submit" bindtap='share_num' data-share='{{allGoodDetail}}'><image src='../../img/share1.png' style='width:86rpx;height:86rpx;'></image><view class='share_popup_text'>微信好友</view></button>
+<button bindtap='savePoster' class='share_popup_top_L' form-type="submit"><image src='../../img/friends1.png' style='width:86rpx;height:86rpx;'></image><view class='share_popup_text'>朋友圈</view></button>
+  </view>
+</image>
+<view wx:if='{{posterShow}}' class='sharePoster' style='padding-top:{{doubleMenuRectTop}}px'>
+  <image src="{{'https://kanjia.bigclient.cn' + sharePoster}}" style='width:500rpx;height:890rpx;'></image>
+  <button bindtap='posterToPhone' class='posterBtn btn' form-type="submit">保存图片至相册</button>
+</view> -->
+    

@@ -1,6 +1,6 @@
 {
   "usingComponents": {
-    "location-tip": "../../components/location-tip/location"
+    
   },
   "navigationBarTitleText": "分享页",
   "onReachBottomDistance": 50

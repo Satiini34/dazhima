@@ -1,0 +1,6 @@
+{
+  "usingComponents": {
+    "main": "../../components/main-block/main"
+  },
+  "navigationBarTitleText": "领券中心"
+}

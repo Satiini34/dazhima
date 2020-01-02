@@ -46,21 +46,23 @@ Page({
   onLoad: function (options) {
     var that = this;
     wx.hideShareMenu();
-    wx.showLoading({
-      title: '加载中',
-      mask: true
-    })
+    // wx.showLoading({
+    //   title: '加载中',
+    //   mask: true
+    // })
     // 判断新老用户(服务器端是否有数据)
     wx.getStorageSync('qrop') != '' ? that.setData({ kanjiaBtn: 2, userLogin: false }) : that.setData({ kanjiaBtn: 1, userLogin: true })
     wx.setStorageSync('inviterId', options.share_id);
     let share_id = options.share_id;
     let goods_id = options.goods_id;
-    // let goods_id = '10002520190904'
+    // let goods_id = '10008020200101'
     this.setData({
       goods_id: goods_id,
       share_id: share_id,
       goods_id_share: goods_id
     })
+
+    // 加载分享页数据 
     this.ShareDetail()
     //地理位置显示
     wx.getStorageSync('userLocation') != '' ? that.setData({ locationShow: true }) : that.setData({ locationShow: false })
@@ -253,7 +255,7 @@ Page({
   },
 
   //授权
-  bindgetuserinfo: function (e) {
+  bindgetuserinfo (e) {
     var that = this;
     wx.getUserInfo({
       success: res => {
@@ -309,7 +311,7 @@ Page({
                 data: {
                   encrypted_data: encStr
                 },
-                success: function (res) {
+                success (res) {
                   if (res.data.code == 0) {
                     that.setData({
                       helpClick: true,
@@ -331,7 +333,7 @@ Page({
                         latitude: wx.getStorageSync('userLocation').latitude,
                         type: help_type
                       },
-                      success: function (res) {
+                      success (res) {
                         if (res.data.code == 0) {
                           res.data.data.goods.goods_pic = res.data.data.goods.goods_pic.split(',')[0];
                           for (let k = 0; k < res.data.data.trends.length; k++) {
@@ -481,11 +483,6 @@ Page({
               kanjiaBtn: 3
             })
           }
-          // Departed
-          // res.data.data.goods.goods_name.length > 40 ? res.data.data.goods.goods_name = res.data.data.goods.goods_name.slice(0, 39) + '…' : res.data.data.goods.goods_name = res.data.data.goods.goods_name;
-          // for (let k = 0; k < res.data.data.other_goods.length; k++) {
-          //   res.data.data.other_goods[k].shop_name.length > 20 ? res.data.data.other_goods[k].shop_name = res.data.data.other_goods[k].shop_name.slice(0, 19) + '…' : res.data.data.other_goods[k].shop_name = res.data.data.other_goods[k].shop_name
-          // }
           that.setData({
             goods: res.data.data.goods,
             friends: res.data.data.friends,
@@ -544,7 +541,6 @@ Page({
             })
           }, 1000);
           that.setData({ loadComplete: true })
-          wx.hideLoading();
         }else {
           wx.showToast({
             title: '网络异常请重试',

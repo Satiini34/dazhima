@@ -42,7 +42,8 @@ Page({
     userPause: false,
     trends_info: [],
     addNow: false,
-    backToShare: false
+    backToShare: false,
+    readyToShare: false
   },
 
   onPageScroll: function (e) {
@@ -212,9 +213,6 @@ Page({
                 })
                 break;
             }
-            // for (let k = 0; k < res.data.data.other_goods.length; k++) {
-            //   res.data.data.other_goods[k].shop_name.length > 20 ? res.data.data.other_goods[k].shop_name = res.data.data.other_goods[k].shop_name.slice(0, 19) + '…' : res.data.data.other_goods[k].shop_name = res.data.data.other_goods[k].shop_name
-            // }
             setTimeout(function () {
               that.setData({
                 recommad_list: res.data.data.other_goods,
@@ -294,10 +292,6 @@ Page({
         },
         success(res) {
           if (res.data.code == 0) {
-            // 店名截取 （ departed ）
-            // for (let k = 0; k < res.data.data.other_goods.length; k++) {
-            //   res.data.data.other_goods[k].shop_name.length > 20 ? res.data.data.other_goods[k].shop_name = res.data.data.other_goods[k].shop_name.slice(0, 19) + '…' : res.data.data.other_goods[k].shop_name = res.data.data.other_goods[k].shop_name
-            // }
             setTimeout(function () {
               that.setData({
                 recommad_list: that.data.recommad_list.concat(res.data.data.other_goods),
@@ -528,7 +522,7 @@ Page({
   },
 
   //授权
-  bindgetuserinfo: function (e) {
+  bindgetuserinfo (e) {
     var that = this;
     wx.getUserInfo({
       success: res => {
@@ -566,6 +560,12 @@ Page({
                 })
               }
               wx.setStorageSync('qrop', res.data.data);
+            } else {
+              if (that.data.bindMobileShow == false) {
+                wx.navigateTo({
+                  url: '../payment/payment?id=' + that.data.goods_id,
+                })
+              }
             }
           }
         })
@@ -831,7 +831,9 @@ Page({
       }
     }else if(res.from == 'menu'){
       if(wx.getStorageSync('qrop') != ''){
-        that.setData({ readyToShare: true })
+        if(that.data.goodItem.bargain == '砍价') {
+          that.setData({ readyToShare: true })
+        }
         return {
           title: `原价¥${that.data.goodItem.price},现在只要¥${that.data.goodItem.current_price},快来帮我一下！`,
           path: 'pages/index/index?share_id=' + wx.getStorageSync('qrop').id + '&goods_id=' + that.data.goodItemId,

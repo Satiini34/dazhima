@@ -1,0 +1,26 @@
+<block wx:for='{{1}}' wx:key='this'> 
+  <view class='coupon'>
+    <view class='couponName'>{{coupon.coupon_name}}</view>
+    <view class='couponDis'>{{conponDis}}</view>
+    <view class='couponTime'>有效期至 {{toDay}}</view>
+    <button class='couponBtn' open-type="getUserInfo" lang="zh_CN" bindgetuserinfo="bindgetuserinfo" wx:if="{{userLogin}}">
+      立即领取
+    </button>
+    <button class='couponBtn' bindtap='couponUse' wx:if="{{!userLogin}}">
+      {{btnName}}
+    </button>
+    <view class='couponInfo'>
+      使用说明：{{coupon.info}}
+    </view>
+    <view class='useOnly' wx:if="{{coupon.not_allow != ''}}">
+      限商品使用
+    </view>
+    <view class='useAll' wx:if="{{coupon.not_allow == ''}}">
+      全场通用 
+    </view>
+  </view>
+</block>
+<view class='notAllow' wx:if="{{coupon.not_allow != ''}}">
+  <text class='notAllowTitle'>不可用商家：</text> 
+  <main goodList='{{coupon.not_allow}}' />
+</view>

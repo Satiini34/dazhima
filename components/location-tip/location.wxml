@@ -1,10 +1,10 @@
-<view class='locationTip animated fadeIn'>
+<view class='locationTip animated fadeIn' wx:if='{{locationShow}}'>
   <view class='tipText'>
     {{text}}
   </view>
   <view class='tipBtns'>
-    <view class='cancelTxt'>{{cancelTxt}}</view>
-    <view class='confirmTxt'>{{confirmTxt}}</view>
+    <view class='cancelTxt' bindtap='cancel'>{{cancelTxt}}</view>
+    <view class='confirmTxt' bindtap='confirm'>{{confirmTxt}}</view>
   </view>
 </view>
-<view class='mask' />
+<view class='mask' wx:if='{{locationShow}}' />

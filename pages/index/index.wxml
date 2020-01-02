@@ -13,7 +13,7 @@
 <form report-submit='true' bindsubmit='codeSubmit'>
   <!-- <official-account style='bottom:0;position:fixed;z-index:9999;width:100%;' /> -->
   <view style="padding-top: {{menuRectTop + 38}}px;">
-    <!-- <navigator url='../saleCenter/saleCenter'>销售中心</navigator> -->
+    <!-- <navigator url='../share/share'>优惠券</navigator> -->
     <!-- banner -->
     <view class="banner"> 
       <swiper style='width:100%;height:100%;' autoplay="true" interval="6000" circular="true" duratio="500">
@@ -27,7 +27,7 @@
     </view>
     <!-- 添加小程序 -->
     <add-tips duration="1000" id='addTip' />
-    <location-tip locationShow='{{locationTip}}' />
+    <!-- <location-tip locationShow='{{locationTip}}' bind:okEvent='okEvent' /> -->
     <view wx:for="{{goodsList}}" class="shopBlock" wx:key='item' catchtap="goodItem" id="{{item.id}}">
       <view class='shopBlockL'>
         <image src="{{'http://new-bigclient.oss-cn-qingdao.aliyuncs.com' + item.goods_pic + '?x-oss-process=style/abc'}}" class='shopMainPic' binderror='imgLoadErr'>
@@ -73,10 +73,10 @@
   </view>
   <!-- 分享弹窗 -->
   <image class="share_popup animated veryFaster zoomIn" wx:if='{{shareShow}}' src='../../img/shareFriends.png'>
-    <!-- <view class='share_popup_top'>每分享 <text class='share_popup_txt'>1</text> 位好友即可获赠 <text class='share_popup_txt'>1</text> 刀</view>
-    <view class='share_popup_middle'>邀请好友砍价，砍到心理价位购买</view> -->
-    <view class='share_popup_top'>全网美食最低价</view>
-    <view class='share_popup_middle'>分享好友砍价提 <text class='share_popup_txt'>￥366</text> 红包</view>
+    <view class='share_popup_top'>每分享 <text class='share_popup_txt'>1</text> 位好友即可获赠 <text class='share_popup_txt'>1</text> 刀</view>
+    <view class='share_popup_middle'>邀请好友砍价，砍到心理价位购买</view>
+    <!-- <view class='share_popup_top'>全网美食最低价</view>
+    <view class='share_popup_middle'>分享好友砍价提 <text class='share_popup_txt'>￥366</text> 红包</view> -->
     <view class='share_popup_bottom'>
       <button open-type='share' class='share_popup_top_L' form-type="submit" bindtap='share_num' data-share='{{allGoodDetail}}'><image src='../../img/share1.png' style='width:86rpx;height:86rpx;'></image><view class='share_popup_text'>微信好友</view></button>
   <button bindtap='savePoster' class='share_popup_top_L' form-type="submit"><image src='../../img/friends1.png' style='width:86rpx;height:86rpx;'></image><view class='share_popup_text'>朋友圈</view></button>
@@ -88,11 +88,6 @@
     <button bindtap='posterToPhone' class='posterBtn btn' form-type="submit">保存图片至相册</button>
   </view>
 
-  <!-- 新手奖励弹窗 -->
-  <!-- <image src='https://kanjia.bigclient.cn/upload/reward4.png' style='width:620rpx;height:872rpx;position:fixed;top:54%;left:50%;transform:translate(-50%,-50%);z-index:999;' wx:if='{{newCustomer}}'>
-    <button class='newBeeToLook' bindtap='newBeeToLook' form-type="submit">立即查看</button>
-  </image> -->
-
    <!-- 芝麻记 -->
   <!-- <movable-area style='' class="release">
     <movable-view direction='all' inertia='true' bindchange='moveableChange' class='releaseItem' x='{{x}}'
@@ -103,9 +98,8 @@
   <!-- <view class="{{ releaseState == true ? 'release animated fadeInRight faster' : 'releaseAway'}}">
     <image src='../../img/release.png' style='width:80rpx;height:80rpx;' catchtap='toRelease'></image>
   </view> -->
-  <view class="activity_pop animated slideInUp" wx:if='{{popShow}}'>
+  <view class="activity_pop animated fadeIn" wx:if='{{popShow && popShowDelay}}'>
     <image class='popPic' src="{{'https://new-bigclient.oss-cn-qingdao.aliyuncs.com' + pop[0].pop_pic + '?x-oss-process=style/abc'}}" mode='widthFix' bindtap="imageUrl" data-url='{{pop[0].link_url}}' bindload='popImg'>
-    <!-- <image class='popPic' src="../../img/redbagpop.png" mode='widthFix' bindtap="imageUrl" data-url='{{pop[0].link_url}}' bindload='popImg'> -->
       <image src='../../img/redbagbtn.png' class='redbagbtn'>
         <view class='redbagbtntext'>立即前往</view>
       </image>

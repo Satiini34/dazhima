@@ -31,14 +31,14 @@
         当前金额：<text style='margin-right: -4rpx;color:rgb(255, 137, 50)'>￥</text><text style='color: rgb(255, 137, 50)'>{{item.current_price}}</text> 
       </view>
     </view>
-    <view class='current_pay'>
+    <view class='current_pay' bindtap='deduction'>
       <view>
         可用<text style='color: rgb(255, 137, 50)'>{{sesame}}</text>芝麻粒 抵用<text style='color: rgb(255, 137, 50)'>{{sesame/100}}元</text>
         <!-- 可用<text style='color: rgb(255, 137, 50)'>{{sesame}}</text>芝麻粒 抵用<text style='color: rgb(255, 137, 50)' wx:if='{{sesame_pay == true}}'>{{sesame/100}}</text> -->
         <!-- <text style='color: rgb(255, 137, 50)' wx:else>0</text>元 -->
       </view>
       <view style='margin-top: -4rpx;'>
-        <switch style='zoom:0.8;' color='rgb(255, 118, 26)' bindchange='deduction' checked='{{sesame_pay}}'></switch>
+        <switch style='zoom:0.8;' color='rgb(255, 118, 26)' checked='{{sesame_pay}}' disabled='{{sesmaeDisabled}}'></switch>
       </view>
     </view>
     <view class='current_pay' wx:if="{{userDisconut != ''}}" bindtap='useDiscount'>
@@ -46,13 +46,14 @@
         使用优惠券
       </view>
       <view class='useDiscount'>
-        使用优惠券
+        <view style="color:{{cardUseColor}}">{{discountChoice}}</view>
+        <view><image src='../../img/relateShops.png' style='width:22rpx;height:22rpx;margin-left:10rpx;' /></view>
       </view>
     </view>
     <view class='current_mobile'>
       联系手机号
     </view>
-    <view class='current_pay'>
+    <view class='current_pay' style='border:none;'>
       <view wx:if="{{mobile !=''}}">{{mobile}}</view>
       <view wx:else>未绑定手机号</view>
       <view>
@@ -79,10 +80,12 @@
    <view class='discountTitle'>优惠券详情</view>
    <view class='discountConfrim' bindtap='maskCancel'>确认</view>
    <block wx:for='{{userDisconut}}' wx:key='this'> 
-    <view class='cardsListItem' catchtap='cardUse' data-name='{{item.name}}'>
-      <view class='cardsListItemText'>{{item.name}}</view>
+    <view class="item.disalbed == true || item.is_expired == 1 ? 'cardsListItemDisabled' : 'cardsListItem'}}" catchtap="{{item.disabled == true || item.is_expired == 1 ? 'cantUse' : 'cardUse'}}" data-name='{{item.coupon_name}}' id='{{item.id}}'>
+      <view class='cardsListItemText'>{{item.coupon_name}}</view>
+      <view class='cardsListItemText'>{{item.discountShow}}</view>
+      <image src='../../img/overtime.png' wx:if='{{item.is_expired == 1}}' class='overtime' />
       <view>
-        <radio checked='{{item.pick}}' color='#fbc756'></radio>
+        <radio wx:if='{{item.is_expired != 1}}' checked='{{item.pick}}' color='#fbc756' disabled="{{item.disabled || item.is_expired == 1}}"></radio>
       </view>
     </view>
   </block>

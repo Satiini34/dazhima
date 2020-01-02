@@ -183,10 +183,10 @@
   </view>
   <!-- 分享弹窗 -->
   <image class='share_popup animated veryFaster zoomIn' wx:if='{{shareShow}}' src='../../img/shareFriends.png'>
-    <!-- <view class='share_popup_top'>每分享 <text class='share_popup_txt'>1</text> 位好友即可获赠 <text class='share_popup_txt'>1</text> 刀</view>
-    <view class='share_popup_middle'>邀请好友砍价，砍到心理价位购买</view> -->
-    <view class='share_popup_top'>全网美食最低价</view>
-    <view class='share_popup_middle'>分享好友砍价提 <text class='share_popup_txt'>￥366</text> 红包</view>
+    <view class='share_popup_top'>每分享 <text class='share_popup_txt'>1</text> 位好友即可获赠 <text class='share_popup_txt'>1</text> 刀</view>
+    <view class='share_popup_middle'>邀请好友砍价，砍到心理价位购买</view>
+    <!-- <view class='share_popup_top'>全网美食最低价</view>
+    <view class='share_popup_middle'>分享好友砍价提 <text class='share_popup_txt'>￥366</text> 红包</view> -->
     <view class='share_popup_bottom'>
       <button open-type='share' class='share_popup_top_L' form-type="submit" bindtap='share_num'><image src='../../img/share1.png' style='width:86rpx;height:86rpx;'></image><view class='share_popup_text'>微信好友</view></button>
   <button bindtap='savePoster' class='share_popup_top_L' form-type="submit"><image src='../../img/friends1.png' style='width:86rpx;height:86rpx;'></image><view class='share_popup_text'>朋友圈</view></button>

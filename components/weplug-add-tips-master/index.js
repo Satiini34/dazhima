@@ -78,11 +78,5 @@ Component({
         data: + new Date,
       });
     }
-  },
-
-  pageLifetimes: {
-    show () {
-      console.log('compoent Show')
-    }
   }
 })

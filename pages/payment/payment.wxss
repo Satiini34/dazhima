@@ -177,8 +177,10 @@ page {
 .useDiscount {
   font-size: 28rpx;
   letter-spacing: 2rpx;
-  color: #fbc756;
+  /* color: #ff8831; */
   font-family: 'lanTing';
+  display: flex;
+  align-items: center;
 }
 .discountList {
   position: fixed;
@@ -188,6 +190,8 @@ page {
   background: #fff;
   padding-bottom: 30rpx;
   overflow-y: scroll;
+  max-height: 60vh;
+  /* transition: all 0.5s linear; */
 }
 .discountTitle {
   font-size: 34rpx;
@@ -196,6 +200,17 @@ page {
   padding: 32rpx 0;
 }
 .cardsListItem {
+  width: 90%;
+  height: 96rpx;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+  left: 5%;
+  border-top: 2rpx solid #f1f1f1;
+  box-sizing: border-box;
+}
+.cardsListItemDisabled {
   width: 90%;
   height: 96rpx;
   display: flex;
@@ -222,4 +237,13 @@ radio {
   color: skyblue;
   letter-spacing: 4rpx;
   font-family: 'lanTing';
+}
+.overtime {
+  position: absolute;
+  right: 0rpx;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+  width: 66rpx;
+  height: 66rpx;
 }
