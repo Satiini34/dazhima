@@ -123,14 +123,20 @@ Page({
         data: {
           user_id: wx.getStorageSync('qrop').id
         },
-        success(res) {
+        success (res) {
           if (res.data.code == 0) {
             wx.setStorageSync('qrop', res.data.data);
             let discountList = res.data.data.discount;
             let list = [{ id: 0, coupon_name: '不使用', pick: true }];
             discountList.map(e => {
+              let discount = (e.discount * 10).toFixed(1)
+              if (discount.split('.')[1] == '0') {
+                discount = discount.slice(0, 1) + '折'
+              } else {
+                discount = discount + '折'
+              }
               let everyThing = e;
-              e.discountShow = e.discount * 10 + '折';
+              e.discountShow = discount;
               e.pick = false;
               e.not_allow.split(',').map(e => {
                 if (e == goods_id.slice(0, 6)) {
@@ -257,7 +263,6 @@ Page({
   onUnload: function () {
     var that = this;
     Sesame.Sesame();
-
     if (that.data.paySuccess == false){
       if (wx.getStorageSync('quitPay') != 'yes') {
         wx.showModal({
@@ -448,18 +453,18 @@ Page({
     var that= this;
     this.setData({ useDiscountNow: false })
     this.data.userDisconut.map (e => {
-      if(e.coupon_name != '不使用') {
+      if(e.id != 0) {
         if(e.pick == true) {
           that.setData({
-            pay_amount: that.data.item.price * e.discount,
+            pay_amount: (that.data.item.price * e.discount).toFixed(2),
             discount: e.discount
           })
         } 
       } else {
         if(e.pick == true) {
           that.setData({
-            pay_amount: that.data.fake_pay,
-            discount: ''
+            pay_amount: that.data.real_pay,
+            discount: '',
           })
         }
       }
@@ -475,17 +480,18 @@ Page({
 
   cardUse (e) {
     var that = this;
+    let discountChoice = e.currentTarget.dataset.name;
     let idHave = e.currentTarget.id;
     this.data.userDisconut.map( e => {
       if (idHave != 0) {
         if (e.id == idHave) {
           e.pick = true;
-        } else {
+        }else {
           e.pick = false
         }
         that.setData({
           pay_amount: that.data.real_pay,
-          discountChoice: e.discountShow + '券',
+          discountChoice,
           cardUseColor: '#ff8831',
           sesmaeDisabled: true,
           sesame_pay: false

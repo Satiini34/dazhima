@@ -24,7 +24,7 @@
   <view class='kan_pay'>
     <view style='margin-top: 2rpx;'>实付金额：</view>
     <view class='kan_pay_amount'>￥{{item.total_amount}}</view>
-    <view wx:if="{{item.use_sesame != 0}}" class='kan_pay_amount'>+{{item.use_sesame}}<image src='../../img/reward_zhima.png' class='zhima_use' /></view> 
+    <view wx:if="{{item.use_sesame != 0}}" class='kan_pay_amount'>+ {{item.use_sesame}}<image src='../../img/reward_zhima.png' class='zhima_use' wx:if='{{item.use_coupon != true}}' /></view> 
     <view wx:if="{{ item.is_use == '已过期 '}}"><image src='../../img/overtime.png' style='width:30px;height:30px;position:absolute;top:50%;transform: translateY(-50%);right:20rpx;'></image>{{item.is_use}}</view>
     <view class="kan_is_use" catchtap="{{item.is_use == '评价赢芝麻粒'||item.is_use == '审核未通过，请重新上传'?'toWin':'' }}" id="{{item.orderNo}}" wx:else>{{item.is_use}}</view>
   </view>

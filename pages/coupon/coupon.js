@@ -22,7 +22,7 @@ Page({
         user_id: wx.getStorageSync('qrop').id,
         coupon_id: options.id
       },  
-      success(res) {
+      success (res) {
         if (res.data.code == 0) {
           let discount = (res.data.data.discount * 10).toFixed(1)
           if(discount.split('.')[1] == '0') {

@@ -23,7 +23,7 @@
 </view>
 <!--各层级-->
 <template name='rich-text-floor1'>
-  <block wx:for='{{nodes}}' wx:key>
+  <block wx:for='{{nodes}}' wx:key='this'>
     <template wx:if="{{!item.continue}}" is='element' data='{{item,videoControl}}' />
     <navigator wx:elif="{{item.name=='a'}}" style="{{item.attrs.style}}" url="{{item.attrs.href}}" data-href='{{item.attrs.href}}' hover-class="navigator-hover" bindtap="tapevent" bindlongpress='copyhref'>
       <template is='rich-text-floor2' data='{{nodes:item.children,videoControl}}' />
@@ -34,7 +34,7 @@
   </block>
 </template>
 <template name='rich-text-floor2'>
-  <block wx:for='{{nodes}}' wx:key>
+  <block wx:for='{{nodes}}' wx:key='this'>
     <template wx:if="{{!item.continue}}" is='element' data='{{item}}' />
     <navigator wx:elif="{{item.name=='a'}}" style="{{item.attrs.style}}" url="{{item.attrs.href}}" data-href='{{item.attrs.href}}' hover-class="navigator-hover" bindtap="tapevent" bindlongpress='copyhref'>
       <template is='rich-text-floor3' data='{{nodes:item.children}}' />
@@ -56,7 +56,7 @@
   </block>
 </template>
 <template name='rich-text-floor4'>
-  <block wx:for='{{nodes}}' wx:key>
+  <block wx:for='{{nodes}}' wx:key='this'>
     <template wx:if="{{!item.continue}}" is='element' data='{{item}}' />
     <navigator wx:elif="{{item.name=='a'}}" style="{{item.attrs.style}}" url="{{item.attrs.href}}" data-href='{{item.attrs.href}}' hover-class="navigator-hover" bindtap="tapevent" bindlongpress='copyhref'>
       <template is='rich-text-floor5' data='{{nodes:item.children}}' />
@@ -67,7 +67,7 @@
   </block>
 </template>
 <template name='rich-text-floor5'>
-  <block wx:for='{{nodes}}' wx:key>
+  <block wx:for='{{nodes}}' wx:key='this'>
     <template wx:if="{{!item.continue}}" is='element' data='{{item}}' />
     <navigator wx:elif="{{item.name=='a'}}" style="{{item.attrs.style}}" url="{{item.attrs.href}}" data-href='{{item.attrs.href}}' hover-class="navigator-hover" bindtap="tapevent" bindlongpress='copyhref'>
       <template is='rich-text-floor6' data='{{nodes:item.children}}' />
@@ -78,7 +78,7 @@
   </block>
 </template>
 <template name='rich-text-floor6'>
-  <block wx:for='{{nodes}}' wx:key>
+  <block wx:for='{{nodes}}' wx:key='this'>
     <template wx:if="{{!item.continue}}" is='element' data='{{item}}' />
     <navigator wx:elif="{{item.name=='a'}}" style="{{item.attrs.style}}" url="{{item.attrs.href}}" data-href='{{item.attrs.href}}' hover-class="navigator-hover" bindtap="tapevent" bindlongpress='copyhref'>
       <template is='rich-text-floor7' data='{{nodes:item.children}}' />
@@ -89,7 +89,7 @@
   </block>
 </template>
 <template name='rich-text-floor7'>
-  <block wx:for='{{nodes}}' wx:key>
+  <block wx:for='{{nodes}}' wx:key='this'>
     <template wx:if="{{!item.continue}}" is='element' data='{{item}}' />
     <navigator wx:elif="{{item.name=='a'}}" style="{{item.attrs.style}}" url="{{item.attrs.href}}" data-href='{{item.attrs.href}}' hover-class="navigator-hover" bindtap="tapevent" bindlongpress='copyhref'>
       <template is='rich-text-floor8' data='{{nodes:item.children}}' />
@@ -100,7 +100,7 @@
   </block>
 </template>
 <template name='rich-text-floor8'>
-  <block wx:for='{{nodes}}' wx:key>
+  <block wx:for='{{nodes}}' wx:key='this'>
     <template wx:if="{{!item.continue}}" is='element' data='{{item}}' />
     <navigator wx:elif="{{item.name=='a'}}" style="{{item.attrs.style}}" url="{{item.attrs.href}}" data-href='{{item.attrs.href}}' hover-class="navigator-hover" bindtap="tapevent" bindlongpress='copyhref'>
       <template is='rich-text-floor9' data='{{nodes:item.children}}' />
@@ -111,7 +111,7 @@
   </block>
 </template>
 <template name='rich-text-floor9'>
-  <block wx:for='{{nodes}}' wx:key>
+  <block wx:for='{{nodes}}' wx:key='this'>
     <template wx:if="{{!item.continue}}" is='element' data='{{item}}' />
     <navigator wx:elif="{{item.name=='a'}}" style="{{item.attrs.style}}" url="{{item.attrs.href}}" data-href='{{item.attrs.href}}' hover-class="navigator-hover" bindtap="tapevent" bindlongpress='copyhref'>
       <template is='rich-text-floor10' data='{{nodes:item.children}}' />
@@ -122,7 +122,7 @@
   </block>
 </template>
 <template name='rich-text-floor10'>
-  <block wx:for='{{nodes}}' wx:key>
+  <block wx:for='{{nodes}}' wx:key='this'>
     <template wx:if="{{!item.continue}}" is='element' data='{{item}}' />
     <navigator wx:elif="{{item.name=='a'}}" style="{{item.attrs.style}}" url="{{item.attrs.href}}" data-href='{{item.attrs.href}}' hover-class="navigator-hover" bindtap="tapevent" bindlongpress='copyhref'>
       <template is='rich-text-floor11' data='{{nodes:item.children}}' />
@@ -133,7 +133,7 @@
   </block>
 </template>
 <template name='rich-text-floor11'>
-  <block wx:for='{{nodes}}' wx:key>
+  <block wx:for='{{nodes}}' wx:key='this'>
     <template wx:if="{{!item.continue}}" is='element' data='{{item}}' />
     <navigator wx:elif="{{item.name=='a'}}" style="{{item.attrs.style}}" url="{{item.attrs.href}}" data-href='{{item.attrs.href}}' hover-class="navigator-hover" bindtap="tapevent" bindlongpress='copyhref'>
       <template is='rich-text-floor12' data='{{nodes:item.children}}' />
@@ -144,7 +144,7 @@
   </block>
 </template>
 <template name='rich-text-floor12'>
-  <block wx:for='{{nodes}}' wx:key>
+  <block wx:for='{{nodes}}' wx:key='this'>
     <template wx:if="{{!item.continue}}" is='element' data='{{item}}' />
     <navigator wx:elif="{{item.name=='a'}}" style="{{item.attrs.style}}" url="{{item.attrs.href}}" data-href='{{item.attrs.href}}' hover-class="navigator-hover" bindtap="tapevent" bindlongpress='copyhref'>
       <template is='rich-text-floor13' data='{{nodes:item.children}}' />
@@ -155,7 +155,7 @@
   </block>
 </template>
 <template name='rich-text-floor13'>
-  <block wx:for='{{nodes}}' wx:key>
+  <block wx:for='{{nodes}}' wx:key='this'>
     <template wx:if="{{!item.continue}}" is='element' data='{{item}}' />
     <navigator wx:elif="{{item.name=='a'}}" style="{{item.attrs.style}}" url="{{item.attrs.href}}" data-href='{{item.attrs.href}}' hover-class="navigator-hover" bindtap="tapevent" bindlongpress='copyhref'>
       <template is='rich-text-floor14' data='{{nodes:item.children}}' />
@@ -166,7 +166,7 @@
   </block>
 </template>
 <template name='rich-text-floor14'>
-  <block wx:for='{{nodes}}' wx:key>
+  <block wx:for='{{nodes}}' wx:key='this'>
     <template wx:if="{{!item.continue}}" is='element' data='{{item}}' />
     <navigator wx:elif="{{item.name=='a'}}" style="{{item.attrs.style}}" url="{{item.attrs.href}}" data-href='{{item.attrs.href}}' hover-class="navigator-hover" bindtap="tapevent" bindlongpress='copyhref'>
       <template is='rich-text-floor15' data='{{nodes:item.children}}' />
@@ -177,7 +177,7 @@
   </block>
 </template>
 <template name='rich-text-floor15'>
-  <block wx:for='{{nodes}}' wx:key>
+  <block wx:for='{{nodes}}' wx:key='this'>
     <template wx:if="{{!item.continue}}" is='element' data='{{item}}' />
     <navigator wx:elif="{{item.name=='a'}}" style="{{item.attrs.style}}" url="{{item.attrs.href}}" data-href='{{item.attrs.href}}' hover-class="navigator-hover" bindtap="tapevent" bindlongpress='copyhref'>
       <template is='rich-text-floor16' data='{{nodes:item.children}}' />
@@ -188,7 +188,7 @@
   </block>
 </template>
 <template name='rich-text-floor16'>
-  <block wx:for='{{nodes}}' wx:key>
+  <block wx:for='{{nodes}}' wx:key='this'>
     <template wx:if="{{!item.continue}}" is='element' data='{{item}}' />
     <navigator wx:elif="{{item.name=='a'}}" style="{{item.attrs.style}}" url="{{item.attrs.href}}" data-href='{{item.attrs.href}}' hover-class="navigator-hover" bindtap="tapevent" bindlongpress='copyhref'>
       <template is='rich-text-floor17' data='{{nodes:item.children}}' />
@@ -199,7 +199,7 @@
   </block>
 </template>
 <template name='rich-text-floor17'>
-  <block wx:for='{{nodes}}' wx:key>
+  <block wx:for='{{nodes}}' wx:key='this'>
     <template wx:if="{{!item.continue}}" is='element' data='{{item}}' />
     <navigator wx:elif="{{item.name=='a'}}" style="{{item.attrs.style}}" url="{{item.attrs.href}}" data-href='{{item.attrs.href}}' hover-class="navigator-hover" bindtap="tapevent" bindlongpress='copyhref'>
       <template is='rich-text-floor18' data='{{nodes:item.children}}' />
@@ -210,7 +210,7 @@
   </block>
 </template>
 <template name='rich-text-floor18'>
-  <block wx:for='{{nodes}}' wx:key>
+  <block wx:for='{{nodes}}' wx:key='this'>
     <template wx:if="{{!item.continue}}" is='element' data='{{item}}' />
     <navigator wx:elif="{{item.name=='a'}}" style="{{item.attrs.style}}" url="{{item.attrs.href}}" data-href='{{item.attrs.href}}' hover-class="navigator-hover" bindtap="tapevent" bindlongpress='copyhref'>
       <template is='rich-text-floor19' data='{{nodes:item.children}}' />
@@ -221,7 +221,7 @@
   </block>
 </template>
 <template name='rich-text-floor19'>
-  <block wx:for='{{nodes}}' wx:key>
+  <block wx:for='{{nodes}}' wx:key='this'>
     <template wx:if="{{!item.continue}}" is='element' data='{{item}}' />
     <navigator wx:elif="{{item.name=='a'}}" style="{{item.attrs.style}}" url="{{item.attrs.href}}" data-href='{{item.attrs.href}}' hover-class="navigator-hover" bindtap="tapevent" bindlongpress='copyhref'>
       <template is='rich-text-floor20' data='{{nodes:item.children}}' />
@@ -232,7 +232,7 @@
   </block>
 </template>
 <template name='rich-text-floor20'>
-  <block wx:for='{{nodes}}' wx:key>
+  <block wx:for='{{nodes}}' wx:key='this'>
     <template is='element' data='{{item}}' />
   </block>
 </template>

@@ -43,6 +43,10 @@ Page({
             } else if (res.data.data[k].is_use == '2') {
               res.data.data[k].is_use = '已过期'
             }
+            // 判断优惠券还是芝麻粒
+            let patter = /折/;
+            let reg = res.data.data[k].use_sesame
+            if (patter.test(reg) == true) res.data.data[k].use_coupon = true
           }
           setTimeout(function(){
             that.setData({

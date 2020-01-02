@@ -13,7 +13,8 @@ Page({
     checkedShow: false,
     uncheckShow: false,
     expireShow: false,
-    amountShow: ''
+    amountShow: '',
+    dealAmountShow: false
   },
 
   onLoad: function (options) {
@@ -64,6 +65,13 @@ Page({
       uncheck_,
       expire_
     })
+
+    // 判断是否显示成交金额
+    if(wx.getStorageSync('qrop').is_manager == 1 && wx.getStorageSync('shopCenter').is_withdraw == 0) {
+      that.setData({ dealAmountShow: false })
+    } else {
+      that.setData({ dealAmountShow: true })
+    }
   },
 
   deal() {

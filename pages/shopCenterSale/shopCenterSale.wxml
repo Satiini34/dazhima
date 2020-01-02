@@ -9,7 +9,7 @@
   <view class='deal animated fadeIn' wx:if='{{choice == 1}}' >
     <view class='deal_title' wx:if='{{dealShow}}'>
       <view class='checked_detail' style='width:38%;text-align:left;'>顾客</view>
-      <view class='checked_detail' style='width:18%;'>成交金额</view>
+      <view class='checked_detail' style='width:18%;' wx:if='{{dealAmountShow}}'>成交金额</view>
       <view class='checked_detail' style='width:32%;'>成交时间</view>
       <view class='checked_detail' style='width:12%;'>状态</view>
     </view>
@@ -17,7 +17,7 @@
       <view class='checked_content_listF'>
         <image src="{{item.headimgurl}}" style='width:56rpx;height:56rpx;border-radius:50%;margin-top:14rpx;flex-shrink:0;'></image><view>{{item.nickname}}</view>
       </view> 
-      <view class='checked_content_listS'>
+      <view class='checked_content_listS' wx:if='{{dealAmountShow}}'>
         <view>￥{{item.total_amount}}</view>
       </view>
       <view class='checked_content_listT'>
@@ -33,14 +33,14 @@
   <view class='checked animated fadeIn' wx:if='{{choice == 2}}'> 
     <view class='deal_title' wx:if='{{checkedShow}}'>
       <view class='deal_detail' style='width:40%;'>顾客</view>
-      <view class='deal_detail' style='width:30%;'>成交金额</view>
+      <view class='deal_detail' style='width:30%;' wx:if='{{dealAmountShow}}'>成交金额</view>
       <view class='deal_detail' style='width:30%;'>核销时间</view>
     </view>
     <view class='deal_content' wx:for='{{checked_}}' wx:key='item'>
       <view class='deal_content_listF' >
         <image src="{{item.headimgurl}}" style='width:60rpx;height:60rpx;border-radius:50%;margin-top:12rpx;flex-shrink:0;'></image><view>{{item.nickname}}</view>
       </view>
-      <view class='deal_content_listS'>
+      <view class='deal_content_listS' wx:if='{{dealAmountShow}}'>
         <view>￥{{item.total_amount}}</view>
       </view>
       <view class='deal_content_listT' >
@@ -51,14 +51,14 @@
   <view class='uncheck animated fadeIn' wx:if='{{choice == 3}}'> 
     <view class='deal_title' wx:if='{{uncheckShow}}'>
       <view class='deal_detail' style='width:40%;'>顾客</view>
-      <view class='deal_detail' style='width:30%;'>成交金额</view>
+      <view class='deal_detail' style='width:30%;' wx:if='{{dealAmountShow}}'>成交金额</view>
       <view class='deal_detail' style='width:30%;'>到期时间</view>
     </view>
     <view class='deal_content' wx:for='{{uncheck_}}' wx:key='item'>
       <view class='deal_content_listF' >
         <image src="{{item.headimgurl}}" style='width:60rpx;height:60rpx;border-radius:50%;margin-top:12rpx;flex-shrink:0;'></image><view>{{item.nickname}}</view>
       </view>
-      <view class='deal_content_listS'>
+      <view class='deal_content_listS' wx:if='{{dealAmountShow}}'>
         <view>￥{{item.total_amount}}</view>
       </view>
       <view class='deal_content_listT' >
@@ -69,14 +69,14 @@
   <view class='expired animated fadeIn' wx:if='{{choice == 4}}'> 
     <view class='deal_title' wx:if='{{expireShow}}'>
       <view class='deal_detail' style='width:40%;'>顾客</view>
-      <view class='deal_detail' style='width:30%;'>成交金额</view>
+      <view class='deal_detail' style='width:30%;' wx:if='{{dealAmountShow}}'>成交金额</view>
       <view class='deal_detail' style='width:30%;'>过期时间</view>
     </view>
     <view class='deal_content' wx:for='{{expire_}}' wx:key='item'>
       <view class='deal_content_listF' >
         <image src="{{item.headimgurl}}" style='width:60rpx;height:60rpx;border-radius:50%;margin-top:12rpx;flex-shrink:0;'></image><view>{{item.nickname}}</view>
       </view>
-      <view class='deal_content_listS'>
+      <view class='deal_content_listS' wx:if='{{dealAmountShow}}'>
         <view>￥{{item.total_amount}}</view>
       </view>
       <view class='deal_content_listT' >

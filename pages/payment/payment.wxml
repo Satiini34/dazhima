@@ -80,7 +80,7 @@
    <view class='discountTitle'>优惠券详情</view>
    <view class='discountConfrim' bindtap='maskCancel'>确认</view>
    <block wx:for='{{userDisconut}}' wx:key='this'> 
-    <view class="item.disalbed == true || item.is_expired == 1 ? 'cardsListItemDisabled' : 'cardsListItem'}}" catchtap="{{item.disabled == true || item.is_expired == 1 ? 'cantUse' : 'cardUse'}}" data-name='{{item.coupon_name}}' id='{{item.id}}'>
+    <view class="item.disalbed == true || item.is_expired == 1 ? 'cardsListItemDisabled' : 'cardsListItem'}}" catchtap="{{item.disabled == true || item.is_expired == 1 ? 'cantUse' : 'cardUse'}}" data-name='{{item.discountShow}}' id='{{item.id}}'>
       <view class='cardsListItemText'>{{item.coupon_name}}</view>
       <view class='cardsListItemText'>{{item.discountShow}}</view>
       <image src='../../img/overtime.png' wx:if='{{item.is_expired == 1}}' class='overtime' />
@@ -90,7 +90,7 @@
     </view>
   </block>
 </view>
-<view class='pay_tabbar'  wx:if='{{ !paySuccess && loadComplete }}'>
+<view class='pay_tabbar' wx:if='{{ !paySuccess && loadComplete }}'>
   <view class='current_price_pay'>实付金额：<text style='color:rgb(255, 137, 50);font-weight:400;'>￥{{pay_amount}}</text></view>
   <!-- <view class='pay_payNow'> -->
     <button bindtap='payNow' class='pay_btn' hover-class="taping">结算</button>
