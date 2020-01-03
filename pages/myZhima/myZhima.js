@@ -14,7 +14,7 @@ Page({
         e.create_time = time.tsFormatTime(e.create_time * 1000, 'Y-M-D h:m:s');
       })
       that.setData({ 
-        zhima_detail: activityData,
+        zhima_detail: activityData.reverse(),
         canReachBottom: false
       })
     }else {

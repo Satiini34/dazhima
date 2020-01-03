@@ -112,6 +112,11 @@ Page({
           wx.showToast({
             title: '领券成功',
           })
+        } else {
+          wx.showToast({
+            title: res.data.msg,
+            icon: 'none'
+          })
         }
       }
     })

@@ -185,12 +185,12 @@ page {
 .discountList {
   position: fixed;
   bottom: 0;
-  z-index: 9999;
+  z-index: 999;
   width: 100%;
   background: #fff;
   padding-bottom: 30rpx;
   overflow-y: scroll;
-  max-height: 70vh;
+  max-height: 80vh;
   /* transition: all 0.5s linear; */
 }
 .discountTitle {
@@ -201,7 +201,7 @@ page {
 }
 .cardsListItem {
   width: 90%;
-  height: 96rpx;
+  height: 116rpx;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -212,7 +212,7 @@ page {
 }
 .cardsListItemDisabled {
   width: 90%;
-  height: 96rpx;
+  height: 116rpx;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -222,19 +222,21 @@ page {
   box-sizing: border-box;
 }
 radio {
-  transform: scale(0.7)
+  transform: scale(0.8)
 }
 .cardsListItemText {
   font-size: 30rpx;
   color: #333;
-  font-weight: bold;
+  font-weight: normal;
+  display: flex;
+  flex-direction: column;
 }
 .discountConfrim {
-  font-size: 30rpx;
+  font-size: 32rpx;
   position: absolute;
   top: 38rpx;
   right: 4%;
-  color: skyblue;
+  color: #ff8831;
   letter-spacing: 4rpx;
   font-family: 'lanTing';
 }
@@ -246,4 +248,10 @@ radio {
   z-index: 10;
   width: 66rpx;
   height: 66rpx;
+}
+.cardsTimer {
+  font-size: 24rpx;
+  color: #999;
+  font-weight: normal;
+  margin-top: 6rpx;
 }

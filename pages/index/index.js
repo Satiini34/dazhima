@@ -68,6 +68,7 @@ Page({
           url: `../coupon/coupon?id=${couponId}`,
         })
       }
+      // 扫个人二维码，商家二维码，分享二维码
       if (sharePosterQr.length >= 15){
         // 自动拼接当天日期
         let scan_share_id = sharePosterQr.substr(14, sharePosterQr.length - 1)
@@ -152,7 +153,7 @@ Page({
     }
 
     // 用户首次进入首页未加载数据屏幕空白(手机拒绝授权微信GPS信息未知是否会走getLocation的sueccess或fail事件???)
-    if (wx.getStorageSync('nowCity') == '') {
+    if (wx.getStorageSync('nowCity') == '' || wx.getStorageSync('nowCity') == 'refuse') {
       that.Dailygoodlist();
     } 
     
@@ -195,7 +196,6 @@ Page({
           locationShow: false,
         })
         wx.setStorageSync('nowCity', 'refuse')
-        that.Dailygoodlist();
       }
     })
 
@@ -287,6 +287,7 @@ Page({
                 locationTip: false
               })
               that.DailygoodlistBak()
+              that.setData({ page: 1 })
               let tencentMapKey = 'JAXBZ-ZVACX-OGN46-7DUJS-7UO2J-QWBYE';
               let latitude = res.latitude;
               let longitude = res.longitude;
@@ -297,6 +298,10 @@ Page({
                     wx.setStorageSync('nowCity', res.data.result.ad_info.city)
                   }
                 }
+              })
+              wx.pageScrollTo({
+                scrollTop: 0,
+                duration: 0
               })
             }
           })
@@ -487,7 +492,13 @@ Page({
             locationShow: true,
             popShowDelay: true
           })
+          wx.pageScrollTo({
+            scrollTop: 0,
+            duration: 0
+          })
           that.DailygoodlistBak();
+          that.setData({ page: 1 })
+          // wx.removeStorageSync('leftHand');
           that.setData({ locationTip: false })
         },
         fail () {
@@ -511,12 +522,12 @@ Page({
     // }
 
     // 组件加载授权地理位置刷新列表
-    if(wx.getStorageSync('refreshMainList') == true) {
-      setTimeout( ()=> {
-        that.DailygoodlistBak();
-        wx.removeStorageSync('refreshMainList')
-      }, 1111)
-    }
+    // if(wx.getStorageSync('refreshMainList') == true) {
+    //   setTimeout( ()=> {
+    //     that.DailygoodlistBak();
+    //     wx.removeStorageSync('refreshMainList')
+    //   }, 1111)
+    // }
 
     // 分享页点击允许地理位置授权
     setTimeout( ()=> {
@@ -576,7 +587,7 @@ Page({
         longitude: wx.getStorageSync('userLocation').longitude,
         user_id: userId,
         type,
-        p: this.data.page
+        p: that.data.page
       },
       success (res) {
         if(res.data.code == 0){
@@ -634,8 +645,8 @@ Page({
       success(res) {
         if (res.data.code == 0) {
           that.setData({
-            isBottom: true,
-            isLoaded: false
+            isBottom: false,
+            isLoaded: true
           })
           that.setData({
             goodsList: res.data.data,

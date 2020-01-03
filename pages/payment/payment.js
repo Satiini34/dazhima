@@ -145,6 +145,9 @@ Page({
                   everyThing.disabled = false;
                 }
               })
+
+              // 将时间戳转化
+              e.expire_time = '有效期至' + Sesame.tsFormatTime(e.expire_time * 1000, 'Y.M.D h:m:s')
             })
             if (res.data.data.discount != '') {
               that.setData({
@@ -159,6 +162,10 @@ Page({
     this.setData({
       goodsList: wx.getStorageSync('other_goods'),
     })
+  },
+
+  scrolling (e) {
+    
   },
 
   notPayNow: function () {

@@ -76,13 +76,15 @@
   </view>
 </view>
 <!-- 优惠券 -->
-<view  wx:if='{{useDiscountNow}}' class='discountList animated fadeInUp faster'>
+<view  wx:if='{{useDiscountNow}}' class='discountList animated fadeInUp faster' catchtouchmove="scrolling">
    <view class='discountTitle'>优惠券详情</view>
    <view class='discountConfrim' bindtap='maskCancel'>确认</view>
    <block wx:for='{{userDisconut}}' wx:key='this'> 
     <view class="item.disalbed == true || item.is_expired == 1 ? 'cardsListItemDisabled' : 'cardsListItem'}}" catchtap="{{item.disabled == true || item.is_expired == 1 ? 'cantUse' : 'cardUse'}}" data-name='{{item.discountShow}}' id='{{item.id}}'>
-      <view class='cardsListItemText'>{{item.coupon_name}}</view>
-      <view class='cardsListItemText'>{{item.discountShow}}</view>
+      <view class='cardsListItemText'>
+        <view>{{item.coupon_name}} <text style='margin-left:10rpx;' wx:if='{{item.id != 0}}'>{{item.discountShow}}</text></view>
+        <view class='cardsTimer' wx:if='{{item.id != 0}}'>{{item.expire_time}}</view>
+      </view>
       <image src='../../img/overtime.png' wx:if='{{item.is_expired == 1}}' class='overtime' />
       <view>
         <radio wx:if='{{item.is_expired != 1}}' checked='{{item.pick}}' color='#fbc756' disabled="{{item.disabled || item.is_expired == 1}}"></radio>

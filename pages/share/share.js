@@ -500,7 +500,7 @@ Page({
             that.setData({
               trends_info: that.data.trends[j]
             })
-          }, 6000)
+          }, 6001)
 
           //倒计时
           var newSec, newMin, newHour, newDay, leftTime;

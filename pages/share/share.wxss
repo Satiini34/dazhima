@@ -193,9 +193,6 @@ page {
   font-weight: 600;
   margin:30rpx 0 16rpx 0;
 }
-
-
-
 .circleNameShare {
   margin-top: 8rpx;
   display: flex;
